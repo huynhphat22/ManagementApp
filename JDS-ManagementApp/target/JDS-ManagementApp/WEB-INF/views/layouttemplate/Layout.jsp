@@ -2,8 +2,9 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx"%>
+<%@ page isELIgnored="false" %>
 <tilesx:useAttribute name="css" classname="java.util.List" id="cssItems"/>
 <tilesx:useAttribute name="headjs" classname="java.util.List" id="headjsItems"/>
 <tilesx:useAttribute name="js" classname="java.util.List" id="jsItems"/>
@@ -26,14 +27,16 @@
         <link href="<spring:url value="${font}"/>" rel="stylesheet" type="text/css">
     </c:forEach>
     <!--animate-->
-	<link href="/css/animate.css" rel="stylesheet" type="text/css" media="all">
-	<script src="/js/wow.min.js"></script>
+	<link href='<spring:url value="/css/animate.css"></spring:url>' rel="stylesheet" type="text/css" media="all">
+	<script src='<spring:url value="/js/wow.min.js"></spring:url>'></script>
 </head>
 <body class="cbp-spmenu-push">
 	<div class="main-content">
+		<tiles:insertAttribute name="leftnavigation"></tiles:insertAttribute>
 		<tiles:insertAttribute name="header"></tiles:insertAttribute>
 		<tiles:insertAttribute name="body"></tiles:insertAttribute>
 		<tiles:insertAttribute name="footer"></tiles:insertAttribute>
+
 	   <!-- Other js file -->
 	   <c:forEach items="${jsItems}" var="js">
 	            <script src="<spring:url value="${js}"/>"></script>

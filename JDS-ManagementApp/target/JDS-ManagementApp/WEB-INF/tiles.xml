@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
- <!DOCTYPE tiles-definitions PUBLIC  
-        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
-        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
-        
+<!DOCTYPE tiles-definitions PUBLIC 
+		"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+		"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
     <definition name="DefaultTemplate" 
       template="/WEB-INF/views/layouttemplate/Layout.jsp" >
+      	<put-attribute name="leftnavigation" value="/WEB-INF/views/layouttemplate/LeftNavigation.jsp"></put-attribute>
         <put-attribute name="header" value="/WEB-INF/views/layouttemplate/Header.jsp"></put-attribute>
         <put-attribute name="title" value="" />
         <put-attribute name="body" value="" />
@@ -18,20 +18,23 @@
         <put-list-attribute name="headjs">
             <add-attribute value="/js/jquery-1.11.1.min.js"/>
             <add-attribute value="/js/modernizr.custom.js"/>
+       		<add-attribute value="/js/Chart.js"></add-attribute>
         </put-list-attribute>
         <put-list-attribute name="js">
         	<add-attribute value="/js/bootstrap.js"/>
       		<add-attribute value="/js/jquery.nicescroll.js"/>
       		<add-attribute value="/js/scripts.js"/>
+
         </put-list-attribute>
         <put-list-attribute name="fonts">
-            <add-attribute value="//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic"/>
+            <add-attribute value="/fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic"/>
         </put-list-attribute>
     </definition>
     
     <definition name="home" extends="DefaultTemplate">
         <put-attribute name="title" value="Home"/>
-        <put-attribute name="body" value="/WEB-INF/views/Home/Home.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Home.jsp"/>
+        
     </definition>
     
     <!--
