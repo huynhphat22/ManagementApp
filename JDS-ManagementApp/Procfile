@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar JDS-ManagementApp/target/dependency/webapp-runner.jar --port $PORT JDS-ManagementApp/target/*.war
+web: java $JAVA_OPTS -jar JDS-ManagementApp/target/dependency/JDS-ManagementApp.jar --port $PORT JDS-ManagementApp/target/*.war
