@@ -14,6 +14,7 @@
             <add-attribute value="/css/bootstrap.css" />
             <add-attribute value="/css/font-awesome.css" />
             <add-attribute value="/css/style.css" />
+            <add-attribute value="/css/custom.css"></add-attribute>
         </put-list-attribute>
         <put-list-attribute name="headjs">
             <add-attribute value="/js/jquery-1.11.1.min.js"/>
@@ -36,44 +37,6 @@
         <put-attribute name="body" value="/WEB-INF/views/MainBody/Home.jsp"/>
         
     </definition>
-    
-    <!--
-    <definition name="menu" extends="DefaultTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/Home/Menu.jsp"/>
-    </definition>
-    
-    <definition name="foods" extends="DefaultTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/Home/Foods.jsp"/>
-    </definition>
-    
-     <definition name="login" extends="DefaultTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/Home/Login.jsp"/>
-    </definition>
-    
-     <definition name="sign-up" extends="DefaultTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/Home/SignUp.jsp"/>
-    </definition>
-    
-    <definition name="contact" extends="DefaultTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/Home/Contact.jsp"/>
-    </definition>
-    
-     <definition name="departments" extends="DefaultTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/Home/Departments.jsp"/>
-    </definition>
-    
-    <definition name="about" extends="DefaultTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/Home/About.jsp"/>
-    </definition>
-    
-    <definition name="help" extends="DefaultTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/Home/Help.jsp"/>
-    </definition>
-    
-    <definition name="offers" extends="DefaultTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/Home/Offers.jsp"/>
-    </definition>
-      -->
     
     
     
