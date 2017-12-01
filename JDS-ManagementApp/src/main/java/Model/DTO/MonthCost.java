@@ -1,5 +1,4 @@
 package Model.DTO;
-// Generated Nov 8, 2017 7:11:15 PM by Hibernate Tools 5.2.3.Final
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -13,7 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "month_cost", catalog = "restaurant")
-public class MonthCost implements java.io.Serializable {
+public class MonthCost  {
 
 	private MonthCostId id;
 	private String typeOfCost;

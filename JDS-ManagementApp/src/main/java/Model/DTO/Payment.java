@@ -1,5 +1,6 @@
 package Model.DTO;
-// Generated Nov 8, 2017 7:11:15 PM by Hibernate Tools 5.2.3.Final
+
+
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -16,7 +17,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "payment", catalog = "restaurant")
-public class Payment implements java.io.Serializable {
+public class Payment {
 
 	private Integer paymentId;
 	private int orderId;

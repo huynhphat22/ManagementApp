@@ -1,5 +1,5 @@
 package Model.DTO;
-// Generated Nov 8, 2017 7:11:15 PM by Hibernate Tools 5.2.3.Final
+
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -13,7 +13,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "date_revenue", catalog = "restaurant")
-public class DateRevenue implements java.io.Serializable {
+public class DateRevenue  {
 
 	private DateRevenueId id;
 	private String typeOfRevenue;

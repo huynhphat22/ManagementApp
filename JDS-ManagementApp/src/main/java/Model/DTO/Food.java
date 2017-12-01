@@ -1,5 +1,5 @@
 package Model.DTO;
-// Generated Nov 8, 2017 7:11:15 PM by Hibernate Tools 5.2.3.Final
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,25 +13,23 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "food", catalog = "restaurant")
-public class Food implements java.io.Serializable {
+public class Food  {
 
 	private Integer foodId;
 	private String foodName;
 	private int categoryId;
+	private String image;
 	private Boolean flags;
 
 	public Food() {
 	}
 
-	public Food(String foodName, int categoryId) {
-		this.foodName = foodName;
-		this.categoryId = categoryId;
-	}
 
-	public Food(String foodName, int categoryId, Boolean flags) {
+	public Food(String foodName, int categoryId, String image, Boolean flags) {
 		this.foodName = foodName;
 		this.categoryId = categoryId;
 		this.flags = flags;
+		this.image = image;
 	}
 
 	@Id
@@ -63,6 +61,18 @@ public class Food implements java.io.Serializable {
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
+	
+	
+	@Column(name = "image", nullable = false, length = 120)
+	public String getImage() {
+		return image;
+	}
+
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 
 	@Column(name = "flags")
 	public Boolean getFlags() {

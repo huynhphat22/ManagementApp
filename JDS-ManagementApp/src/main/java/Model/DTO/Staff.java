@@ -1,5 +1,5 @@
 package Model.DTO;
-// Generated Nov 8, 2017 7:11:15 PM by Hibernate Tools 5.2.3.Final
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +13,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "staff", catalog = "restaurant")
-public class Staff implements java.io.Serializable {
+public class Staff {
 
 	private Integer staffId;
 	private String staffName;
