@@ -6,11 +6,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import Model.DTO.Category;
 
 @Transactional
+@Service
 public class CategoryDAOImpl implements CategoryDAO{
 
 	@Autowired

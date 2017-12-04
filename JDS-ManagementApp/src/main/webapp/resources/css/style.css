@@ -4,6 +4,8 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 */
+
+.toggle-hide{float:right; margin-right:5px}
 h4, h5, h6,
 h1, h2, h3 {margin: 0;}
 ul, ol {margin: 0;}
@@ -131,6 +133,9 @@ button#showLeftPush:hover {
 }
 /*--//push-menu-css--*/
 /*--side-menu--*/
+#side-menu {
+    overflow: auto;
+}
 .sidebar ul li{
 	 margin-bottom: 1em;
 }
@@ -1337,9 +1342,6 @@ section#tables  p {
 .forms label {
     font-weight: 400;
 }
-.form-control {
-    border-radius: inherit;
-}
 .help-block {
     margin-top: 10px;
 }
@@ -1362,20 +1364,7 @@ section#tables  p {
     padding: 2em;
 }
 /* --  general forms  -- */
-.form-control1, .form-control_2.input-sm{
-  border: 1px solid #ccc;
-  padding: 5px 8px;
-  color: #616161;
-  background: #fff;
-  box-shadow: none !important;
-  width: 100%;
-  font-size: 0.85em;
-  font-weight: 300;
-  height: 40px;
-  border-radius: 0;
-  -webkit-appearance: none;
-  resize: none;
-}
+
 .general .tab-content {
     padding: 1.5em 0.5em 0;
 }
@@ -1793,9 +1782,6 @@ p.creating {
 /*--general elements--*/
 .panel-info.widget-shadow {
     padding: 2em 1em;
-}
-.panel {
-    border-radius: inherit;
 }
 .general h4.title2{
     font-size: 1.4em;
@@ -3632,9 +3618,7 @@ span.nav-badge-btm {
 ul.nav.nav-second-level li a {
     padding: 5px 32px;
 }
-.cbp-spmenu-push div#page-wrapper {
-    padding: 8.2em 1em 1.5em;
-}
+
 .bs-example5 {
     padding: 1em;
 }
@@ -3887,9 +3871,7 @@ h4.title3 {
 .compose-right .panel-body {
     padding: 1em;
 }
-.form-control1,.form-control_2.input-sm {
-    height: 35px;
-}
+
 .validation .form-control {
     height: 29px;
 }
