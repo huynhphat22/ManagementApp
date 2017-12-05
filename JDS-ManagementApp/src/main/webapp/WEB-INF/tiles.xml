@@ -9,33 +9,60 @@
         <put-attribute name="header" value="/WEB-INF/views/layouttemplate/Header.jsp"></put-attribute>
         <put-attribute name="title" value="" />
         <put-attribute name="body" value="" />
+        <put-attribute name="classie" value="/WEB-INF/views/layouttemplate/Classie.jsp"></put-attribute>
         <put-attribute name="footer" value="/WEB-INF/views/layouttemplate/Footer.jsp" />
         <put-list-attribute name="css">
-            <add-attribute value="/css/bootstrap.css" />
+            <add-attribute value="/css/bootstrap.min.css" />
             <add-attribute value="/css/font-awesome.css" />
             <add-attribute value="/css/style.css" />
             <add-attribute value="/css/custom.css"></add-attribute>
         </put-list-attribute>
         <put-list-attribute name="headjs">
             <add-attribute value="/js/jquery-1.11.1.min.js"/>
+            <add-attribute value="/js/angular.min.js"/>
             <add-attribute value="/js/modernizr.custom.js"/>
        		<add-attribute value="/js/Chart.js"></add-attribute>
+       		<add-attribute value="/js/metisMenu.min.js"/>
+      		<add-attribute value="/js/custom.js"/>
         </put-list-attribute>
         <put-list-attribute name="js">
         	<add-attribute value="/js/bootstrap.js"/>
       		<add-attribute value="/js/jquery.nicescroll.js"/>
       		<add-attribute value="/js/scripts.js"/>
-
+      		<add-attribute value="/js/app/app.js"/>
+      		<add-attribute value="/js/app/DepartmentService.js"/>
+      		<add-attribute value="/js/app/DepartmentController.js"/>
+      		<add-attribute value="/js/app/CategoryService.js"/>
+      		<add-attribute value="/js/app/CategoryController.js"/>
+      		<add-attribute value="/js/app/FoodService.js"/>
+      		<add-attribute value="/js/app/FoodController.js"/>
+      		
         </put-list-attribute>
+        
         <put-list-attribute name="fonts">
             <add-attribute value="/fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic"/>
         </put-list-attribute>
+        
     </definition>
     
     <definition name="home" extends="DefaultTemplate">
         <put-attribute name="title" value="Home"/>
         <put-attribute name="body" value="/WEB-INF/views/MainBody/Home.jsp"/>
-        
+    </definition>
+    
+    <definition name="categories" extends="DefaultTemplate">
+        <put-attribute name="title" value="Manage Categories"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Categories.jsp"/>
+    </definition>
+    
+    <definition name="departments" extends="DefaultTemplate">
+        <put-attribute name="title" value="Manage Departments"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Departments.jsp"/>
+    </definition>
+    
+    <definition name="foods" extends="DefaultTemplate">
+        <put-attribute name="title" value="Manage Foods"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Foods.jsp"/>
     </definition>
     
     

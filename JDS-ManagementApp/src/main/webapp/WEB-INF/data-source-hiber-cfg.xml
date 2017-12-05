@@ -13,7 +13,7 @@
 	<bean id="myDataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/restaurant" />
+		<property name="url" value="jdbc:mysql://localhost:3306/restaurant?autoReconnect=true&amp;useUnicode=true&amp;createDatabaseIfNotExist=true&amp;characterEncoding=utf-8" />
 		<property name="username" value="root" />
 		<property name="password" value="" />
 	</bean>
@@ -24,19 +24,19 @@
 
 		<property name="annotatedClasses">
 			<list>
-				<value>Model.DAO.Category</value>
-				<value>Model.DAO.Customer</value>
-				<value>Model.DAO.DateCost</value>
-				<value>Model.DAO.DateRevenue</value>
-				<value>Model.DAO.Department</value>
-				<value>Model.DAO.Food</value>
-				<value>Model.DAO.MenuDepartment</value>
-				<value>Model.DAO.MonthCost</value>
-				<value>Model.DAO.OrderDetail</value>
-				<value>Model.DAO.OrderFood</value>
-				<value>Model.DAO.Payment</value>
-				<value>Model.DAO.RestaurantTable</value>
-				<value>Model.DAO.Staff</value>
+				<value>Model.DTO.Category</value>
+				<value>Model.DTO.Customer</value>
+				<value>Model.DTO.DateCost</value>
+				<value>Model.DTO.DateRevenue</value>
+				<value>Model.DTO.Department</value>
+				<value>Model.DTO.Food</value>
+				<value>Model.DTO.MenuDepartment</value>
+				<value>Model.DTO.MonthCost</value>
+				<value>Model.DTO.OrderDetail</value>
+				<value>Model.DTO.OrderFood</value>
+				<value>Model.DTO.Payment</value>
+				<value>Model.DTO.RestaurantTable</value>
+				<value>Model.DTO.Staff</value>
 			</list>
 		</property>
 
