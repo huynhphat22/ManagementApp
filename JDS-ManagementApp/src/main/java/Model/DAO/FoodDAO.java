@@ -3,6 +3,8 @@ package Model.DAO;
 import java.util.Map;
 
 import Model.DTO.Food;
+import Model.MODEL.Page;
+import Model.MODEL.PageQuery;
 
 public interface FoodDAO {
 	
@@ -18,5 +20,5 @@ public interface FoodDAO {
 
 	public long count();
 
-	public Map<Food,Integer> findByDepartmentIdAndCategoryId(int departmentId, int categoryId, int page, String sort);
+	public Page paginateFood(PageQuery pageQuery);
 }

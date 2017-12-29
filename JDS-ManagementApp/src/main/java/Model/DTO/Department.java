@@ -1,17 +1,20 @@
 package Model.DTO;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 /**
@@ -28,6 +31,7 @@ public class Department {
 	private short numberOfTable;
 	private Boolean flags;
 	
+	@JsonIgnore 
 	private Set<MenuDepartment> menuDepartments = new HashSet<MenuDepartment>(0);
 
 	public Department() {
@@ -104,6 +108,7 @@ public class Department {
 	public void setFlags(Boolean flags) {
 		this.flags = flags;
 	}
+	
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "department")
 	public Set<MenuDepartment> getMenuDepartments() {

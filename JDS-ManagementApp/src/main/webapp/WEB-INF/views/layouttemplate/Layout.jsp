@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
@@ -23,24 +23,25 @@
     <c:forEach items="${headjsItems}" var="headjs">
         <script src="<spring:url value="${headjs}"/>"></script>
     </c:forEach>
-    <c:forEach items="${fontItems}" var="font">
-        <link href="<spring:url value="${font}"/>" rel="stylesheet" type="text/css">
-    </c:forEach>
+   
+	<link href="/fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic" type="text/css">
+    
     <!--animate-->
 	<link href='<spring:url value="/css/animate.css"></spring:url>' rel="stylesheet" type="text/css" media="all">
 	<script src='<spring:url value="/js/wow.min.js"></spring:url>'></script>
 </head>
-<body class="cbp-spmenu-push">
+<body class="cbp-spmenu-push" ng-app="ManagementApp">
 	<div class="main-content">
 		<tiles:insertAttribute name="leftnavigation"></tiles:insertAttribute>
 		<tiles:insertAttribute name="header"></tiles:insertAttribute>
 		<tiles:insertAttribute name="body"></tiles:insertAttribute>
 		<tiles:insertAttribute name="footer"></tiles:insertAttribute>
 
+		<tiles:insertAttribute name="classie"></tiles:insertAttribute>
 	   <!-- Other js file -->
 	   <c:forEach items="${jsItems}" var="js">
 	            <script src="<spring:url value="${js}"/>"></script>
-	   </c:forEach>
+       </c:forEach>
    </div>
 </body>
 </html>
