@@ -11,10 +11,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ReportController {
 
-	@RequestMapping(value="/Report", method=RequestMethod.GET)
+	@RequestMapping(value="/Reports", method=RequestMethod.GET)
 	public ModelAndView init(HttpServletRequest request,
 							HttpServletResponse response){
-		return new ModelAndView("report");
+		return new ModelAndView("reports");
 	}
 							
 

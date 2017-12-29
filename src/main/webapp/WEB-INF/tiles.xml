@@ -68,6 +68,10 @@
     <definition name="reports" extends="DefaultTemplate">
         <put-attribute name="title" value="Reports"/>
         <put-attribute name="body" value="/WEB-INF/views/MainBody/Reports.jsp"/>
+        <put-list-attribute name="js" inherit="true">
+        	<add-attribute value="/js/app/ReportController.js"/>
+        	<add-attribute value="/js/app/ReportService.js"/>
+        </put-list-attribute>
     </definition>
     
 </tiles-definitions>
