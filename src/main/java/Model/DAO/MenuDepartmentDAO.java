@@ -2,6 +2,8 @@ package Model.DAO;
 
 import Model.DTO.MenuDepartment;
 import Model.DTO.MenuDepartmentId;
+import Model.MODEL.Page;
+import Model.MODEL.PageQuery;
 
 public interface MenuDepartmentDAO {
 	
@@ -15,9 +17,6 @@ public interface MenuDepartmentDAO {
 
 	public Iterable<MenuDepartment> findAll();
 
-	public long count();
 	
-	public long countByDepartmentIdAndCategoryId(int departmentId, int categoryId);
-	
-	public Iterable<MenuDepartment> findByDepartmentIdAndCategoryId(int departmentId, int categoryId, int page, String sort);
+	public Page paginateMenuDepartment(PageQuery pageQuery, int departmentId);
 }

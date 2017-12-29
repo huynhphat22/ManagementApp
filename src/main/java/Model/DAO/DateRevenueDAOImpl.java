@@ -1,5 +1,7 @@
 package Model.DAO;
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -18,6 +20,8 @@ public class DateRevenueDAOImpl implements DateRevenueDAO{
 	public DateRevenue save(DateRevenue dateRevenue) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
+		dateRevenue.setFlags(true);
+		dateRevenue.setDateCreated(new Date());
 		session.persist(dateRevenue);
 		return dateRevenue;
 	}
@@ -37,7 +41,8 @@ public class DateRevenueDAOImpl implements DateRevenueDAO{
 		DateRevenue dateRevenue = this.findById(id);
 		if(dateRevenue != null) {
 			Session session = this.sessionFactory.getCurrentSession();
-			session.delete(dateRevenue);
+			dateRevenue.setFlags(false);
+			session.update(dateRevenue);
 		}
 		
 	}

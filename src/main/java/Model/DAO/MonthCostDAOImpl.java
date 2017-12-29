@@ -1,5 +1,7 @@
 package Model.DAO;
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -18,6 +20,8 @@ public class MonthCostDAOImpl implements MonthCostDAO{
 	public MonthCost save(MonthCost monthCost) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
+		monthCost.setFlags(true);
+		monthCost.setDateCreated(new Date());
 		session.persist(monthCost);
 		return monthCost;
 	}

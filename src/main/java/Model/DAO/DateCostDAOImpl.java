@@ -1,5 +1,7 @@
 package Model.DAO;
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -18,6 +20,8 @@ public class DateCostDAOImpl implements DateCostDAO {
 	public DateCost save(DateCost dateCost) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
+		dateCost.setFlags(true);
+		dateCost.setDateCreated(new Date());
 		session.persist(dateCost);
 		return dateCost;
 	}
@@ -26,7 +30,7 @@ public class DateCostDAOImpl implements DateCostDAO {
 	public DateCost update(DateCost dateCost) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
-		session.persist(dateCost);
+		session.update(dateCost);
 		return dateCost;
 	}
 
@@ -37,7 +41,8 @@ public class DateCostDAOImpl implements DateCostDAO {
 		DateCost dateCost = this.findById(id);
 		if(dateCost != null) {
 			Session session = this.sessionFactory.getCurrentSession();
-			session.delete(dateCost);
+			dateCost.setFlags(false);
+			session.update(dateCost);
 		}
 		
 	}

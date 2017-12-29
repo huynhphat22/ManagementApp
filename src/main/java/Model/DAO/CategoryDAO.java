@@ -1,6 +1,8 @@
 package Model.DAO;
 
 import Model.DTO.Category;
+import Model.MODEL.Page;
+import Model.MODEL.PageQuery;
 
 public interface CategoryDAO {
 	
@@ -14,7 +16,7 @@ public interface CategoryDAO {
 	
 	public Iterable<Category> findAll();
 	
-	public long count();
+	public Page findByDepartmentId(PageQuery pageQuery, int departmentId);
 	
-	public Iterable<Category> findByDepartmentId(int departmentId);
+	public Page paginateCategory(PageQuery pageQuery);
 }
