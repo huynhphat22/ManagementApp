@@ -1,7 +1,6 @@
 package Model.DAO;
 
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
@@ -71,29 +70,6 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		Iterable<Department> list = session.createQuery("from Department").list();
 
 		return list;
-
-	}
-
-	public long count() {
-		Session session = this.sessionFactory.getCurrentSession();
-		Criteria criteriaCount = session.createCriteria(Department.class);
-		criteriaCount.setProjection(Projections.rowCount());
-		return (long) criteriaCount.uniqueResult();
-	}
-
-	public Iterable<Department> paginateDepartment(int page, String sort) {
-
-		int pageSize = 10;
-		int start = (page - 1) * pageSize;
-		
-		Session session = this.sessionFactory.getCurrentSession();
-
-		Criteria criteria = session.createCriteria(Department.class);
-		criteria.setFirstResult(start);
-		criteria.setMaxResults(pageSize);
-		criteria.addOrder(Order.asc(sort));
-		Iterable<Department> list = criteria.list();
-		return list;
 	}
 	
 	public Page paginateDepartment(PageQuery pageQuery) {
@@ -111,17 +87,14 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 			System.out.println(pageQuery.getSearchText() +  pageQuery.getSearchBy());
 			Criterion criterion = Restrictions.like(pageQuery.getSearchBy(), pageQuery.getSearchText(), MatchMode.ANYWHERE);
 			criteria.add(criterion);
-			Query query = session.createQuery("SELECT COUNT(*) FROM Department d WHERE d." + pageQuery.getSearchBy()
-					+ " LIKE CONCAT('%',:searchText,'%')");
-			query.setParameter("searchText", pageQuery.getSearchText());
-			count = (long)query.uniqueResult();
-		}
-		else {
-			count = (long)session.createQuery("select count(*) from Department").uniqueResult();
 		}
 		
+		Iterable<Department> list = criteria.list();
+		count = (long) criteria.setProjection(Projections.rowCount()).uniqueResult();
 		totalPages = (count % pageQuery.getSize() != 0) ? (count/pageQuery.getSize()) + 1 : count/pageQuery.getSize();
-		Page page = new Page((Iterable<Department>)criteria.list(), totalPages);
+		Page page = new Page(list , totalPages);
+		System.out.println("count : " + count );
+		System.out.println("page : "  + page.getContent());
 		return page;
 	}
 }

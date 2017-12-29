@@ -1,7 +1,8 @@
 package Model.DAO;
 
+import java.util.Date;
+
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
@@ -18,37 +19,40 @@ import Model.MODEL.PageQuery;
 
 @Transactional
 public class FoodDAOImpl implements FoodDAO {
-
 	@Autowired
 	private SessionFactory sessionFactory;
+	
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 
 	@Override
-	public Food save(Food food) {
+	public Food save(Food orderFood) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
-		session.persist(food);
-		return food;
+		orderFood.setFlags(true);
+		orderFood.setDateCreated(new Date());
+		session.persist(orderFood);
+		return orderFood;
 	}
 
 	@Override
-	public Food update(Food food) {
+	public Food update(Food orderFood) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
-		session.update(food);
-		return food;
+		session.update(orderFood);
+		return orderFood;
 	}
 
 	@Override
 	public void delete(int id) {
 		// TODO Auto-generated method stub
-		Food food = this.findById(id);
-		if (food != null) {
-			Session session = this.sessionFactory.getCurrentSession();
-			session.delete(food);
+		Session session = this.sessionFactory.getCurrentSession();
+		Food orderFood = this.findById(id);
+		if(orderFood != null) {
+			orderFood.setFlags(false);
+			session.update(orderFood);
 		}
 	}
 
@@ -56,26 +60,17 @@ public class FoodDAOImpl implements FoodDAO {
 	public Food findById(int id) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
-		Food food = session.get(Food.class, id);
-		return food;
+		Food orderFood = session.get(Food.class, id);
+		return orderFood;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Iterable<Food> findAll() {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
-		Iterable<Food> list = session.createQuery("FROM Food").list();
+		Iterable<Food> list = session.createQuery("from Food").list();
 		return list;
-	}
-
-
-	@Override
-	public long count() {
-		// TODO Auto-generated method stub
-		Session session = this.sessionFactory.getCurrentSession();
-		Criteria criteriaCount = session.createCriteria(Food.class);
-		criteriaCount.setProjection(Projections.rowCount());
-		return (long) criteriaCount.uniqueResult();
 	}
 
 	@Override
@@ -95,19 +90,14 @@ public class FoodDAOImpl implements FoodDAO {
 			System.out.println(pageQuery.getSearchText() +  pageQuery.getSearchBy());
 			Criterion criterion = Restrictions.like(pageQuery.getSearchBy(), pageQuery.getSearchText(), MatchMode.ANYWHERE);
 			criteria.add(criterion);
-			Query query = session.createQuery("SELECT COUNT(*) FROM Food f WHERE f." + pageQuery.getSearchBy()
-					+ " LIKE CONCAT('%',:searchText,'%')");
-			query.setParameter("searchText", pageQuery.getSearchText());
-			count = (long)query.uniqueResult();
-		}
-		else {
-			count = (long)session.createQuery("select count(*) from Food").uniqueResult();
 		}
 		
+		Iterable<Food> list = criteria.list();
+		count = (long) criteria.setProjection(Projections.rowCount()).uniqueResult();
 		totalPages = (count % pageQuery.getSize() != 0) ? (count/pageQuery.getSize()) + 1 : count/pageQuery.getSize();
-		Page page = new Page((Iterable<Food>)criteria.list(), totalPages);
+		Page page = new Page(list , totalPages);
+		System.out.println("count : " + count );
+		System.out.println("page : "  + page.getContent());
 		return page;
 	}
-
-	
 }

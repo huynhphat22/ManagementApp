@@ -16,9 +16,6 @@ public interface DepartmentDAO {
 	
 	public Iterable<Department> findAll();
 	
-	public Iterable<Department> paginateDepartment(int page, String sort);
-	
 	public Page paginateDepartment(PageQuery pageQuery);
 	
-	public long count();
 }
