@@ -50,6 +50,7 @@ angular.module('ManagementApp').factory('CategoryService', ['$http', '$q', 'urls
         return deferred.promise;
     }
 
+<<<<<<< HEAD
     function save(category) {
         var deferred = $q.defer();
         $http.post(urls.CATEGORY_SERVICE_API, category)
@@ -64,6 +65,22 @@ angular.module('ManagementApp').factory('CategoryService', ['$http', '$q', 'urls
     function update(category){
         var deferred = $q.defer();
         $http.put(urls.CATEGORY_SERVICE_API, category)
+=======
+    function save(department) {
+        var deferred = $q.defer();
+        $http.post(urls.CATEGORY_SERVICE_API, department)
+            .then((response) => {
+                deferred.resolve(response.data);
+            }, (errors) => {
+                deferred.reject(errors);
+            });
+        return deferred.promise;
+    }
+
+    function update(department){
+        var deferred = $q.defer();
+        $http.put(urls.CATEGORY_SERVICE_API, department)
+>>>>>>> refs/remotes/origin/1412147
             .then((response) => {
                 deferred.resolve(response.data);
             }, (errors) => {

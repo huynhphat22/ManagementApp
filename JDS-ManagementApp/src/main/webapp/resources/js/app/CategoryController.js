@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 'use strict';
 
 angular.module('ManagementApp').controller('Categories', 
@@ -172,3 +173,5 @@ angular.module('ManagementApp').controller('Categories',
         self.saveCategory = true;
     }
 }]);
+=======
+>>>>>>> refs/remotes/origin/1412147

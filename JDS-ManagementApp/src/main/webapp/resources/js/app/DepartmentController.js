@@ -160,6 +160,7 @@ angular.module('ManagementApp').controller('Departments',
         .then((response)=>{
             self.department =  response;
 <<<<<<< HEAD
+<<<<<<< HEAD
             
         },(errors)=>{
             self.successMessage = '';
@@ -177,6 +178,13 @@ angular.module('ManagementApp').controller('Departments',
         });
 
 >>>>>>> refs/remotes/origin/1412163
+=======
+        },(errors)=>{
+            self.successMessage = '';
+            self.errorMessage = 'Error When Getting Department!';
+        });
+
+>>>>>>> refs/remotes/origin/1412147
         self.saveDepartment = true;
     }
 }]);

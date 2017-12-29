@@ -33,6 +33,7 @@
       		<add-attribute value="/js/app/app.js"/>
       		<add-attribute value="/js/app/DepartmentService.js"/>
       		<add-attribute value="/js/app/DepartmentController.js"/>
+<<<<<<< HEAD
       		<add-attribute value="/js/app/CategoryService.js"/>
       		<add-attribute value="/js/app/CategoryController.js"/>
 <<<<<<< HEAD
@@ -40,6 +41,8 @@
       		<add-attribute value="/js/app/FoodController.js"/>
 =======
 >>>>>>> refs/remotes/origin/1412163
+=======
+>>>>>>> refs/remotes/origin/1412147
       		
         </put-list-attribute>
         
@@ -67,10 +70,14 @@
     <definition name="foods" extends="DefaultTemplate">
         <put-attribute name="title" value="Manage Foods"/>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <put-attribute name="body" value="/WEB-INF/views/MainBody/Foods.jsp"/>
 =======
         <put-attribute name="body" value="/WEB-INF/views/MainBody/Home.jsp"/>
 >>>>>>> refs/remotes/origin/1412163
+=======
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Home.jsp"/>
+>>>>>>> refs/remotes/origin/1412147
     </definition>
     
     

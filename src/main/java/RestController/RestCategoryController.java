@@ -1,6 +1,5 @@
 package RestController;
 
-<<<<<<< HEAD
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -82,11 +81,4 @@ public class RestCategoryController {
 	}
 	
 	
-=======
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class RestCategoryController {
-
->>>>>>> refs/remotes/origin/1412147
 }
