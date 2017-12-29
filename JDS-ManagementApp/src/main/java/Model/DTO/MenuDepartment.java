@@ -1,4 +1,8 @@
+// default package
+// Generated Dec 25, 2017 5:48:08 PM by Hibernate Tools 5.1.4.Final
+
 package Model.DTO;
+import java.util.Date;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -9,6 +13,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -22,23 +28,25 @@ public class MenuDepartment  {
 	private Department department;
 	private Food food;
 	private int price;
+	private Date dateCreated;
 	private Boolean flags;
 
 	public MenuDepartment() {
 	}
 
 	
-
-	public MenuDepartment(MenuDepartmentId id, Department department,
-			Food food, int price, Boolean flags) {
+	public MenuDepartment(MenuDepartmentId id, int price, Date dateCreated) {
 		this.id = id;
-		this.department = department;
-		this.food = food;
 		this.price = price;
-		this.flags = flags;
+		this.dateCreated = dateCreated;
 	}
 
-
+	public MenuDepartment(MenuDepartmentId id, int price, Date dateCreated, Boolean flags) {
+		this.id = id;
+		this.price = price;
+		this.dateCreated = dateCreated;
+		this.flags = flags;
+	}
 
 	@EmbeddedId
 
@@ -62,6 +70,16 @@ public class MenuDepartment  {
 		this.price = price;
 	}
 
+	@Temporal(TemporalType.DATE)
+	@Column(name = "dateCreated", nullable = false, length = 10)
+	public Date getDateCreated() {
+		return this.dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
 	@Column(name = "flags")
 	public Boolean getFlags() {
 		return this.flags;
@@ -70,9 +88,9 @@ public class MenuDepartment  {
 	public void setFlags(Boolean flags) {
 		this.flags = flags;
 	}
+	
 
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "departmentID", nullable = false, insertable = false,  updatable = false)
 	public Department getDepartment() {
 		return department;
@@ -85,13 +103,11 @@ public class MenuDepartment  {
 	}
 
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "foodID", nullable = false, insertable = false,  updatable = false)
 	public Food getFood() {
 		return food;
 	}
-
-
 
 	public void setFood(Food food) {
 		this.food = food;
