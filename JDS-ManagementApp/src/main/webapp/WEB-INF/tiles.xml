@@ -18,6 +18,7 @@
             <add-attribute value="/css/custom.css"></add-attribute>
         </put-list-attribute>
         <put-list-attribute name="headjs">
+            <add-attribute value="/js/angular.min.js"/>
             <add-attribute value="/js/jquery-1.11.1.min.js"/>
             <add-attribute value="/js/angular.min.js"/>
             <add-attribute value="/js/modernizr.custom.js"/>
@@ -34,8 +35,11 @@
       		<add-attribute value="/js/app/DepartmentController.js"/>
       		<add-attribute value="/js/app/CategoryService.js"/>
       		<add-attribute value="/js/app/CategoryController.js"/>
+<<<<<<< HEAD
       		<add-attribute value="/js/app/FoodService.js"/>
       		<add-attribute value="/js/app/FoodController.js"/>
+=======
+>>>>>>> refs/remotes/origin/1412163
       		
         </put-list-attribute>
         
@@ -62,7 +66,11 @@
     
     <definition name="foods" extends="DefaultTemplate">
         <put-attribute name="title" value="Manage Foods"/>
+<<<<<<< HEAD
         <put-attribute name="body" value="/WEB-INF/views/MainBody/Foods.jsp"/>
+=======
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Home.jsp"/>
+>>>>>>> refs/remotes/origin/1412163
     </definition>
     
     

@@ -25,7 +25,11 @@
 					</button>
 				</div>
 				<div class="panel-body">
+<<<<<<< HEAD
 					<form ng-submit="dctrl.submit()" name="saveDepartmentForm">
+=======
+					<form ng-submit="dctrl.submit()">
+>>>>>>> refs/remotes/origin/1412163
 						<div class="row">
 							<div class="col-sm-4">
 								<input type="hidden" ng-model="dctrl.department.departmentId"/>

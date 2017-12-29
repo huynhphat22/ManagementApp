@@ -163,9 +163,12 @@ angular.module('ManagementApp').controller('Categories',
             self.errorMessage = 'Error When Getting Category!';
         });
 
+<<<<<<< HEAD
         $("html , body").animate({
             scrollTop: 0
         }, 300);
+=======
+>>>>>>> refs/remotes/origin/1412163
         self.saveCategory = true;
     }
 }]);

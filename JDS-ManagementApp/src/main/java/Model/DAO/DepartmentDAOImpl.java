@@ -122,6 +122,11 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		
 		totalPages = (count % pageQuery.getSize() != 0) ? (count/pageQuery.getSize()) + 1 : count/pageQuery.getSize();
 		Page page = new Page((Iterable<Department>)criteria.list(), totalPages);
+<<<<<<< HEAD
+=======
+		System.out.println("count : " + count );
+		System.out.println("page : "  + page.getContent());
+>>>>>>> refs/remotes/origin/1412163
 		return page;
 	}
 }

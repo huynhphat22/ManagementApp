@@ -1,5 +1,6 @@
 package RestController;
 
+<<<<<<< HEAD
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -80,5 +81,12 @@ public class RestFoodController {
 		}
 	}
 	
+=======
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class RestFoodController {
+
+>>>>>>> refs/remotes/origin/1412163
 	
 }

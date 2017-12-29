@@ -1,1 +1,4 @@
 /target/
+/JDS-ManagementApp/
+/.gitignore
+/.settings/

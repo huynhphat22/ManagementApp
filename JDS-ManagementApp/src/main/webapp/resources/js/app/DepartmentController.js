@@ -159,6 +159,7 @@ angular.module('ManagementApp').controller('Departments',
         DepartmentService.findById(id)
         .then((response)=>{
             self.department =  response;
+<<<<<<< HEAD
             
         },(errors)=>{
             self.successMessage = '';
@@ -169,6 +170,13 @@ angular.module('ManagementApp').controller('Departments',
             scrollTop: 0
         }, 300);
         
+=======
+        },(errors)=>{
+            self.successMessage = '';
+            self.errorMessage = 'Error When Getting Department!';
+        });
+
+>>>>>>> refs/remotes/origin/1412163
         self.saveDepartment = true;
     }
 }]);
