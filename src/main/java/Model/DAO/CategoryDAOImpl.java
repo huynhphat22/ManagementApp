@@ -23,8 +23,7 @@ import Model.MODEL.PageQuery;
 @Transactional
 @Service
 public class CategoryDAOImpl implements CategoryDAO{
-
-	@Autowired
+//chay lai thu
 	private SessionFactory sessionFactory;
 	
 

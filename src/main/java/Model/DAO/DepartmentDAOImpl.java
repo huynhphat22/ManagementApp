@@ -20,7 +20,7 @@ import Model.MODEL.PageQuery;
 @Service
 public class DepartmentDAOImpl implements DepartmentDAO {
 
-	@Autowired
+
 	private SessionFactory sessionFactory;
 
 	public void setSessionFactory(SessionFactory sessionFactory) {

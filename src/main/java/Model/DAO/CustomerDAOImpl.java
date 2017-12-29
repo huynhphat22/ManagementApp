@@ -22,7 +22,6 @@ import Model.MODEL.PageQuery;
 @Transactional
 public class CustomerDAOImpl implements CustomerDAO{
 
-	@Autowired
 	private SessionFactory sessionFactory;
 	
 
