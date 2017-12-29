@@ -1,6 +1,8 @@
 package Model.DAO;
 
 import Model.DTO.Staff;
+import Model.MODEL.Page;
+import Model.MODEL.PageQuery;
 
 public interface StaffDAO {
 
@@ -12,5 +14,9 @@ public Staff save(Staff staff);
 	
 	public Staff findById(int id);
 	
+	public Staff findByUsername(String username);
+	
 	public Iterable<Staff> findAll();
+	
+	public Page paginateStaff(PageQuery pageQuery);
 }
