@@ -16,9 +16,7 @@ public interface CategoryDAO {
 	
 	public Iterable<Category> findAll();
 	
-	public long count();
-	
-	public Iterable<Category> findByDepartmentId(int departmentId);
+	public Page findByDepartmentId(PageQuery pageQuery, int departmentId);
 	
 	public Page paginateCategory(PageQuery pageQuery);
 }

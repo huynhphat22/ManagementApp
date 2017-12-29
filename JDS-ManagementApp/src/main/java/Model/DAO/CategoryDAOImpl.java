@@ -1,7 +1,8 @@
 package Model.DAO;
 
+import java.util.Date;
+
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import Model.DTO.Category;
 import Model.MODEL.Page;
 import Model.MODEL.PageQuery;
+
+
 
 @Transactional
 @Service
@@ -33,6 +36,8 @@ public class CategoryDAOImpl implements CategoryDAO{
 	public Category save(Category category) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
+		category.setFlags(true);
+		category.setDateCreated(new Date());
 		session.persist(category);
 		return category;
 	}
@@ -51,7 +56,8 @@ public class CategoryDAOImpl implements CategoryDAO{
 		Session session = this.sessionFactory.getCurrentSession();
 		Category category = this.findById(id);
 		if(category != null) {
-			session.delete(category);
+			category.setFlags(false);
+			session.update(category);
 		}
 	}
 
@@ -74,17 +80,9 @@ public class CategoryDAOImpl implements CategoryDAO{
 
 	
 
-	@Override
-	public long count() {
-		// TODO Auto-generated method stub
-		Session session = this.sessionFactory.getCurrentSession();
-		Criteria criteriaCount = session.createCriteria(Category.class);
-		criteriaCount.setProjection(Projections.rowCount());
-		return (long) criteriaCount.uniqueResult();
-	}
+	
 
-	@Override
-	public Iterable<Category> findByDepartmentId(int departmentId) {
+	/*public Iterable<Category> findByDepartmentId(int departmentId) {
 		// TODO Auto-generated method stub
 		
 		Session session = this.sessionFactory.getCurrentSession();
@@ -92,7 +90,7 @@ public class CategoryDAOImpl implements CategoryDAO{
 				+ "INNER JOIN MenuDepartment md ON (f.foodId = md.id.foodId and md.id.departmentId = " + departmentId +  ")";
 		Iterable<Category> list = session.createQuery(hql).list();
 		return list;
-	}
+	}*/
 
 	@Override
 	public Page paginateCategory(PageQuery pageQuery) {
@@ -111,20 +109,21 @@ public class CategoryDAOImpl implements CategoryDAO{
 			System.out.println(pageQuery.getSearchText() +  pageQuery.getSearchBy());
 			Criterion criterion = Restrictions.like(pageQuery.getSearchBy(), pageQuery.getSearchText(), MatchMode.ANYWHERE);
 			criteria.add(criterion);
-			Query query = session.createQuery("SELECT COUNT(*) FROM Category c WHERE c." + pageQuery.getSearchBy()
-					+ " LIKE CONCAT('%',:searchText,'%')");
-			query.setParameter("searchText", pageQuery.getSearchText());
-			count = (long)query.uniqueResult();
-		}
-		else {
-			count = (long)session.createQuery("select count(*) from Category").uniqueResult();
 		}
 		
+		Iterable<Category> list = criteria.list();
+		count = (long) criteria.setProjection(Projections.rowCount()).uniqueResult();
 		totalPages = (count % pageQuery.getSize() != 0) ? (count/pageQuery.getSize()) + 1 : count/pageQuery.getSize();
-		Page page = new Page((Iterable<Category>)criteria.list(), totalPages);
+		Page page = new Page(list , totalPages);
 		System.out.println("count : " + count );
 		System.out.println("page : "  + page.getContent());
 		return page;
+	}
+
+	@Override
+	public Page findByDepartmentId(PageQuery pageQuery, int departmentId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
