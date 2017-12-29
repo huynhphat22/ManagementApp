@@ -65,6 +65,9 @@
         <put-attribute name="body" value="/WEB-INF/views/MainBody/Foods.jsp"/>
     </definition>
     
-    
+    <definition name="reports" extends="DefaultTemplate">
+        <put-attribute name="title" value="Reports"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Reports.jsp"/>
+    </definition>
     
 </tiles-definitions>
