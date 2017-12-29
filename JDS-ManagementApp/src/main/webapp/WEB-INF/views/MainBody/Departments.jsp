@@ -25,12 +25,7 @@
 					</button>
 				</div>
 				<div class="panel-body">
-<<<<<<< HEAD
-<<<<<<< HEAD
 					<form ng-submit="dctrl.submit()" name="saveDepartmentForm">
-=======
-					<form ng-submit="dctrl.submit()">
->>>>>>> refs/remotes/origin/1412163
 						<div class="row">
 							<div class="col-sm-4">
 								<input type="hidden" ng-model="dctrl.department.departmentId"/>
@@ -58,35 +53,6 @@
 							<div class="col-sm-12">
 								<button class="btn btn-info">{{dctrl.department.departmentId ? 'Update' : 'Add'}}</button>
 								<button type="button" ng-click="dctrl.reset()" class="btn btn-warning">Reset</button>
-=======
-					<form ng-submit="dctrl.submit()">
-						<div class="row">
-							<div class="col-sm-4">
-								<input type="hidden" ng-model="dctrl.department.departmentId"/>
-								<div class="form-group">
-									<label>Department Name</label>
-									<input type="text" ng-model="dctrl.department.departmentName" class="form-control" />
-								</div>
-								<div class="form-group">
-									<label>Address</label>
-									<input type="text" ng-model="dctrl.department.address" class="form-control" />
-								</div>
-							</div>
-							<div class="col-sm-4">
-								<div class="form-group">
-									<label>Phone Number</label>
-									<input type="text" ng-model="dctrl.department.phoneNumber" class="form-control" />
-								</div>
-								<div class="form-group">
-									<label>Number Of Table</label>
-									<input type="number" ng-model="dctrl.department.numberOfTable" class="form-control" />
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-12">
-								<button class="btn btn-info">{{dctrl.department.departmentId ? 'Update' : 'Add'}}</button>
->>>>>>> refs/remotes/origin/1412147
 							</div>
 						</div>
 					</form>
