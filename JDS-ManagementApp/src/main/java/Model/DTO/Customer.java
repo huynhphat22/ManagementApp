@@ -15,11 +15,13 @@ import javax.persistence.Table;
 @Table(name = "customer", catalog = "restaurant")
 public class Customer  {
 
-	private Integer custumerId;
+	private Integer customerId;
 	private String customerName;
 	private String address;
 	private String phoneNumber;
+	private String password;
 	private String customerType;
+	private Date dateCreated;
 	private Boolean flags;
 
 	public Customer() {
