@@ -1,13 +1,24 @@
 package Model.DAO;
 
+import java.util.Date;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import Model.DTO.OrderFood;
+import Model.MODEL.Page;
+import Model.MODEL.PageQuery;
 
+@Transactional
 public class OrderFoodDAOImpl implements OrderFoodDAO {
-
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -20,6 +31,8 @@ public class OrderFoodDAOImpl implements OrderFoodDAO {
 	public OrderFood save(OrderFood orderFood) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
+		orderFood.setFlags(true);
+		orderFood.setDateCreated(new Date());
 		session.persist(orderFood);
 		return orderFood;
 	}
@@ -38,7 +51,8 @@ public class OrderFoodDAOImpl implements OrderFoodDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		OrderFood orderFood = this.findById(id);
 		if(orderFood != null) {
-			session.delete(orderFood);
+			orderFood.setFlags(false);
+			session.update(orderFood);
 		}
 	}
 
@@ -57,5 +71,31 @@ public class OrderFoodDAOImpl implements OrderFoodDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		Iterable<OrderFood> list = session.createQuery("from OrderFood").list();
 		return list;
+	}
+
+	@Override
+	public Page paginateOrderFood(PageQuery pageQuery) {
+		// TODO Auto-generated method stub
+		int start = (pageQuery.getPage() - 1) * pageQuery.getSize();
+		long count = 0;
+		long totalPages = 0;
+		Session session = this.sessionFactory.getCurrentSession();
+
+		Criteria criteria = session.createCriteria(OrderFood.class);
+		criteria.setFirstResult(start);
+		criteria.setMaxResults(pageQuery.getSize());
+		criteria.addOrder(pageQuery.isAsc() ? Order.asc(pageQuery.getSortBy()) : Order.desc(pageQuery.getSortBy()));
+		
+		if(pageQuery.getSearchBy() != null && pageQuery.getSearchText() != null) {
+			System.out.println(pageQuery.getSearchText() +  pageQuery.getSearchBy());
+			Criterion criterion = Restrictions.like(pageQuery.getSearchBy(), pageQuery.getSearchText(), MatchMode.ANYWHERE);
+			criteria.add(criterion);
+		}
+		
+		count = (long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+		
+		totalPages = (count % pageQuery.getSize() != 0) ? (count/pageQuery.getSize()) + 1 : count/pageQuery.getSize();
+		Page page = new Page((Iterable<OrderFood>)criteria.list(), totalPages);
+		return page;
 	}
 }
