@@ -11,10 +11,8 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import Model.DTO.Category;
 import Model.DTO.Customer;
 import Model.MODEL.Page;
 import Model.MODEL.PageQuery;
@@ -95,6 +93,7 @@ public class CustomerDAOImpl implements CustomerDAO{
 		Session session = this.sessionFactory.getCurrentSession();
 
 		Criteria criteria = session.createCriteria(Customer.class);
+		Criteria criteriaCount = session.createCriteria(Customer.class);
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(pageQuery.getSize());
 		criteria.addOrder(pageQuery.isAsc() ? Order.asc(pageQuery.getSortBy()) : Order.desc(pageQuery.getSortBy()));
@@ -103,10 +102,11 @@ public class CustomerDAOImpl implements CustomerDAO{
 			System.out.println(pageQuery.getSearchText() +  pageQuery.getSearchBy());
 			Criterion criterion = Restrictions.like(pageQuery.getSearchBy(), pageQuery.getSearchText(), MatchMode.ANYWHERE);
 			criteria.add(criterion);
+			criteriaCount.add(criterion);
 		}
 		
 		Iterable<Customer> list = criteria.list();
-		count = (long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+		count = (long) criteriaCount.setProjection(Projections.rowCount()).uniqueResult();
 		totalPages = (count % pageQuery.getSize() != 0) ? (count/pageQuery.getSize()) + 1 : count/pageQuery.getSize();
 		Page page = new Page(list , totalPages);
 		System.out.println("count : " + count );

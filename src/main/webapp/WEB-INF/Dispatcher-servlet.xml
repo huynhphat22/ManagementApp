@@ -26,7 +26,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
 	
 	<mvc:annotation-driven/>
-    <context:component-scan base-package="Controller , RestController"></context:component-scan>
+    <context:component-scan base-package="Controller , RestController, Service"></context:component-scan>
     
     
     <bean id="viewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"/>

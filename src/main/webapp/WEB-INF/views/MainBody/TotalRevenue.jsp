@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- main content start-->
-<div id="page-wrapper" ng-controller="TotalRevenueController as fctrl" ng-init="init()">
+
+
+<div id="page-wrapper" ng-controller="TotalRevenueController as ctrl" ng-init="init()">
 	<div class="main-page">
 		<h3 class="title1">Report
 				</h3>
@@ -9,7 +11,7 @@
 		<div class="form-three widget-shadow">
 			<form class="form-horizontal">
 				<div class="form-group">
-						<label for="selector1" class="col-sm-2 control-label">Dropdown Select</label>
+						<label for="selector1" class="col-sm-2 control-label">Period type</label>
 						<div class="col-sm-8"><select ng-model="periodType" class="form-control1">
 							<option value="0">Date </option>
 							<option value="1">Week </option>
@@ -24,122 +26,130 @@
 					<div class="form-group" ng-switch-when="0">
 						<label for="dateInput" class="col-sm-2 control-label">Date </label>
 						<div class="col-sm-8">
-							<input type="date" class="form-control1"  ng-model="date" id="dateInput">
+							<input type="date" class="form-control1 required"  ng-model="date" id="dateInput">
 						</div>
 					</div>
 					
 					<div class="form-group" ng-switch-when="1">
 						<label for="weekInput" class="col-sm-2 control-label">Week </label>
 						<div class="col-sm-8">
-							<input type="week" class="form-control1"  ng-model="week" id="weekInput">
+							<input type="week" class="form-control1 required"  ng-model="date" id="weekInput">
 						</div>
 					</div>
 					
 					<div class="form-group" ng-switch-when="2">
 						<label for="monthInput" class="col-sm-2 control-label">Month </label>
 						<div class="col-sm-8">
-							<input type="month" class="form-control1"  ng-model="month" id="monthInput">
+							<input type="month" class="form-control1 required"  ng-model="date" id="monthInput">
 						</div>
 					</div>
 					
 					<div class="form-group" ng-switch-when="3">
 						<label for="quarterInput" class="col-sm-2 control-label">Quarter</label>
-						<input type="week" class="form-control1"  ng-model="quarter" id="quarterInput">
+						<div class="col-sm-8">
+							<input type="number" class="form-control1"  ng-model="quarter" id="quarterInput" min="1" max="4">
+						</div>
 					</div>
 					
 					<div class="form-group" ng-switch-when="4">
-						<label for="yearInput" class="col-sm-2 control-label">Quarter</label>
-						<input type="number" class="form-control1"  ng-model="year" id="yearInput" min="1900" max="2100">
-					</div>
-				</div>
-				
-				<!--
-				<div class="form-group">
-					<label for="disabledinput" class="col-sm-2 control-label">Disabled Input</label>
-					<div class="col-sm-8">
-						<input disabled="" type="text" class="form-control1" id="disabledinput" placeholder="Disabled Input">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="inputPassword" class="col-sm-2 control-label">Password</label>
-					<div class="col-sm-8">
-						<input type="password" class="form-control1" id="inputPassword" placeholder="Password">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="checkbox" class="col-sm-2 control-label">Checkbox</label>
-					<div class="col-sm-8">
-						<div class="checkbox-inline1"><label><input type="checkbox"> Unchecked</label></div>
-						<div class="checkbox-inline1"><label><input type="checkbox" checked=""> Checked</label></div>
-						<div class="checkbox-inline1"><label><input type="checkbox" disabled=""> Disabled Unchecked</label></div>
-						<div class="checkbox-inline1"><label><input type="checkbox" disabled="" checked=""> Disabled Checked</label></div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="checkbox" class="col-sm-2 control-label">Checkbox Inline</label>
-					<div class="col-sm-8">
-						<div class="checkbox-inline"><label><input type="checkbox"> Unchecked</label></div>
-						<div class="checkbox-inline"><label><input type="checkbox" checked=""> Checked</label></div>
-						<div class="checkbox-inline"><label><input type="checkbox" disabled=""> Disabled Unchecked</label></div>
-						<div class="checkbox-inline"><label><input type="checkbox" disabled="" checked=""> Disabled Checked</label></div>
+						<label for="yearInput" class="col-sm-2 control-label">Year</label>
+						<div class="col-sm-8">
+							<input type="number" class="form-control1"  ng-model="year" id="yearInput" min="1900" max="2100">
+						</div>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Multiple Select</label>
-					<div class="col-sm-8">
-						<select multiple="" class="form-control1">
-							<option>Option 1</option>
-							<option>Option 2</option>
-							<option>Option 3</option>
-							<option>Option 4</option>
-							<option>Option 5</option>
-						</select>
-					</div>
+					<button class="btn btn-default" style="float: right;" ng-click="onGetReportClick()">Get report</button>
+					
 				</div>
-				<div class="form-group">
-					<label for="txtarea1" class="col-sm-2 control-label">Textarea</label>
-					<div class="col-sm-8"><textarea name="txtarea1" id="txtarea1" cols="50" rows="4" class="form-control1"></textarea></div>
-				</div>
-				<div class="form-group">
-					<label for="radio" class="col-sm-2 control-label">Radio</label>
-					<div class="col-sm-8">
-						<div class="radio block"><label><input type="radio"> Unchecked</label></div>
-						<div class="radio block"><label><input type="radio" checked=""> Checked</label></div>
-						<div class="radio block"><label><input type="radio" disabled=""> Disabled Unchecked</label></div>
-						<div class="radio block"><label><input type="radio" disabled="" checked=""> Disabled Checked</label></div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="radio" class="col-sm-2 control-label">Radio Inline</label>
-					<div class="col-sm-8">
-						<div class="radio-inline"><label><input type="radio"> Unchecked</label></div>
-						<div class="radio-inline"><label><input type="radio" checked=""> Checked</label></div>
-						<div class="radio-inline"><label><input type="radio" disabled=""> Disabled Unchecked</label></div>
-						<div class="radio-inline"><label><input type="radio" disabled="" checked=""> Disabled Checked</label></div>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="smallinput" class="col-sm-2 control-label label-input-sm">Small Input</label>
-					<div class="col-sm-8">
-						<input type="text" class="form-control1 input-sm" id="smallinput" placeholder="Small Input">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="mediuminput" class="col-sm-2 control-label">Medium Input</label>
-					<div class="col-sm-8">
-						<input type="text" class="form-control1" id="mediuminput" placeholder="Medium Input">
-					</div>
-				</div>
-				<div class="form-group mb-n">
-					<label for="largeinput" class="col-sm-2 control-label label-input-lg">Large Input</label>
-					<div class="col-sm-8">
-						<input type="text" class="form-control1 input-lg" id="largeinput" placeholder="Large Input">
-					</div>
-				</div>
-				  -->
 				
 			</form>
+		</div>
+		
+		<div class="clearfix"></div>
+		
+		<div class="tables" ng-if="showReport && hasData">
+			<h3 class="title1">Report
+			</h3>
+
+			<div class="panel panel-primary" >
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-sm-7">
+							<div class="form-inline">
+								<div class="form-group">
+									<button class="btn btn-default btn-sm" ng-disabled="ctrl.page === 1" ng-click="ctrl.decreasePage();" disabled="disabled">
+										<i class="glyphicon glyphicon-menu-left"></i>
+									</button>
+								</div>
+
+								<div class="form-group">
+									<select ng-change="ctrl.changePage()" ng-options="n for n in ctrl.range(1, ctrl.listFoods.totalPages, 1)" ng-model="ctrl.page" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-not-empty"><option label="1" value="number:1" selected="selected">1</option></select>
+								</div>
+
+
+								<button class="btn btn-default btn-sm ng-binding">1/</button>
+
+
+								<button class="btn btn-default btn-sm" ng-disabled="ctrl.page === ctrl.listFoods.totalPages" ng-click="ctrl.increasePage(ctrl.listFoods)">
+									<i class="glyphicon glyphicon-menu-right"></i>
+								</button>
+
+								<div class="form-group">
+									<label>Records per page : </label>
+									<select ng-change="ctrl.changeRecordsPerPage()" ng-options="n for n in ctrl.range(1, 20, 1)" ng-model="ctrl.size" class="form-control input-sm ng-pristine ng-untouched ng-valid ng-not-empty"><option label="1" value="number:1">1</option><option label="2" value="number:2">2</option><option label="3" value="number:3">3</option><option label="4" value="number:4">4</option><option label="5" value="number:5">5</option><option label="6" value="number:6">6</option><option label="7" value="number:7">7</option><option label="8" value="number:8">8</option><option label="9" value="number:9">9</option><option label="10" value="number:10" selected="selected">10</option><option label="11" value="number:11">11</option><option label="12" value="number:12">12</option><option label="13" value="number:13">13</option><option label="14" value="number:14">14</option><option label="15" value="number:15">15</option><option label="16" value="number:16">16</option><option label="17" value="number:17">17</option><option label="18" value="number:18">18</option><option label="19" value="number:19">19</option><option label="20" value="number:20">20</option></select>
+								</div>
+
+							</div>
+						</div>
+						<div class="col-sm-5">
+							<form name="searchFoodForm" class="form-inline ng-pristine ng-invalid ng-invalid-required">
+								<div class="form-group">
+									<select ng-model="ctrl.searchBy" required="true" class="form-control input-sm ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"><option value="? object:null ?" selected="selected"></option>
+										<option value="foodName">Food Name</option>
+										<option value="address">Address</option>
+									</select>
+								</div>
+								<div class="input-group">
+									<input type="text" placeholder="Search here..." required="" class="form-control input-sm ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-model="ctrl.searchText">
+									<div class="input-group-btn">
+										<button class="btn btn-default btn-sm" ng-click="ctrl.search()" ng-disabled="searchFoodForm.$invalid || searchFoodForm.$pristine" type="submit" disabled="disabled">
+											<i class="glyphicon glyphicon-search"></i>
+										</button>
+									</div>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-default btn-sm" ng-click="ctrl.reload()" type="button">
+										<i class="glyphicon glyphicon-refresh"></i>
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="panel-body">
+					<table class="table table-responsive">
+						<thead>
+							<tr>
+								
+								<th ng-switch="periodType">
+									<span ng-switch-when="0">Hour</span>
+									<span ng-switch-when="1">Weekday</span>
+									<span ng-switch-when="2">Day</span>
+									<span ng-switch-when="3">Month</span>
+									<span ng-switch-when="4">Month</span>
+								</th>
+								<th>Revenue</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- ngRepeat: f in ctrl.listFoods.content -->
+
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -1,5 +1,5 @@
 <!-- Classie -->
-		<script src="js/classie.js"></script>
+		<script src="${pageContext.request.contextPath}/js/classie.js"></script>
 		<script>
 			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
 				showLeftPush = document.getElementById( 'showLeftPush' ),

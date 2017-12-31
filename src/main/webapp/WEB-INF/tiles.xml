@@ -24,6 +24,8 @@
        		<add-attribute value="/js/Chart.js"></add-attribute>
        		<add-attribute value="/js/metisMenu.min.js"/>
       		<add-attribute value="/js/custom.js"/>
+      		<add-attribute value="/js/moment-2.20.1.js"/>
+      		<add-attribute value="/js/angular-moment.js"/>
         </put-list-attribute>
         <put-list-attribute name="js">
         	<add-attribute value="/js/bootstrap.js"/>
@@ -66,8 +68,8 @@
     </definition>
     
     <definition name="totalRevenue" extends="DefaultTemplate">
-        <put-attribute name="title" value="Reports"/>
-        <put-attribute name="body" value="/WEB-INF/views/MainBody/Reports.jsp"/>
+        <put-attribute name="title" value="Total revenue report"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/TotalRevenue.jsp"/>
         <put-list-attribute name="js" inherit="true">
         	<add-attribute value="/js/app/TotalRevenueController.js"/>
         	<add-attribute value="/js/app/TotalRevenueService.js"/>

@@ -4,10 +4,12 @@ import java.util.Date;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import Model.DTO.MonthCost;
 import Model.DTO.MonthCostId;
 
+@Transactional
 public class MonthCostDAOImpl implements MonthCostDAO{
 
 	private SessionFactory sessionFactory;

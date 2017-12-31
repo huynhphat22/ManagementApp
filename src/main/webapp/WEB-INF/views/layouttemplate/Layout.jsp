@@ -42,7 +42,8 @@
 	   <c:forEach items="${jsItems}" var="js">
 	            <script src="<spring:url value="${js}"/>"></script>
        </c:forEach>
+       <p id="contextPath">${pageContext.request.contextPath}</p>
    </div>
+   
 </body>
->>>>>>> refs/heads/1412163
 </html>

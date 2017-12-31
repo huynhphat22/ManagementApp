@@ -9,10 +9,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import Model.DTO.Department;
+import Model.DTO.Food;
 import Model.DTO.RestaurantTable;
 import Model.MODEL.Page;
 import Model.MODEL.PageQuery;
@@ -20,7 +23,6 @@ import Model.MODEL.PageQuery;
 @Transactional
 public class RestaurantTableDAOImpl implements RestaurantTableDAO {
 
-	@Autowired
 	private SessionFactory sessionFactory;
 	
 
@@ -85,6 +87,7 @@ public class RestaurantTableDAOImpl implements RestaurantTableDAO {
 
 		
 		Criteria criteria = session.createCriteria(RestaurantTable.class).add(Restrictions.eq("departmentId", departmentId));
+		Criteria criteriaCount = session.createCriteria(Department.class).add(Restrictions.eq("departmentId", departmentId));
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(pageQuery.getSize());
 		criteria.addOrder(pageQuery.isAsc() ? Order.asc(pageQuery.getSortBy()) : Order.desc(pageQuery.getSortBy()));
@@ -94,22 +97,15 @@ public class RestaurantTableDAOImpl implements RestaurantTableDAO {
 			System.out.println(pageQuery.getSearchText() +  pageQuery.getSearchBy());
 			Criterion criterion = Restrictions.like(pageQuery.getSearchBy(), pageQuery.getSearchText(), MatchMode.ANYWHERE);
 			criteria.add(criterion);
-			Query query = session.createQuery("SELECT COUNT(*) FROM RestaurantTable rt WHERE rt." + pageQuery.getSearchBy()
-					+ " LIKE CONCAT('%',:searchText,'%')" + " AND rt.departmentId = " + departmentId);
-			query.setParameter("searchText", pageQuery.getSearchText());
-			count = (long)query.uniqueResult();
+			criteriaCount.add(criterion);
 		}
-		else {
-			count = (long)session.createQuery("select count(*) from RestaurantTable WHERE departmentId = " + departmentId)
-					.uniqueResult();
-		}
-		System.out.println("zo3 : "  );
+		
+		Iterable<RestaurantTable> list = criteria.list();
+		count = (long) criteriaCount.setProjection(Projections.rowCount()).uniqueResult();
 		totalPages = (count % pageQuery.getSize() != 0) ? (count/pageQuery.getSize()) + 1 : count/pageQuery.getSize();
-		Page page = new Page((Iterable<RestaurantTable>)criteria.list(), totalPages);
+		Page page = new Page(list , totalPages);
 		System.out.println("count : " + count );
 		System.out.println("page : "  + page.getContent());
 		return page;
 	}
-	
-	
 }

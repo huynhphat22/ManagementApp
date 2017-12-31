@@ -13,6 +13,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import Model.DTO.Department;
+import Model.DTO.Food;
 import Model.DTO.OrderFood;
 import Model.MODEL.Page;
 import Model.MODEL.PageQuery;
@@ -82,6 +84,7 @@ public class OrderFoodDAOImpl implements OrderFoodDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 
 		Criteria criteria = session.createCriteria(OrderFood.class);
+		Criteria criteriaCount = session.createCriteria(Department.class);
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(pageQuery.getSize());
 		criteria.addOrder(pageQuery.isAsc() ? Order.asc(pageQuery.getSortBy()) : Order.desc(pageQuery.getSortBy()));
@@ -90,12 +93,15 @@ public class OrderFoodDAOImpl implements OrderFoodDAO {
 			System.out.println(pageQuery.getSearchText() +  pageQuery.getSearchBy());
 			Criterion criterion = Restrictions.like(pageQuery.getSearchBy(), pageQuery.getSearchText(), MatchMode.ANYWHERE);
 			criteria.add(criterion);
+			criteriaCount.add(criterion);
 		}
 		
-		count = (long) criteria.setProjection(Projections.rowCount()).uniqueResult();
-		
+		Iterable<OrderFood> list = criteria.list();
+		count = (long) criteriaCount.setProjection(Projections.rowCount()).uniqueResult();
 		totalPages = (count % pageQuery.getSize() != 0) ? (count/pageQuery.getSize()) + 1 : count/pageQuery.getSize();
-		Page page = new Page((Iterable<OrderFood>)criteria.list(), totalPages);
+		Page page = new Page(list , totalPages);
+		System.out.println("count : " + count );
+		System.out.println("page : "  + page.getContent());
 		return page;
 	}
 }
