@@ -9,7 +9,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import Model.DTO.Department;
@@ -17,7 +16,6 @@ import Model.MODEL.Page;
 import Model.MODEL.PageQuery;
 
 @Transactional
-@Service
 public class DepartmentDAOImpl implements DepartmentDAO {
 
 	@Autowired
@@ -76,21 +74,34 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		int start = (pageQuery.getPage() - 1) * pageQuery.getSize();
 		long count = 0;
 		long totalPages = 0;
+		System.out.println("page : " +pageQuery.getPage());
+		System.out.println("size : " +pageQuery.getSize());
+		System.out.println("sortBy : " +pageQuery.getSortBy());
+		System.out.println("asc : " +pageQuery.isAsc());
 		Session session = this.sessionFactory.getCurrentSession();
 
 		Criteria criteria = session.createCriteria(Department.class);
+		Criteria criteriaCount = session.createCriteria(Department.class);
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(pageQuery.getSize());
 		criteria.addOrder(pageQuery.isAsc() ? Order.asc(pageQuery.getSortBy()) : Order.desc(pageQuery.getSortBy()));
 		
 		if(pageQuery.getSearchBy() != null && pageQuery.getSearchText() != null) {
 			System.out.println(pageQuery.getSearchText() +  pageQuery.getSearchBy());
-			Criterion criterion = Restrictions.like(pageQuery.getSearchBy(), pageQuery.getSearchText(), MatchMode.ANYWHERE);
+			Criterion criterion = null;
+			try{
+				int number = Integer.parseInt(pageQuery.getSearchText());
+				criterion = Restrictions.eq(pageQuery.getSearchBy(), number);
+			}
+			catch(Exception e){
+				criterion = Restrictions.like(pageQuery.getSearchBy(), pageQuery.getSearchText(), MatchMode.ANYWHERE);
+			}
 			criteria.add(criterion);
+			criteriaCount.add(criterion);
 		}
 		
 		Iterable<Department> list = criteria.list();
-		count = (long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+		count = (long) criteriaCount.setProjection(Projections.rowCount()).uniqueResult();
 		totalPages = (count % pageQuery.getSize() != 0) ? (count/pageQuery.getSize()) + 1 : count/pageQuery.getSize();
 		Page page = new Page(list , totalPages);
 		System.out.println("count : " + count );

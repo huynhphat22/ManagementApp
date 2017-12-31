@@ -1,25 +1,25 @@
 'use strict';
 
-angular.module('ManagementApp').controller('Foods', 
-['FoodService','CategoryService', '$scope', function (FoodService, CategoryService , $scope) {
+angular.module('ManagementApp').controller('Staffs', 
+['StaffService','DepartmentService', '$scope', function (StaffService, DepartmentService , $scope) {
 
     var self = this;
 
-    self.listFoods = [];
-    self.listCategories = [];
-    self.food = {};
+    self.listStaffs = [];
+    self.listDepartments = [];
+    self.staff = {};
 
     self.page = 1;
     self.asc = true;
     self.searchText = null;
     self.searchBy = null;
     self.size = 10;
-    self.sortBy = 'foodId'
+    self.sortBy = 'staffId'
 
     self.successMessage = '';
     self.errorMessage = '';
 
-    self.saveFood = false;
+    self.saveStaff = false;
 
     self.edit = edit;
 
@@ -35,8 +35,8 @@ angular.module('ManagementApp').controller('Foods',
     self.changeRecordsPerPage = changeRecordsPerPage;
 
 
-    findAllFoods();
-    findAllCategories();
+    findAllStaffs();
+    findAllDepartments();
 
     function range(min, max, step) {
         step = step || 1;
@@ -54,20 +54,20 @@ angular.module('ManagementApp').controller('Foods',
     }
 
     function increasePage() {
-        self.page = parseInt(self.page) < self.listFoods.totalPages ? parseInt(self.page) + 1 : parseInt(self.page);
+        self.page = parseInt(self.page) < self.listStaffs.totalPages ? parseInt(self.page) + 1 : parseInt(self.page);
         console.log(self.page);
-        findAllFoods();
+        findAllStaffs();
     }
 
     function decreasePage() {
         self.page = parseInt(self.page) > 1 ? parseInt(self.page) - 1 : parseInt(self.page);
-        findAllFoods();
+        findAllStaffs();
     }
 
     function changeRecordsPerPage() {
         self.page = 1;
         console.log(self.size);
-        findAllFoods();
+        findAllStaffs();
     }
 
     function changePage(x) {
@@ -76,46 +76,55 @@ angular.module('ManagementApp').controller('Foods',
             self.sortBy = x;
         }
         console.log("self when change" + self.page);
-        findAllFoods();
+        findAllStaffs();
     }
 
     function search() {
         self.page = 1;
-        $scope.searchFoodForm.$setPristine();
-        findAllFoods();
+        $scope.searchStaffForm.$setPristine();
+        findAllStaffs();
     }
 
     function reload() {
         self.page = 1;
         self.size = 10;
-        self.sortBy = "foodId";
+        self.sortBy = "staffId";
         self.asc = true;
         self.searchText = null;
-        findAllFoods();
+        findAllStaffs();
     }
 
     function reset() {
         self.successMessage = '';
         self.errorMessage = '';
-        self.food = {};
-        $scope.foodForm.$setPristine(); //reset Form
+        self.staff = {};
+        $scope.staffForm.$setPristine(); //reset Form
     }
 
     function submit() {
-    	self.food.image = document.getElementById("input-image").value;
-        console.log('Submitting', self.food);
-        if (self.food.foodId === undefined || self.food.foodId === null) {
-            console.log('Saving New Food', self.food);
-            save(self.food);
+        console.log('Submitting');
+        if (self.staff.staffId === undefined || self.staff.staffId === null) {
+            console.log('Saving New Staff', self.staff);
+            save(self.staff);
         } else {
-            update(self.food);
-            console.log('Food updated with id ', self.food.foodId);
+            update(self.staff);
+            console.log('Staff updated with id ', self.staff.id);
         }
-        $scope.foodForm.$setPristine();
+        $scope.staffForm.$setPristine();
     }
 
+    function findAllDepartments(){
+    	DepartmentService.findAll()
+        .then((response) => {
+            self.listDepartments = response;
+            console.log("listdepartment", self.listDepartments);
+        },
+        (errors) => {
+            console.log("Errors Find All Staff :", errors);
+        });
+    }
 
-    function findAllFoods() {
+    function findAllStaffs() {
         var pageQuery = {
             sortBy : self.sortBy,
             page : self.page,
@@ -124,66 +133,68 @@ angular.module('ManagementApp').controller('Foods',
             searchText : self.searchText,
             size : self.size
         }
-        FoodService.findAllByPagination(pageQuery)
+        StaffService.findAllByPagination(pageQuery)
             .then((response) => {
-                self.listFoods = response;
+                self.listStaffs = response;
             },
             (errors) => {
-                console.log("Errors Find All Food :", errors);
+                console.log("Errors Find All Staff :", errors);
             });
     }
     
-    function findAllCategories() {
-  
-        CategoryService.findAll()
-            .then((response) => {
-                self.listCategories = response;
-            },
-            (errors) => {
-                console.log("Errors Find All Food :", errors);
-            });
-    }
+    
 
-    function save(food){
-        FoodService.save(food)
+    function save(staff){
+        StaffService.save(staff)
         .then((response)=>{
-            self.successMessage = 'Insert Food Successfully!';
+            self.successMessage = 'Insert Staff Successfully!';
             self.errorMessage = '';
-            findAllFoods();
+            findAllStaffs();
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Insert Food!';
+            self.errorMessage = 'Error When Insert Staff!';
         });
     }
 
-    function update(food){
-        FoodService.update(food)
+    function update(staff){
+        StaffService.update(staff)
         .then((response)=>{
-            self.successMessage = 'Update Food Successfully!';
+            self.successMessage = 'Update Staff Successfully!';
             self.errorMessage = '';
-            findAllFoods();
+            findAllStaffs();
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Update Food!';
+            self.errorMessage = 'Error When Update Staff!';
         });
     }
 
     function edit(id){
         console.log("zo");
-        FoodService.findById(id)
+        StaffService.findById(id)
         .then((response)=>{
-            self.food =  response;
-            console.log(self.food);
+            self.staff =  response;
             
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Getting Food!';
+            self.errorMessage = 'Error When Getting Staff!';
         });
         
         $("html , body").animate({
             scrollTop: 0
         }, 300);
         
-        self.saveFood = true;
+        self.saveStaff = true;
     }
+    
+    function resetPassword(id){
+        StaffService.resetPassword(id)
+        .then((response)=>{
+        	self.successMessage = 'Reset Password successfully';
+        	self.errorMessage = '';
+        },(errors)=>{
+            self.successMessage = '';
+            self.errorMessage = 'Error When Getting Staff!';
+        });
+    }
+    
 }]);

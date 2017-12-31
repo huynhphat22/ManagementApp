@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('ManagementApp').controller('Categories', 
-['CategoryService', '$scope', function (CategoryService, $scope) {
+angular.module('ManagementApp').controller('Categories', ['CategoryService', '$scope', function(CategoryService, $scope) {
 
     var self = this;
 
@@ -114,54 +113,55 @@ angular.module('ManagementApp').controller('Categories',
 
     function findAllCategories() {
         var pageQuery = {
-            sortBy : self.sortBy,
-            page : self.page,
-            asc : self.asc,
-            searchBy : self.searchBy,
-            searchText : self.searchText,
-            size : self.size
+            sortBy: self.sortBy,
+            page: self.page,
+            asc: self.asc,
+            searchBy: self.searchBy,
+            searchText: self.searchText,
+            size: self.size
         }
         CategoryService.findAllByPagination(pageQuery)
             .then((response) => {
-                self.listCategories = response;
-            },
-            (errors) => {
-                console.log("Errors Find All Category :", errors);
+                    self.listCategories = response;
+                    console.log("selfCategory : ", self.listCategories);
+                },
+                (errors) => {
+                    console.log("Errors Find All Category :", errors);
+                });
+    }
+
+    function save(category) {
+        CategoryService.save(category)
+            .then((response) => {
+                self.successMessage = 'Insert Category Successfully!';
+                self.errorMessage = '';
+                findAllCategories();
+            }, (errors) => {
+                self.successMessage = '';
+                self.errorMessage = 'Error When Insert Category!';
             });
     }
 
-    function save(category){
-        CategoryService.save(category)
-        .then((response)=>{
-            self.successMessage = 'Insert Category Successfully!';
-            self.errorMessage = '';
-            findAllCategories();
-        },(errors)=>{
-            self.successMessage = '';
-            self.errorMessage = 'Error When Insert Category!';
-        });
-    }
-
-    function update(category){
+    function update(category) {
         CategoryService.update(category)
-        .then((response)=>{
-            self.successMessage = 'Update Category Successfully!';
-            self.errorMessage = '';
-            findAllCategories();
-        },(errors)=>{
-            self.successMessage = '';
-            self.errorMessage = 'Error When Update Category!';
-        });
+            .then((response) => {
+                self.successMessage = 'Update Category Successfully!';
+                self.errorMessage = '';
+                findAllCategories();
+            }, (errors) => {
+                self.successMessage = '';
+                self.errorMessage = 'Error When Update Category!';
+            });
     }
 
-    function edit(id){
+    function edit(id) {
         CategoryService.findById(id)
-        .then((response)=>{
-            self.category =  response;
-        },(errors)=>{
-            self.successMessage = '';
-            self.errorMessage = 'Error When Getting Category!';
-        });
+            .then((response) => {
+                self.category = response;
+            }, (errors) => {
+                self.successMessage = '';
+                self.errorMessage = 'Error When Getting Category!';
+            });
 
         $("html , body").animate({
             scrollTop: 0

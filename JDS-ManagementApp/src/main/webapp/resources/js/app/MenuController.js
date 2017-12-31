@@ -1,26 +1,26 @@
 'use strict';
 
-angular.module('ManagementApp').controller('Foods', 
-['FoodService','CategoryService', '$scope', function (FoodService, CategoryService , $scope) {
+angular.module('ManagementApp').controller('Menus', 
+['MenuService', '$scope', function (MenuService, $scope) {
 
     var self = this;
 
-    self.listFoods = [];
-    self.listCategories = [];
-    self.food = {};
-
+    self.listMenus = [];
+    self.menu = {};
+   
+    
     self.page = 1;
     self.asc = true;
     self.searchText = null;
     self.searchBy = null;
     self.size = 10;
-    self.sortBy = 'foodId'
+    self.sortBy = 'id.departmentId'
 
     self.successMessage = '';
     self.errorMessage = '';
 
-    self.saveFood = false;
-
+    self.saveMenu = false;
+    self.isUpdate = false;
     self.edit = edit;
 
     self.range = range;
@@ -33,10 +33,12 @@ angular.module('ManagementApp').controller('Foods',
     self.reset = reset;
     self.submit = submit;
     self.changeRecordsPerPage = changeRecordsPerPage;
+    
+    const url = new URL(window.location.href);
+    
+    self.departmentId = url.searchParams.get("deptId");
 
-
-    findAllFoods();
-    findAllCategories();
+    findAllMenus();
 
     function range(min, max, step) {
         step = step || 1;
@@ -54,20 +56,20 @@ angular.module('ManagementApp').controller('Foods',
     }
 
     function increasePage() {
-        self.page = parseInt(self.page) < self.listFoods.totalPages ? parseInt(self.page) + 1 : parseInt(self.page);
+        self.page = parseInt(self.page) < self.listMenus.totalPages ? parseInt(self.page) + 1 : parseInt(self.page);
         console.log(self.page);
-        findAllFoods();
+        findAllMenus();
     }
 
     function decreasePage() {
         self.page = parseInt(self.page) > 1 ? parseInt(self.page) - 1 : parseInt(self.page);
-        findAllFoods();
+        findAllMenus();
     }
 
     function changeRecordsPerPage() {
         self.page = 1;
         console.log(self.size);
-        findAllFoods();
+        findAllMenus();
     }
 
     function changePage(x) {
@@ -76,46 +78,51 @@ angular.module('ManagementApp').controller('Foods',
             self.sortBy = x;
         }
         console.log("self when change" + self.page);
-        findAllFoods();
+        findAllMenus();
     }
 
     function search() {
         self.page = 1;
-        $scope.searchFoodForm.$setPristine();
-        findAllFoods();
+        $scope.searchMenuForm.$setPristine();
+        findAllMenus();
     }
 
     function reload() {
         self.page = 1;
         self.size = 10;
-        self.sortBy = "foodId";
+        self.sortBy = "menuId";
         self.asc = true;
         self.searchText = null;
-        findAllFoods();
+        findAllMenus();
     }
 
     function reset() {
         self.successMessage = '';
         self.errorMessage = '';
-        self.food = {};
-        $scope.foodForm.$setPristine(); //reset Form
+        self.isUpdate = false;
+        self.menu = {};
+        self.menu.id.departmentId = document.getElementById("deptId").value;
+        $scope.menuForm.$setPristine(); //reset Form
     }
 
     function submit() {
-    	self.food.image = document.getElementById("input-image").value;
-        console.log('Submitting', self.food);
-        if (self.food.foodId === undefined || self.food.foodId === null) {
-            console.log('Saving New Food', self.food);
-            save(self.food);
+    	self.menu.id.departmentId = document.getElementById("deptId").value;
+        console.log('Submitting');
+        if (!self.isUpdate) {
+            console.log('Saving New Menu', self.menu);
+            save(self.menu);
         } else {
-            update(self.food);
-            console.log('Food updated with id ', self.food.foodId);
+            update(self.menu);
+            console.log('Menu updated with id ', self.menu.id);
         }
-        $scope.foodForm.$setPristine();
+        $scope.menuForm.$setPristine();
     }
 
 
-    function findAllFoods() {
+    function findAllMenus() {
+    	if(!self.departmentId){
+    		return;
+    	}
         var pageQuery = {
             sortBy : self.sortBy,
             page : self.page,
@@ -124,66 +131,62 @@ angular.module('ManagementApp').controller('Foods',
             searchText : self.searchText,
             size : self.size
         }
-        FoodService.findAllByPagination(pageQuery)
+        
+        MenuService.findAllByPagination(pageQuery, self.departmentId)
             .then((response) => {
-                self.listFoods = response;
+                self.listMenus = response;
             },
             (errors) => {
-                console.log("Errors Find All Food :", errors);
-            });
-    }
-    
-    function findAllCategories() {
-  
-        CategoryService.findAll()
-            .then((response) => {
-                self.listCategories = response;
-            },
-            (errors) => {
-                console.log("Errors Find All Food :", errors);
+                console.log("Errors Find All Menu :", errors);
             });
     }
 
-    function save(food){
-        FoodService.save(food)
+    function save(menu){
+        MenuService.save(menu)
         .then((response)=>{
-            self.successMessage = 'Insert Food Successfully!';
+            self.successMessage = 'Insert Menu Successfully!';
             self.errorMessage = '';
-            findAllFoods();
+            findAllMenus();
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Insert Food!';
+            self.errorMessage = 'Error When Insert Menu!';
         });
     }
 
-    function update(food){
-        FoodService.update(food)
+    function update(menu){
+        MenuService.update(menu)
         .then((response)=>{
-            self.successMessage = 'Update Food Successfully!';
+            self.successMessage = 'Update Menu Successfully!';
             self.errorMessage = '';
-            findAllFoods();
+            findAllMenus();
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Update Food!';
+            self.errorMessage = 'Error When Update Menu!';
         });
     }
 
-    function edit(id){
+    function edit(foodId, departmentId){
         console.log("zo");
-        FoodService.findById(id)
+        const id = {
+        		foodId : foodId,
+        		departmentId : departmentId
+        };
+        console.log("id" ,id);
+        MenuService.findById(id)
         .then((response)=>{
-            self.food =  response;
-            console.log(self.food);
+            self.menu =  response;
+            console.log("meni",self.menu);
+            self.isUpdate = true;
             
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Getting Food!';
+            self.errorMessage = 'Error When Getting Menu!';
         });
         
         $("html , body").animate({
             scrollTop: 0
         }, 300);
         
-        self.saveFood = true;
+        self.saveMenu = true;
     }
 }]);

@@ -8,24 +8,24 @@
 				<button ng-hide="fctrl.saveFood" class="btn btn-info" ng-click="fctrl.saveFood = true">Add Food</button>
 			</h3>
 
-			<div class="alert alert-success" ng-show="fctrl.successMessage">
+			<div class="alert alert-success" ng-cloak ng-show="fctrl.successMessage">
 				<strong>Success!</strong> {{fctrl.successMessage}}
 			</div>
 
-			<div class="alert alert-danger" ng-show="fctrl.errorMessage">
+			<div class="alert alert-danger" ng-cloak ng-show="fctrl.errorMessage">
 				<strong>Error!</strong> {{fctrl.errorMessage}}.
 			</div>
 
 
-			<div class="panel panel-primary" ng-show="fctrl.saveFood">
+			<div class="panel panel-primary" ng-cloak ng-show="fctrl.saveFood">
 				<div class="panel-heading">
-					<strong>{{fctrl.food.foodId ? 'Update' : 'Add'}} Food</strong>
+					<strong ng-cloak>{{fctrl.food.foodId ? 'Update' : 'Add'}} Food</strong>
 					<button ng-click="fctrl.saveFood = false" class="toggle-hide btn btn-default">
 						<i class="glyphicon glyphicon-minus"></i>
 					</button>
 				</div>
 				<div class="panel-body">
-					<form ng-submit="fctrl.submit()" name="saveFoodForm">
+					<form ng-submit="fctrl.submit()" name="foodForm">
 						<div class="row">
 							<div class="col-sm-4">
 								<input type="hidden" ng-model="fctrl.food.foodId"/>
@@ -34,24 +34,27 @@
 									<input type="text" ng-model="fctrl.food.foodName" class="form-control" />
 								</div>
 								<div class="form-group">
-									<label>Address</label>
-									<input type="text" ng-model="fctrl.food.address" class="form-control" />
+									<label>Category</label>
+									<select class="form-control" 
+									ng-model="fctrl.food.category.categoryId"
+									ng-options="cat.categoryId as cat.categoryName for cat in fctrl.listCategories"
+									ng-required = "true">
+									
+									</select>
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="form-group">
-									<label>Phone Number</label>
-									<input type="text" ng-model="fctrl.food.phoneNumber" class="form-control" />
-								</div>
-								<div class="form-group">
-									<label>Number Of Table</label>
-									<input type="number" ng-model="fctrl.food.numberOfTable" class="form-control" />
+									<label>Image</label>
+									<img src="{{fctrl.food.image}}" id="img-preview" width="200" />
+									<input id="input-image" type="hidden" ng-model="fctrl.food.image"/>
+									<input class="form-control btn btn-default" id="file-upload" type="file"/>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<button class="btn btn-info">{{fctrl.food.foodId ? 'Update' : 'Add'}}</button>
+								<button class="btn btn-info" ng-cloak>{{fctrl.food.foodId ? 'Update' : 'Add'}}</button>
 								<button type="button" ng-click="fctrl.reset()" class="btn btn-warning">Reset</button>
 							</div>
 						</div>
@@ -77,7 +80,7 @@
 								</div>
 
 
-								<button class="btn btn-default btn-sm">{{fctrl.page}}/{{fctrl.listFoods.totalPages}}</button>
+								<button class="btn btn-default btn-sm" ng-cloak>{{fctrl.page}}/{{fctrl.listFoods.totalPages}}</button>
 
 
 								<button class="btn btn-default btn-sm" ng-disabled="fctrl.page === fctrl.listFoods.totalPages" ng-click="fctrl.increasePage(fctrl.listFoods)">
@@ -96,6 +99,7 @@
 							<form name="searchFoodForm" class="form-inline">
 								<div class="form-group">
 									<select ng-model="fctrl.searchBy" required="true" class="form-control input-sm">
+										<option value="foodId">Food Id</option>
 										<option value="foodName">Food Name</option>
 										<option value="address">Address</option>
 									</select>
@@ -126,19 +130,18 @@
 								<th>Id</th>
 								<th>Name</th>
 								<th>Category</th>
-								<th>Image</th>
-								
+								<th>Image</th>								
 								<th>Flags</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="f in fctrl.listFoods.content">
+							<tr ng-cloak ng-repeat="f in fctrl.listFoods.content">
 								<th scope="row">{{fctrl.indexOrder($index)}}</th>
 								<td>{{f.foodId}}</td>
 								<td>{{f.foodName}}</td>
-								<td>{{f.address}}</td>
-								<td><img alt="" src="/images/{{f.image}}"></td>
+								<td>{{f.category.categoryName}}</td>
+								<td><img alt="" width="100" src="{{f.image}}"></td>
 								<td>{{f.flags}}</td>
 								<td>
 									<a ng-click="fctrl.edit(f.foodId)" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i></a>
@@ -152,3 +155,35 @@
 		</div>
 	</div>
 </div>
+<script>
+
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/duythao56/image/upload';
+const CLOUDINARY_UPLOAD_PRESET = 'vpk2kcau';
+
+var imgPreview = document.getElementById('img-preview');
+var fileUpload = document.getElementById('file-upload');
+var inputImage = document.getElementById('input-image');
+fileUpload.addEventListener('change', function(event){
+    var file = event.target.files[0];
+    console.log
+    var formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    axios({
+        url: CLOUDINARY_URL,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: formData
+    })
+    .then(function(response){
+        console.log(response.data.secure_url);
+        imgPreview.src = response.data.secure_url;
+        inputImage.value = response.data.secure_url;
+    })
+    .catch(function(error){
+        console.log(error);
+    });
+});
+</script>

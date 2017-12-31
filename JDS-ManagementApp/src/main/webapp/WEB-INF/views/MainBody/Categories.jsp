@@ -8,18 +8,18 @@
 				<button ng-hide="cctrl.saveCategory" class="btn btn-info" ng-click="cctrl.saveCategory = true">Add Category</button>
 			</h3>
 
-			<div class="alert alert-success" ng-show="cctrl.successMessage">
-				<strong>Success!</strong> {{cctrl.successMessage}}
+			<div class="alert alert-success" ng-cloak ng-show="cctrl.successMessage">
+				<strong>Success!</strong> <p ng-bind="cctrl.successMessage"></p>
 			</div>
 
-			<div class="alert alert-danger" ng-show="cctrl.errorMessage">
-				<strong>Error!</strong> {{cctrl.errorMessage}}.
+			<div class="alert alert-danger" ng-cloak ng-show="cctrl.errorMessage">
+				<strong>Error!</strong> <p ng-bind="cctrl.errorMessage"></p>
 			</div>
 
 
-			<div class="panel panel-primary" ng-show="cctrl.saveCategory">
+			<div class="panel panel-primary" ng-cloak ng-show="cctrl.saveCategory">
 				<div class="panel-heading">
-					<strong>{{cctrl.category.categoryId ? 'Update' : 'Add'}} Category</strong>
+					<strong ng-cloak>{{cctrl.category.categoryId ? 'Update' : 'Add'}} Category</strong>
 					<button ng-click="cctrl.saveCategory = false" class="toggle-hide btn btn-default">
 						<i class="glyphicon glyphicon-minus"></i>
 					</button>
@@ -63,7 +63,7 @@
 								</div>
 
 
-								<button class="btn btn-default btn-sm">{{cctrl.page}}/{{cctrl.listCategories.totalPages}}</button>
+								<button class="btn btn-default btn-sm" ng-cloak>{{cctrl.page}}/{{cctrl.listCategories.totalPages}}</button>
 
 
 								<button class="btn btn-default btn-sm" ng-disabled="cctrl.page === cctrl.listCategories.totalPages" ng-click="cctrl.increasePage(cctrl.listCategories)">
@@ -82,7 +82,7 @@
 							<form name="searchCategoryForm" class="form-inline">
 								<div class="form-group">
 									<select ng-model="cctrl.searchBy" required="true" class="form-control input-sm">
-										<option value="categoryId">Id</option>
+										<option value="categoryId">Category Id</option>
 										<option value="categoryName">Category Name</option>
 									</select>
 								</div>
@@ -117,10 +117,10 @@
 						</thead>
 						<tbody>
 							<tr ng-repeat="c in cctrl.listCategories.content">
-								<th scope="row">{{cctrl.indexOrder($index)}}</th>
-								<td>{{c.categoryId}}</td>
-								<td>{{c.categoryName}}</td>
-								<td>{{c.flags}}</td>
+								<th scope="row" ng-bind="cctrl.indexOrder($index)"></th>
+								<td ng-bind="c.categoryId"></td>
+								<td ng-bind="c.categoryName"></td>
+								<td ng-bind="c.flags"></td>
 								<td>
 									<a ng-click="cctrl.edit(c.categoryId)" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i></a>
 								</td>

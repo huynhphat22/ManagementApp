@@ -23,6 +23,7 @@
             <add-attribute value="/js/modernizr.custom.js"/>
        		<add-attribute value="/js/Chart.js"></add-attribute>
        		<add-attribute value="/js/metisMenu.min.js"/>
+       		<add-attribute value="/js/axios.min.js"/>
       		<add-attribute value="/js/custom.js"/>
         </put-list-attribute>
         <put-list-attribute name="js">
@@ -36,15 +37,22 @@
       		<add-attribute value="/js/app/CategoryController.js"/>
       		<add-attribute value="/js/app/FoodService.js"/>
       		<add-attribute value="/js/app/FoodController.js"/>
-      		
+      		<add-attribute value="/js/app/MenuService.js"/>
+      		<add-attribute value="/js/app/MenuController.js"/>
+      		<add-attribute value="/js/app/TableService.js"/>
+      		<add-attribute value="/js/app/TableController.js"/>
+      		<add-attribute value="/js/app/StaffService.js"/>
+      		<add-attribute value="/js/app/StaffController.js"/>
+      		<add-attribute value="/js/app/ProfileController.js"/>
         </put-list-attribute>
         
         <put-list-attribute name="fonts">
             <add-attribute value="/fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic"/>
         </put-list-attribute>
         
+        
     </definition>
-    
+    <definition name="LoginTemplate" template="/WEB-INF/views/layouttemplate/Login.jsp" ></definition>
     <definition name="home" extends="DefaultTemplate">
         <put-attribute name="title" value="Home"/>
         <put-attribute name="body" value="/WEB-INF/views/MainBody/Home.jsp"/>
@@ -63,6 +71,29 @@
     <definition name="foods" extends="DefaultTemplate">
         <put-attribute name="title" value="Manage Foods"/>
         <put-attribute name="body" value="/WEB-INF/views/MainBody/Foods.jsp"/>
+    </definition>
+    
+    <definition name="menu" extends="DefaultTemplate">
+        <put-attribute name="title" value="Menu"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Menu.jsp"/>
+    </definition>
+    
+    <definition name="tables" extends="DefaultTemplate">
+        <put-attribute name="title" value="Tables"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Tables.jsp"/>
+    </definition>
+    
+     <definition name="staffs" extends="DefaultTemplate">
+        <put-attribute name="title" value="Staffs"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Staffs.jsp"/>
+    </definition>
+    
+     <definition name="profile" extends="DefaultTemplate">
+        <put-attribute name="title" value="Profile"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Profile.jsp"/>
+    </definition>
+    
+     <definition name="login" extends="LoginTemplate">
     </definition>
     
     

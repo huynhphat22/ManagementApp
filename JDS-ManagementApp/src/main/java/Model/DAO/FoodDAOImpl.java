@@ -10,7 +10,6 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import Model.DTO.Food;
@@ -19,7 +18,6 @@ import Model.MODEL.PageQuery;
 
 @Transactional
 public class FoodDAOImpl implements FoodDAO {
-	@Autowired
 	private SessionFactory sessionFactory;
 	
 
@@ -82,18 +80,26 @@ public class FoodDAOImpl implements FoodDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 
 		Criteria criteria = session.createCriteria(Food.class);
+		Criteria criteriaCount = session.createCriteria(Food.class);
 		criteria.setFirstResult(start);
 		criteria.setMaxResults(pageQuery.getSize());
 		criteria.addOrder(pageQuery.isAsc() ? Order.asc(pageQuery.getSortBy()) : Order.desc(pageQuery.getSortBy()));
 		
 		if(pageQuery.getSearchBy() != null && pageQuery.getSearchText() != null) {
 			System.out.println(pageQuery.getSearchText() +  pageQuery.getSearchBy());
-			Criterion criterion = Restrictions.like(pageQuery.getSearchBy(), pageQuery.getSearchText(), MatchMode.ANYWHERE);
+			Criterion criterion = null;
+			try{
+				int number = Integer.parseInt(pageQuery.getSearchText());
+				criterion = Restrictions.eq(pageQuery.getSearchBy(), number);
+			}
+			catch(Exception e){
+				criterion = Restrictions.like(pageQuery.getSearchBy(), pageQuery.getSearchText(), MatchMode.ANYWHERE);
+			}
 			criteria.add(criterion);
+			criteriaCount.add(criterion);
 		}
-		
 		Iterable<Food> list = criteria.list();
-		count = (long) criteria.setProjection(Projections.rowCount()).uniqueResult();
+		count = (long) criteriaCount.setProjection(Projections.rowCount()).uniqueResult();
 		totalPages = (count % pageQuery.getSize() != 0) ? (count/pageQuery.getSize()) + 1 : count/pageQuery.getSize();
 		Page page = new Page(list , totalPages);
 		System.out.println("count : " + count );

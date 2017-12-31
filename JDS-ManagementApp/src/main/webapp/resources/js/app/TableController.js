@@ -1,25 +1,24 @@
 'use strict';
 
-angular.module('ManagementApp').controller('Foods', 
-['FoodService','CategoryService', '$scope', function (FoodService, CategoryService , $scope) {
+angular.module('ManagementApp').controller('Tables', 
+['TableService', '$scope', function (TableService, $scope) {
 
     var self = this;
 
-    self.listFoods = [];
-    self.listCategories = [];
-    self.food = {};
+    self.listTables = [];
+    self.table = {};
 
     self.page = 1;
     self.asc = true;
     self.searchText = null;
     self.searchBy = null;
     self.size = 10;
-    self.sortBy = 'foodId'
+    self.sortBy = 'tableId'
 
     self.successMessage = '';
     self.errorMessage = '';
 
-    self.saveFood = false;
+    self.saveTable = false;
 
     self.edit = edit;
 
@@ -33,10 +32,12 @@ angular.module('ManagementApp').controller('Foods',
     self.reset = reset;
     self.submit = submit;
     self.changeRecordsPerPage = changeRecordsPerPage;
+    const url = new URL(window.location.href);
+    
+    self.departmentId = url.searchParams.get("deptId");
 
 
-    findAllFoods();
-    findAllCategories();
+    findAllTables();
 
     function range(min, max, step) {
         step = step || 1;
@@ -54,20 +55,20 @@ angular.module('ManagementApp').controller('Foods',
     }
 
     function increasePage() {
-        self.page = parseInt(self.page) < self.listFoods.totalPages ? parseInt(self.page) + 1 : parseInt(self.page);
+        self.page = parseInt(self.page) < self.listTables.totalPages ? parseInt(self.page) + 1 : parseInt(self.page);
         console.log(self.page);
-        findAllFoods();
+        findAllTables();
     }
 
     function decreasePage() {
         self.page = parseInt(self.page) > 1 ? parseInt(self.page) - 1 : parseInt(self.page);
-        findAllFoods();
+        findAllTables();
     }
 
     function changeRecordsPerPage() {
         self.page = 1;
         console.log(self.size);
-        findAllFoods();
+        findAllTables();
     }
 
     function changePage(x) {
@@ -76,46 +77,45 @@ angular.module('ManagementApp').controller('Foods',
             self.sortBy = x;
         }
         console.log("self when change" + self.page);
-        findAllFoods();
+        findAllTables();
     }
 
     function search() {
         self.page = 1;
-        $scope.searchFoodForm.$setPristine();
-        findAllFoods();
+        $scope.searchTableForm.$setPristine();
+        findAllTables();
     }
 
     function reload() {
         self.page = 1;
         self.size = 10;
-        self.sortBy = "foodId";
+        self.sortBy = "tableId";
         self.asc = true;
         self.searchText = null;
-        findAllFoods();
+        findAllTables();
     }
 
     function reset() {
         self.successMessage = '';
         self.errorMessage = '';
-        self.food = {};
-        $scope.foodForm.$setPristine(); //reset Form
+        self.table = {};
+        $scope.saveTableForm.$setPristine(); //reset Form
     }
 
     function submit() {
-    	self.food.image = document.getElementById("input-image").value;
-        console.log('Submitting', self.food);
-        if (self.food.foodId === undefined || self.food.foodId === null) {
-            console.log('Saving New Food', self.food);
-            save(self.food);
+        console.log('Submitting');
+        if (self.table.tableId === undefined || self.table.tableId === null) {
+            console.log('Saving New Table', self.table);
+            save(self.table);
         } else {
-            update(self.food);
-            console.log('Food updated with id ', self.food.foodId);
+            update(self.table);
+            console.log('Table updated with id ', self.table.id);
         }
-        $scope.foodForm.$setPristine();
+        $scope.saveTableForm.$setPristine();
     }
 
 
-    function findAllFoods() {
+    function findAllTables() {
         var pageQuery = {
             sortBy : self.sortBy,
             page : self.page,
@@ -124,66 +124,54 @@ angular.module('ManagementApp').controller('Foods',
             searchText : self.searchText,
             size : self.size
         }
-        FoodService.findAllByPagination(pageQuery)
+        TableService.findAllByPagination(pageQuery, self.departmentId)
             .then((response) => {
-                self.listFoods = response;
+                self.listTables = response;
             },
             (errors) => {
-                console.log("Errors Find All Food :", errors);
-            });
-    }
-    
-    function findAllCategories() {
-  
-        CategoryService.findAll()
-            .then((response) => {
-                self.listCategories = response;
-            },
-            (errors) => {
-                console.log("Errors Find All Food :", errors);
+                console.log("Errors Find All Table :", errors);
             });
     }
 
-    function save(food){
-        FoodService.save(food)
+    function save(table){
+        TableService.save(table)
         .then((response)=>{
-            self.successMessage = 'Insert Food Successfully!';
+            self.successMessage = 'Insert Table Successfully!';
             self.errorMessage = '';
-            findAllFoods();
+            findAllTables();
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Insert Food!';
+            self.errorMessage = 'Error When Insert Table!';
         });
     }
 
-    function update(food){
-        FoodService.update(food)
+    function update(table){
+        TableService.update(table)
         .then((response)=>{
-            self.successMessage = 'Update Food Successfully!';
+            self.successMessage = 'Update Table Successfully!';
             self.errorMessage = '';
-            findAllFoods();
+            findAllTables();
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Update Food!';
+            self.errorMessage = 'Error When Update Table!';
         });
     }
 
     function edit(id){
-        console.log("zo");
-        FoodService.findById(id)
+        console.log("zo : " + id);
+        TableService.findById(id)
         .then((response)=>{
-            self.food =  response;
-            console.log(self.food);
+            self.table =  response;
             
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Getting Food!';
+            self.errorMessage = 'Error When Getting Table!';
         });
         
         $("html , body").animate({
             scrollTop: 0
         }, 300);
         
-        self.saveFood = true;
+        self.saveTable = true;
     }
 }]);

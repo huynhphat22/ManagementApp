@@ -4,10 +4,12 @@ import java.util.Date;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import Model.DTO.DateRevenue;
 import Model.DTO.DateRevenueId;
 
+@Transactional
 public class DateRevenueDAOImpl implements DateRevenueDAO{
 
 	private SessionFactory sessionFactory;

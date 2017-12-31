@@ -7,13 +7,22 @@
 							<a href="index.html" class="active"><i class="fa fa-home nav_icon"></i>Dashboard</a>
 						</li>
 						<li>
-							<a href="#"><i class="fa fa-cogs nav_icon"></i>Components <span class="nav-badge">12</span> <span class="fa arrow"></span></a>
+							<a href="#"><i class="fa fa-cogs nav_icon"></i>Management <span class="nav-badge">12</span> <span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level collapse">
 								<li>
-									<a href="grids.html">Grid System</a>
+									<a href="${pageContext.request.contextPath}/Departments">Manage Department</a>
 								</li>
 								<li>
-									<a href="media.html">Media Objects</a>
+									<a href="${pageContext.request.contextPath}/Categories">Manage Categories</a>
+								</li>
+								<li>
+									<a href="${pageContext.request.contextPath}/Foods">Manage Foods</a>
+								</li>
+								<li>
+									<a href="${pageContext.request.contextPath}/Staffs">Manage Staff</a>
+								</li>
+								<li>
+									<a href="${pageContext.request.contextPath}/Profile">Profile</a>
 								</li>
 							</ul>
 							<!-- /nav-second-level -->

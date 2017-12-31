@@ -121,6 +121,7 @@ angular.module('ManagementApp').controller('Departments',
             searchText : self.searchText,
             size : self.size
         }
+        console.log("pageQuery", pageQuery);
         DepartmentService.findAllByPagination(pageQuery)
             .then((response) => {
                 self.listDepartments = response;

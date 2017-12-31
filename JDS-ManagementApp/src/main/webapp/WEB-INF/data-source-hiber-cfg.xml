@@ -34,7 +34,6 @@
 				<value>Model.DTO.MonthCost</value>
 				<value>Model.DTO.OrderDetail</value>
 				<value>Model.DTO.OrderFood</value>
-				<value>Model.DTO.Payment</value>
 				<value>Model.DTO.RestaurantTable</value>
 				<value>Model.DTO.Staff</value>
 			</list>
@@ -68,6 +67,17 @@
 	
 	<bean id="menuDepartmentDAO" class="Model.DAO.MenuDepartmentDAOImpl">
 		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	<bean id="restaurantTableDAO" class="Model.DAO.RestaurantTableDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	<bean id="staffDAO" class="Model.DAO.StaffDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	
+	<bean id="staffDetailsService" class="Service.StaffDetailsService">
+		<property name="staffDAO" ref="staffDAO" />
 	</bean>
 	<!-- Transaction AOP -->
 	<tx:annotation-driven proxy-target-class="true" transaction-manager="txManager" />
