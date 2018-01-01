@@ -70,16 +70,15 @@
 		<property name="sessionFactory" ref="mySessionFactory" />
 	</bean>
 	
-	<bean id="reportService" class="Service.ReportService">
-		<property name="sessionFactory" ref="mySessionFactory" />
+	<bean id="dateRevenueDAO" class="Model.DAO.DateRevenueDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory"></property>
 	</bean>
 	<!-- Transaction AOP -->
-	<tx:annotation-driven transaction-manager="txManager" />
+	<tx:annotation-driven transaction-manager="txManager" mode="proxy" proxy-target-class="true"/>
 
 	<bean id="txManager"
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
 		<constructor-arg name="sessionFactory" ref="mySessionFactory"/>
-		
 	</bean>
 	
 	

@@ -28,14 +28,14 @@ public class DateRevenue {
 	public DateRevenue() {
 	}
 
-	public DateRevenue(DateRevenueId id, long price, Date dateCreated) {
+	public DateRevenue(DateRevenueId id, long price, Date dateCreated, Date dateOfRevenue) {
 		this.id = id;
 		this.price = price;
 		this.dateCreated = dateCreated;
 	}
 
 	public DateRevenue(DateRevenueId id, String typeOfRevenue, long price, String note, Date dateCreated,
-			Boolean flags) {
+			Boolean flags, Date dateOfRevenue) {
 		this.id = id;
 		this.typeOfRevenue = typeOfRevenue;
 		this.price = price;
@@ -102,5 +102,6 @@ public class DateRevenue {
 	public void setFlags(Boolean flags) {
 		this.flags = flags;
 	}
+
 
 }

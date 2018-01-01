@@ -5,31 +5,39 @@
 				$scope.init = function(){
 					$scope.periodType = "0";
 					var now = moment();
-					$scope.date = now.toDate();
-					$scope.week = 1;
-					$scope.month = now.month();
-					$scope.quarter = now.quarters();
-					$scope.year = now.year();
-					$scope.showReport = false;
-					$scope.hasData = false;
-					$scope.dataList = null;
+					$scope.data = {
+							date : now.toDate(),
+							month : now.month(),
+							quarter : now.quarters(),
+							year : now.year(),
+							hasData : false,
+							dataList : null,
+					}
+					
 				};
 				
 				$scope.onGetReportClick = function(){
 					var data = {
-							date : $scope.date,
-							week : $scope.week,
-							month : $scope.month,
-							quarter : $scope.quarter,
-							year : $scope.year,
-							showReport : $scope.showReport,
-							hasData : $scope.hasData,
+							date : $scope.data.date,
+							quarter : $scope.data.quarter,
+							year : $scope.data.year,
+							hasData : $scope.data.hasData,
+							periodType: $scope.periodType
 					}
+					$scope.data.error = null;
 					TotalRevenueService.post(urls.TOTAL_REVENUE_SERVICE_API, data, function(response){
-						
+						if (response.data != null){
+							$scope.data.hasData = true;
+							$scope.data.dataList = response.data;
+						}
 					}, function(error){
-						
+						$scope.data.hasData = false;
+						$scope.data.error = "No data found";
 					});
 				};
+				
+				$scope.onPeriodTypeChanged = function(){
+					$scope.data.hasData = false;
+				}
 			}]);
 })(angular, app);

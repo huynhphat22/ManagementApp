@@ -5,20 +5,21 @@
 
 <div id="page-wrapper" ng-controller="TotalRevenueController as ctrl" ng-init="init()">
 	<div class="main-page">
-		<h3 class="title1">Report
+		<h3 class="title1">Condition
 				</h3>
 				
 		<div class="form-three widget-shadow">
 			<form class="form-horizontal">
 				<div class="form-group">
 						<label for="selector1" class="col-sm-2 control-label">Period type</label>
-						<div class="col-sm-8"><select ng-model="periodType" class="form-control1">
+						<div class="col-sm-8"><select ng-model="periodType" class="form-control1" ng-change="onPeriodTypeChanged()">
 							<option value="0">Date </option>
 							<option value="1">Week </option>
 							<option value="2">Month </option>
 							<option value="3">Quarter </option>
 							<option value="4">Year </option>
-						</select></div>
+						</select>
+						</div>
 				</div>
 				
 				
@@ -26,35 +27,35 @@
 					<div class="form-group" ng-switch-when="0">
 						<label for="dateInput" class="col-sm-2 control-label">Date </label>
 						<div class="col-sm-8">
-							<input type="date" class="form-control1 required"  ng-model="date" id="dateInput">
+							<input type="date" class="form-control1 required"  ng-model="data.date" id="dateInput">
 						</div>
 					</div>
 					
 					<div class="form-group" ng-switch-when="1">
 						<label for="weekInput" class="col-sm-2 control-label">Week </label>
 						<div class="col-sm-8">
-							<input type="week" class="form-control1 required"  ng-model="date" id="weekInput">
+							<input type="week" class="form-control1 required"  ng-model="data.date" id="weekInput">
 						</div>
 					</div>
 					
 					<div class="form-group" ng-switch-when="2">
 						<label for="monthInput" class="col-sm-2 control-label">Month </label>
 						<div class="col-sm-8">
-							<input type="month" class="form-control1 required"  ng-model="date" id="monthInput">
+							<input type="month" class="form-control1 required"  ng-model="data.date" id="monthInput">
 						</div>
 					</div>
 					
 					<div class="form-group" ng-switch-when="3">
 						<label for="quarterInput" class="col-sm-2 control-label">Quarter</label>
 						<div class="col-sm-8">
-							<input type="number" class="form-control1"  ng-model="quarter" id="quarterInput" min="1" max="4">
+							<input type="number" class="form-control1"  ng-model="data.quarter" id="quarterInput" min="1" max="4">
 						</div>
 					</div>
 					
 					<div class="form-group" ng-switch-when="4">
 						<label for="yearInput" class="col-sm-2 control-label">Year</label>
 						<div class="col-sm-8">
-							<input type="number" class="form-control1"  ng-model="year" id="yearInput" min="1900" max="2100">
+							<input type="number" class="form-control1"  ng-model="data.year" id="yearInput" min="1900" max="2100">
 						</div>
 					</div>
 				</div>
@@ -69,7 +70,11 @@
 		
 		<div class="clearfix"></div>
 		
-		<div class="tables" ng-if="showReport && hasData">
+		<div class="alert alert-warning" ng-show="data.error != null">
+				{{data.error}}
+			</div>
+		
+		<div class="tables" ng-if="data.hasData">
 			<h3 class="title1">Report
 			</h3>
 
@@ -103,29 +108,7 @@
 
 							</div>
 						</div>
-						<div class="col-sm-5">
-							<form name="searchFoodForm" class="form-inline ng-pristine ng-invalid ng-invalid-required">
-								<div class="form-group">
-									<select ng-model="ctrl.searchBy" required="true" class="form-control input-sm ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"><option value="? object:null ?" selected="selected"></option>
-										<option value="foodName">Food Name</option>
-										<option value="address">Address</option>
-									</select>
-								</div>
-								<div class="input-group">
-									<input type="text" placeholder="Search here..." required="" class="form-control input-sm ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" ng-model="ctrl.searchText">
-									<div class="input-group-btn">
-										<button class="btn btn-default btn-sm" ng-click="ctrl.search()" ng-disabled="searchFoodForm.$invalid || searchFoodForm.$pristine" type="submit" disabled="disabled">
-											<i class="glyphicon glyphicon-search"></i>
-										</button>
-									</div>
-								</div>
-								<div class="form-group">
-									<button class="btn btn-default btn-sm" ng-click="ctrl.reload()" type="button">
-										<i class="glyphicon glyphicon-refresh"></i>
-									</button>
-								</div>
-							</form>
-						</div>
+						
 					</div>
 				</div>
 				<div class="panel-body">
@@ -145,7 +128,10 @@
 						</thead>
 						<tbody>
 							<!-- ngRepeat: f in ctrl.listFoods.content -->
-
+							<tr ng-repeat="row in data.dataList track by $index">
+								<td>{{row.time != 0 ? row.time : row.dayName}}</td>
+								<td>{{row.revenue}}</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
