@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import Model.DAO.DateCostDAOImpl;
 import Model.DAO.DateRevenueDAOImpl;
 import Model.MODEL.ReportQuery;
 import Model.MODEL.TotalReportModel;
@@ -26,9 +27,11 @@ public class RestReportConroller {
 	@Autowired
 	private DateRevenueDAOImpl	dateRevenueDAO;
 	
+	@Autowired
+	private DateCostDAOImpl	dateCostDAO;
 	
 	@RequestMapping(value="/totalrevenue", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<?> getReportResult(@RequestBody ReportQuery param){
+	public @ResponseBody ResponseEntity<?> getTotalRevenueReportResult(@RequestBody ReportQuery param){
 		
 		ObjectMapper map = new ObjectMapper();
 		List<TotalReportModel> result = dateRevenueDAO.getDateRevenue(param);
@@ -47,4 +50,23 @@ public class RestReportConroller {
 		
 	}
 
+	@RequestMapping(value="/totalcost", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<?> getTotalCostReportResult(@RequestBody ReportQuery param){
+		
+		ObjectMapper map = new ObjectMapper();
+		List<TotalReportModel> result = dateCostDAO.getDateCost(param);
+		
+		if (result.isEmpty())
+			return new ResponseEntity<List<TotalReportModel>>(HttpStatus.BAD_REQUEST);
+		else {
+			try {
+				return new ResponseEntity<>(map.writeValueAsString(result), HttpStatus.OK);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+		
+	}
 }

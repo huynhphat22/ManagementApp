@@ -1,6 +1,6 @@
 (function(angular, app){
 	angular.module("ManagementApp")
-			.factory("TotalRevenueService", ["$http", "$q", function($http, $q){
+			.factory("TotalCostService", ["$http", function($http){
 				var factory = {
 						get: get,
 						post: post,
@@ -24,6 +24,7 @@
 						$http.post(url, param, config).then(successFunction, failedFunction);
 					}
 					$http.post(url, param).then(successFunction, failedFunction);
-				}
+				};
 			}]);
+			
 })(angular, app);

@@ -73,6 +73,10 @@
 	<bean id="dateRevenueDAO" class="Model.DAO.DateRevenueDAOImpl">
 		<property name="sessionFactory" ref="mySessionFactory"></property>
 	</bean>
+	
+	<bean id="dateCostDAO" class="Model.DAO.DateCostDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory"></property>
+	</bean>
 	<!-- Transaction AOP -->
 	<tx:annotation-driven transaction-manager="txManager" mode="proxy" proxy-target-class="true"/>
 

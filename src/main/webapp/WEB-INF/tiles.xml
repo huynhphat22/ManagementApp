@@ -76,4 +76,13 @@
         </put-list-attribute>
     </definition>
     
+    <definition name="totalCost" extends="DefaultTemplate">
+    	<put-attribute name="title" value="Total cost report"/>
+    	<put-attribute name="body" value="/WEB-INF/views/MainBody/TotalCost.jsp"/>
+    	<put-list-attribute name="js" inherit="true">
+        	<add-attribute value="/js/app/TotalCostController.js"/>
+        	<add-attribute value="/js/app/TotalCostService.js"/>
+        </put-list-attribute>
+    </definition>
+    
 </tiles-definitions>

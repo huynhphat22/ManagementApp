@@ -11,11 +11,18 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ReportController {
 
-	@RequestMapping(value="/Reports", method=RequestMethod.GET)
-	public ModelAndView init(HttpServletRequest request,
-							HttpServletResponse response){
-		return new ModelAndView("reports");
+	@RequestMapping(value="/Report/TotalValue")
+	public ModelAndView initTotalValue(HttpServletRequest request,
+					HttpServletResponse response){
+		return new ModelAndView("totalRevenue");
 	}
+	
+	@RequestMapping(value="/Report/TotalCost")
+	public ModelAndView initTotalCost(HttpServletRequest request,
+					HttpServletResponse response){
+		return new ModelAndView("totalCost");
+	}
+	
 							
 
 }
