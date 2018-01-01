@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 public class OrderDetail  {
 
 	private OrderDetailId id;
-	private short quantity;
+	private int quantity;
 	private String status;
 	private Date dateCreated;
 	private Boolean flags;
@@ -27,13 +27,13 @@ public class OrderDetail  {
 	public OrderDetail() {
 	}
 
-	public OrderDetail(OrderDetailId id, short quantity, Date dateCreated) {
+	public OrderDetail(OrderDetailId id, int quantity, Date dateCreated) {
 		this.id = id;
 		this.quantity = quantity;
 		this.dateCreated = dateCreated;
 	}
 
-	public OrderDetail(OrderDetailId id, short quantity, String status, Date dateCreated, Boolean flags) {
+	public OrderDetail(OrderDetailId id, int quantity, String status, Date dateCreated, Boolean flags) {
 		this.id = id;
 		this.quantity = quantity;
 		this.status = status;
@@ -55,11 +55,11 @@ public class OrderDetail  {
 	}
 
 	@Column(name = "quantity", nullable = false)
-	public short getQuantity() {
+	public int getQuantity() {
 		return this.quantity;
 	}
 
-	public void setQuantity(short quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 

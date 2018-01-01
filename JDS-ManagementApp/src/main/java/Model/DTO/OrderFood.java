@@ -20,6 +20,7 @@ public class OrderFood  {
 
 	private Integer orderId;
 	private int customerId;
+	private int departmentId;
 	private String orderType;
 	private String status;
 	private Date dateCreated;
@@ -32,14 +33,16 @@ public class OrderFood  {
 	public OrderFood() {
 	}
 
-	public OrderFood(int customerId, Date dateCreated, String addressDelivery) {
+	public OrderFood(int departmentId, int customerId, Date dateCreated, String addressDelivery) {
+		this.departmentId = departmentId;
 		this.customerId = customerId;
 		this.dateCreated = dateCreated;
 		this.addressDelivery = addressDelivery;
 	}
 
-	public OrderFood(int customerId, String orderType, String status, Date dateCreated, Date dateDelivery, int totalPrice,
+	public OrderFood(int departmentId, int customerId, String orderType, String status, Date dateCreated, Date dateDelivery, int totalPrice,
 			String addressDelivery, String note, Boolean flags) {
+		this.departmentId = departmentId;
 		this.customerId = customerId;
 		this.orderType = orderType;
 		this.status = status;
@@ -61,6 +64,15 @@ public class OrderFood  {
 
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
+	}
+
+	@Column(name = "departmentId", nullable = false)
+	public int getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
 	}
 
 	@Column(name = "customerID", nullable = false)

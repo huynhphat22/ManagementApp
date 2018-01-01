@@ -12,15 +12,13 @@ public class OrderDetailId  implements java.io.Serializable{
 
 	private int orderId;
 	private int foodId;
-	private int departmentId;
 
 	public OrderDetailId() {
 	}
 
-	public OrderDetailId(int orderId, int foodId, int departmentId) {
+	public OrderDetailId(int orderId, int foodId) {
 		this.orderId = orderId;
 		this.foodId = foodId;
-		this.departmentId = departmentId;
 	}
 
 	@Column(name = "orderID", nullable = false)
@@ -41,15 +39,6 @@ public class OrderDetailId  implements java.io.Serializable{
 		this.foodId = foodId;
 	}
 
-	@Column(name = "departmentId", nullable = false)
-	public int getDepartmentId() {
-		return this.departmentId;
-	}
-
-	public void setDepartmentId(int departmentId) {
-		this.departmentId = departmentId;
-	}
-
 	public boolean equals(Object other) {
 		if ((this == other))
 			return true;
@@ -59,8 +48,7 @@ public class OrderDetailId  implements java.io.Serializable{
 			return false;
 		OrderDetailId castOther = (OrderDetailId) other;
 
-		return (this.getOrderId() == castOther.getOrderId()) && (this.getFoodId() == castOther.getFoodId())
-				&& (this.getDepartmentId() == castOther.getDepartmentId());
+		return (this.getOrderId() == castOther.getOrderId()) && (this.getFoodId() == castOther.getFoodId());
 	}
 
 	public int hashCode() {
@@ -68,7 +56,6 @@ public class OrderDetailId  implements java.io.Serializable{
 
 		result = 37 * result + this.getOrderId();
 		result = 37 * result + this.getFoodId();
-		result = 37 * result + this.getDepartmentId();
 		return result;
 	}
 
