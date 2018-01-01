@@ -16,6 +16,8 @@ public interface OrderFoodDAO {
 	
 	public Iterable<OrderFood> findAll();
 	
+	public Page paginateOrderFoodByDepartment(PageQuery pageQuery, int departmentId);
+	
 	public Page paginateOrderFood(PageQuery pageQuery);
 	
 }

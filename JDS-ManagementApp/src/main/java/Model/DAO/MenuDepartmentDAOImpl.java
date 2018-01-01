@@ -1,6 +1,7 @@
 package Model.DAO;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
@@ -68,42 +69,7 @@ public class MenuDepartmentDAOImpl implements MenuDepartmentDAO {
 		return list;
 	}
 
-	/*
-	 * @Override public long count() { // TODO Auto-generated method stub
-	 * Session session = this.sessionFactory.getCurrentSession(); Criteria
-	 * criteriaCount = session.createCriteria(MenuDepartment.class);
-	 * criteriaCount.setProjection(Projections.rowCount()); return (long)
-	 * criteriaCount.uniqueResult(); }
-	 * 
-	 * @Override public long countByDepartmentIdAndCategoryId(int departmentId,
-	 * int categoryId) { // TODO Auto-generated method stub Session session =
-	 * this.sessionFactory.getCurrentSession(); String hql =
-	 * "SELECT count(*) FROM MenuDepartment md INNER JOIN Department d ON " +
-	 * "(d.departmentId = md.id.departmentId AND d.departmentId = " +
-	 * departmentId + ")" +
-	 * "INNER JOIN Food f ON f.foodId = md.id.foodId INNER JOIN Category c ON "
-	 * + "(f.categoryId = c.categoryId AND c.categoryId = " + categoryId + ")";
-	 * return (long)session.createQuery(hql).uniqueResult(); }
-	 * 
-	 * 
-	 * @Override public Iterable<MenuDepartment>
-	 * findByDepartmentIdAndCategoryId(int departmentId, int categoryId, int
-	 * page, String sort) { // TODO Auto-generated method stub int pageSize =
-	 * 10;
-	 * 
-	 * int start = (page - 1) * pageSize; Session session =
-	 * this.sessionFactory.getCurrentSession();
-	 * 
-	 * String hql =
-	 * "SELECT md FROM MenuDepartment md INNER JOIN Department d ON " +
-	 * "(d.departmentId = md.id.departmentId AND d.departmentId = " +
-	 * departmentId + ")" +
-	 * "INNER JOIN Food f ON f.foodId = md.id.foodId INNER JOIN Category c ON "
-	 * + "(f.categoryId = c.categoryId AND c.categoryId = " + categoryId + ")";
-	 * 
-	 * Query query = session.createQuery(hql); query.setFirstResult(start);
-	 * query.setMaxResults(pageSize); return query.list(); }
-	 */
+	
 
 	@Override
 	public Page paginateMenuDepartment(PageQuery pageQuery, int departmentId) {
@@ -142,6 +108,16 @@ public class MenuDepartmentDAOImpl implements MenuDepartmentDAO {
 		System.out.println("count : " + count);
 		System.out.println("page : " + page.getContent());
 		return page;
+	}
+
+	@Override
+	public Iterable<MenuDepartment> findAllByDepartmentId(int departmentId) {
+		// TODO Auto-generated method stub
+		Session session = this.sessionFactory.getCurrentSession();
+		Query query = session.createQuery("From MenuDepartment md where md.id.departmentId = :departmentId");
+		query.setParameter("departmentId", departmentId);
+		Iterable<MenuDepartment> list = query.list();
+		return list;
 	}
 
 }

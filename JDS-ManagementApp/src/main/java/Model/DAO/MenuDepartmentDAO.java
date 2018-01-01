@@ -16,6 +16,8 @@ public interface MenuDepartmentDAO {
 	public MenuDepartment findById(MenuDepartmentId id);
 
 	public Iterable<MenuDepartment> findAll();
+	
+	public Iterable<MenuDepartment> findAllByDepartmentId(int departmentId);
 
 	
 	public Page paginateMenuDepartment(PageQuery pageQuery, int departmentId);
