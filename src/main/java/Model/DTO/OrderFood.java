@@ -1,6 +1,6 @@
+// default package
+// Generated Dec 25, 2017 5:48:08 PM by Hibernate Tools 5.1.4.Final
 package Model.DTO;
-
-
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,16 +16,18 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "order_food", catalog = "restaurant")
-public class OrderFood {
+public class OrderFood  {
 
 	private Integer orderId;
-	private int departmentId;
 	private int customerId;
+	private int departmentId;
 	private String orderType;
 	private String status;
 	private Date dateCreated;
 	private Date dateDelivery;
 	private String addressDelivery;
+	private String note;
+	private int totalPrice;
 	private Boolean flags;
 
 	public OrderFood() {
@@ -38,8 +40,8 @@ public class OrderFood {
 		this.addressDelivery = addressDelivery;
 	}
 
-	public OrderFood(int departmentId, int customerId, String orderType, String status, Date dateCreated,
-			Date dateDelivery, String addressDelivery, Boolean flags) {
+	public OrderFood(int departmentId, int customerId, String orderType, String status, Date dateCreated, Date dateDelivery, int totalPrice,
+			String addressDelivery, String note, Boolean flags) {
 		this.departmentId = departmentId;
 		this.customerId = customerId;
 		this.orderType = orderType;
@@ -47,6 +49,8 @@ public class OrderFood {
 		this.dateCreated = dateCreated;
 		this.dateDelivery = dateDelivery;
 		this.addressDelivery = addressDelivery;
+		this.totalPrice = totalPrice ;
+		this.note = note;
 		this.flags = flags;
 	}
 
@@ -62,9 +66,9 @@ public class OrderFood {
 		this.orderId = orderId;
 	}
 
-	@Column(name = "departmentID", nullable = false)
+	@Column(name = "departmentId", nullable = false)
 	public int getDepartmentId() {
-		return this.departmentId;
+		return departmentId;
 	}
 
 	public void setDepartmentId(int departmentId) {
@@ -127,6 +131,15 @@ public class OrderFood {
 		this.addressDelivery = addressDelivery;
 	}
 
+	@Column(name = "note", length = 200)
+	public String getNote() {
+		return this.note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
 	@Column(name = "flags")
 	public Boolean getFlags() {
 		return this.flags;
@@ -135,5 +148,13 @@ public class OrderFood {
 	public void setFlags(Boolean flags) {
 		this.flags = flags;
 	}
+	
+	@Column(name = "totalPrice")
+	public int getTotalPrice() {
+		return totalPrice;
+	}
 
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}	
 }

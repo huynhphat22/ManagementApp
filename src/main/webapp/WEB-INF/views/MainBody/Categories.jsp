@@ -5,27 +5,27 @@
 	<div class="main-page">
 		<div class="tables">
 			<h3 class="title1">Manage Categories
-				<button ng-hide="cctrl.saveDepartment" class="btn btn-info" ng-click="cctrl.saveDepartment = true">Add Department</button>
+				<button ng-hide="cctrl.saveCategory" class="btn btn-info" ng-click="cctrl.saveCategory = true">Add Category</button>
 			</h3>
 
-			<div class="alert alert-success" ng-show="cctrl.successMessage">
-				<strong>Success!</strong> {{cctrl.successMessage}}
+			<div class="alert alert-success" ng-cloak ng-show="cctrl.successMessage">
+				<strong>Success!</strong> <p ng-bind="cctrl.successMessage"></p>
 			</div>
 
-			<div class="alert alert-danger" ng-show="cctrl.errorMessage">
-				<strong>Error!</strong> {{cctrl.errorMessage}}.
+			<div class="alert alert-danger" ng-cloak ng-show="cctrl.errorMessage">
+				<strong>Error!</strong> <p ng-bind="cctrl.errorMessage"></p>
 			</div>
 
 
-			<div class="panel panel-primary" ng-show="cctrl.saveDepartment">
+			<div class="panel panel-primary" ng-cloak ng-show="cctrl.saveCategory">
 				<div class="panel-heading">
-					<strong>{{cctrl.category.categoryId ? 'Update' : 'Add'}} Department</strong>
-					<button ng-click="cctrl.saveDepartment = false" class="toggle-hide btn btn-default">
+					<strong ng-cloak>{{cctrl.category.categoryId ? 'Update' : 'Add'}} Category</strong>
+					<button ng-click="cctrl.saveCategory = false" class="toggle-hide btn btn-default">
 						<i class="glyphicon glyphicon-minus"></i>
 					</button>
 				</div>
 				<div class="panel-body">
-					<form ng-submit="cctrl.submit()">
+					<form ng-submit="cctrl.submit()" name="saveCategoryForm">
 						<div class="row">
 							<div class="col-sm-4">
 								<input type="hidden" ng-model="cctrl.category.categoryId"/>
@@ -38,6 +38,7 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<button class="btn btn-info">{{cctrl.category.categoryId ? 'Update' : 'Add'}}</button>
+								<button type="button" ng-click="cctrl.reset()" class="btn btn-warning">Reset</button>
 							</div>
 						</div>
 					</form>
@@ -62,7 +63,7 @@
 								</div>
 
 
-								<button class="btn btn-default btn-sm">{{cctrl.page}}/{{cctrl.listCategories.totalPages}}</button>
+								<button class="btn btn-default btn-sm" ng-cloak>{{cctrl.page}}/{{cctrl.listCategories.totalPages}}</button>
 
 
 								<button class="btn btn-default btn-sm" ng-disabled="cctrl.page === cctrl.listCategories.totalPages" ng-click="cctrl.increasePage(cctrl.listCategories)">
@@ -78,17 +79,17 @@
 							</div>
 						</div>
 						<div class="col-sm-5">
-							<form name="searchDepartmentForm" class="form-inline">
+							<form name="searchCategoryForm" class="form-inline">
 								<div class="form-group">
 									<select ng-model="cctrl.searchBy" required="true" class="form-control input-sm">
-										<option value="categoryName">Department Name</option>
-										<option value="address">Address</option>
+										<option value="categoryId">Category Id</option>
+										<option value="categoryName">Category Name</option>
 									</select>
 								</div>
 								<div class="input-group">
 									<input type="text" placeholder="Search here..." required class="form-control input-sm" ng-model="cctrl.searchText" />
 									<div class="input-group-btn">
-										<button class="btn btn-default btn-sm" ng-click="cctrl.search()" ng-disabled="searchDepartmentForm.$invalid || searchDepartmentForm.$pristine"
+										<button class="btn btn-default btn-sm" ng-click="cctrl.search()" ng-disabled="searchCategoryForm.$invalid || searchCategoryForm.$pristine"
 										 type="submit">
 											<i class="glyphicon glyphicon-search"></i>
 										</button>
@@ -116,10 +117,10 @@
 						</thead>
 						<tbody>
 							<tr ng-repeat="c in cctrl.listCategories.content">
-								<th scope="row">{{cctrl.indexOrder($index)}}</th>
-								<td>{{c.categoryId}}</td>
-								<td>{{c.categoryName}}</td>
-								<td>{{c.flags}}</td>
+								<th scope="row" ng-bind="cctrl.indexOrder($index)"></th>
+								<td ng-bind="c.categoryId"></td>
+								<td ng-bind="c.categoryName"></td>
+								<td ng-bind="c.flags"></td>
 								<td>
 									<a ng-click="cctrl.edit(c.categoryId)" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i></a>
 								</td>

@@ -108,7 +108,7 @@ angular.module('ManagementApp').controller('Departments',
             update(self.department);
             console.log('Department updated with id ', self.department.id);
         }
-        $scope.departmentForm.$setPristine();
+        $scope.saveDepartmentForm.$setPristine();
     }
 
 
@@ -121,6 +121,7 @@ angular.module('ManagementApp').controller('Departments',
             searchText : self.searchText,
             size : self.size
         }
+        console.log("pageQuery", pageQuery);
         DepartmentService.findAllByPagination(pageQuery)
             .then((response) => {
                 self.listDepartments = response;
@@ -136,6 +137,8 @@ angular.module('ManagementApp').controller('Departments',
             self.successMessage = 'Insert Department Successfully!';
             self.errorMessage = '';
             findAllDepartments();
+            self.department = {};
+            self.saveDepartment = false;
         },(errors)=>{
             self.successMessage = '';
             self.errorMessage = 'Error When Insert Department!';
@@ -159,11 +162,16 @@ angular.module('ManagementApp').controller('Departments',
         DepartmentService.findById(id)
         .then((response)=>{
             self.department =  response;
+            
         },(errors)=>{
             self.successMessage = '';
             self.errorMessage = 'Error When Getting Department!';
         });
-
+        
+        $("html , body").animate({
+            scrollTop: 0
+        }, 300);
+        
         self.saveDepartment = true;
     }
 }]);

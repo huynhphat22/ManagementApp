@@ -39,6 +39,7 @@ public class RestDepartmentController {
 			this.departmentDAO.save(department);
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<>(HttpStatus.CREATED);

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/security
+      http://www.springframework.org/schema/security/spring-security-4.2.xsd
+      http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+	<http use-expressions="true" auto-config="true">
+		<csrf disabled="true" />
+
+		<intercept-url pattern="/" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Login" access="permitAll()" />
+		<intercept-url pattern="/Logout" access="permitAll()" />
+
+		<intercept-url pattern="/Home" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER','ROLE_SALE', 'ROLE_SWITCHBOARD' )" />
+		<intercept-url pattern="/Departments" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Foods" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Tables" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Staffs" access="hasAnyRole('ROLE_MANAGER')" />
+		<intercept-url pattern="/Menu" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Categories" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Profile" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_SALE', 'ROLE_SWITCHBOARD')" />
+		
+		<intercept-url pattern="/DateCosts" access="hasAnyRole('ROLE_SALE', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/MonthCosts" access="hasAnyRole('ROLE_SALE', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Orders" access="hasAnyRole('ROLE_SALE', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Customer" access="hasAnyRole('ROLE_SALE','ROLE_SWITCHBOARD','ROLE_MANAGER')" />
+		<intercept-url pattern="/SwitchBoardOrders" access="hasAnyRole('ROLE_SWITCHBOARD', 'ROLE_MANAGER')" />
+		<!--  <intercept-url pattern="/other/**" access="isAuthenticated()" />-->
+		<access-denied-handler error-page="/403" />
+
+		<form-login login-page='/Login' login-processing-url="/j_spring_security_check"
+			default-target-url="/Home" always-use-default-target="true"
+			authentication-failure-url="/Login?error=true" username-parameter="username"
+			password-parameter="password" />
+
+		<logout logout-url="/Logout" logout-success-url="/Login?logout=true"
+			delete-cookies="JSESSIONID" invalidate-session="true" />
+
+	</http>
+	
+	<authentication-manager>
+		<authentication-provider user-service-ref="staffDetailsService">
+			<password-encoder hash="bcrypt" />
+		</authentication-provider>
+	</authentication-manager>
+
+
+</beans:beans>

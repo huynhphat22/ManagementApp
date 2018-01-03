@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+
 <!-- main content start-->
 <div id="page-wrapper" ng-controller="Departments as dctrl">
 	<div class="main-page">
@@ -8,50 +7,59 @@
 				<button ng-hide="dctrl.saveDepartment" class="btn btn-info" ng-click="dctrl.saveDepartment = true">Add Department</button>
 			</h3>
 
-			<div class="alert alert-success" ng-show="dctrl.successMessage">
-				<strong>Success!</strong> {{dctrl.successMessage}}
+			<div class="alert alert-success" ng-cloak ng-show="dctrl.successMessage">
+				<strong>Success!</strong> <p ng-bind="dctrl.successMessage"></p>
 			</div>
 
-			<div class="alert alert-danger" ng-show="dctrl.errorMessage">
-				<strong>Error!</strong> {{dctrl.errorMessage}}.
+			<div class="alert alert-danger" ng-cloak ng-show="dctrl.errorMessage">
+				<strong>Error!</strong> <p ng-bind="dctrl.errorMessage"></p>
 			</div>
 
-
-			<div class="panel panel-primary" ng-show="dctrl.saveDepartment">
+			<div class="panel panel-primary" ng-cloak ng-show="dctrl.saveDepartment">
 				<div class="panel-heading">
-					<strong>{{dctrl.department.departmentId ? 'Update' : 'Add'}} Department</strong>
+					<strong ng-cloak>{{dctrl.department.departmentId ? 'Update' : 'Add'}} Department</strong>
 					<button ng-click="dctrl.saveDepartment = false" class="toggle-hide btn btn-default">
 						<i class="glyphicon glyphicon-minus"></i>
 					</button>
 				</div>
 				<div class="panel-body">
-					<form ng-submit="dctrl.submit()">
+					<form ng-submit="dctrl.submit()" name="saveDepartmentForm">
 						<div class="row">
 							<div class="col-sm-4">
 								<input type="hidden" ng-model="dctrl.department.departmentId"/>
 								<div class="form-group">
 									<label>Department Name</label>
-									<input type="text" ng-model="dctrl.department.departmentName" class="form-control" />
+									<input type="text" required minLenth="2" ng-model="dctrl.department.departmentName" class="form-control" />
 								</div>
 								<div class="form-group">
 									<label>Address</label>
-									<input type="text" ng-model="dctrl.department.address" class="form-control" />
+									<input type="text" required minLength="20" ng-model="dctrl.department.address" class="form-control" />
 								</div>
+								
 							</div>
 							<div class="col-sm-4">
 								<div class="form-group">
 									<label>Phone Number</label>
-									<input type="text" ng-model="dctrl.department.phoneNumber" class="form-control" />
+									<input type="text" minLength="10" maxLength="11" ng-model="dctrl.department.phoneNumber" class="form-control" />
 								</div>
 								<div class="form-group">
 									<label>Number Of Table</label>
-									<input type="number" ng-model="dctrl.department.numberOfTable" class="form-control" />
+									<input type="number" required ng-model="dctrl.department.numberOfTable" class="form-control" />
+								</div>
+								<div class="form-group" ng-show="dctrl.department.departmentId">
+									<label>Flags</label>
+									<select required class="form-control" ng-model="dctrl.department.flags"
+									 ng-options="o.v as o.n for o in [{ n: 'False', v: false }, { n: 'True', v: true }]">
+									</select>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<button class="btn btn-info">{{dctrl.department.departmentId ? 'Update' : 'Add'}}</button>
+								<button 
+								ng-disabled="saveDepartmentForm.$pristine"
+								class="btn btn-info" ng-cloak>{{dctrl.department.departmentId ? 'Update' : 'Add'}}</button>
+								<button type="button" ng-click="dctrl.reset()" class="btn btn-warning">Reset</button>
 							</div>
 						</div>
 					</form>
@@ -76,7 +84,7 @@
 								</div>
 
 
-								<button class="btn btn-default btn-sm">{{dctrl.page}}/{{dctrl.listDepartments.totalPages}}</button>
+								<button class="btn btn-default btn-sm" ng-cloak>{{dctrl.page}}/{{dctrl.listDepartments.totalPages}}</button>
 
 
 								<button class="btn btn-default btn-sm" ng-disabled="dctrl.page === dctrl.listDepartments.totalPages" ng-click="dctrl.increasePage(dctrl.listDepartments)">
@@ -95,6 +103,7 @@
 							<form name="searchDepartmentForm" class="form-inline">
 								<div class="form-group">
 									<select ng-model="dctrl.searchBy" required="true" class="form-control input-sm">
+										<option value="departmentId">Department Id</option>
 										<option value="departmentName">Department Name</option>
 										<option value="address">Address</option>
 									</select>
@@ -129,22 +138,29 @@
 								<th>Number Of Table</th>
 								<th>Flags</th>
 								<th></th>
+								<th></th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr ng-repeat="d in dctrl.listDepartments.content">
-								<th scope="row">{{dctrl.indexOrder($index)}}</th>
-								<td>{{d.departmentId}}</td>
-								<td>{{d.departmentName}}</td>
-								<td>{{d.address}}</td>
-								<td>{{d.phoneNumber}}</td>
-								<td>{{d.numberOfTable}}</td>
-								<td>{{d.flags}}</td>
+								<th scope="row" ng-bind="dctrl.indexOrder($index)"></th>
+								<td ng-bind="d.departmentId"></td>
+								<td ng-bind="d.departmentName"></td>
+								<td ng-bind="d.address"></td>
+								<td ng-bind="d.phoneNumber"></td>
+								<td ng-bind="d.numberOfTable"></td>
+								<td ng-bind="d.flags"></td>
 								<td>
 									<a ng-click="dctrl.edit(d.departmentId)" class="btn btn-danger"><i class="glyphicon glyphicon-edit"></i></a>
 								</td>
+								<td>
+									<a href="${pageContext.servletContext.contextPath}/Menu?deptId={{d.departmentId}}" class="btn btn-success">Menu</a>
+								</td>
+								<td>
+									<a href="${pageContext.servletContext.contextPath}/Tables?deptId={{d.departmentId}}" class="btn btn-info">Table</a>
+								</td>
 							</tr>
-
 						</tbody>
 					</table>
 				</div>

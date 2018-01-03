@@ -37,6 +37,7 @@
 		<tiles:insertAttribute name="body"></tiles:insertAttribute>
 		<tiles:insertAttribute name="footer"></tiles:insertAttribute>
 
+		<tiles:insertAttribute name="classie"></tiles:insertAttribute>
 	   <!-- Other js file -->
 	   <c:forEach items="${jsItems}" var="js">
 	            <script src="<spring:url value="${js}"/>"></script>

@@ -13,7 +13,7 @@
 	<bean id="myDataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/restaurantautoReconnect=true&amp;useUnicode=true&amp;createDatabaseIfNotExist=true&amp;characterEncoding=utf-8" />
+		<property name="url" value="jdbc:mysql://localhost:3306/restaurant?autoReconnect=true&amp;useUnicode=true&amp;createDatabaseIfNotExist=true&amp;characterEncoding=utf-8" />
 		<property name="username" value="root" />
 		<property name="password" value="" />
 	</bean>
@@ -34,7 +34,6 @@
 				<value>Model.DTO.MonthCost</value>
 				<value>Model.DTO.OrderDetail</value>
 				<value>Model.DTO.OrderFood</value>
-				<value>Model.DTO.Payment</value>
 				<value>Model.DTO.RestaurantTable</value>
 				<value>Model.DTO.Staff</value>
 			</list>
@@ -48,6 +47,7 @@
 				<prop key="hibernate.connection.characterEncoding">utf8</prop>
 				<prop key="hibernate.connection.useUnicode">true</prop>		
 				<prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+				<prop key="hbm2ddl.auto">create</prop>
 			</props>
 		</property>
 	</bean>
@@ -69,6 +69,44 @@
 	<bean id="menuDepartmentDAO" class="Model.DAO.MenuDepartmentDAOImpl">
 		<property name="sessionFactory" ref="mySessionFactory" />
 	</bean>
+	<bean id="restaurantTableDAO" class="Model.DAO.RestaurantTableDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	<bean id="staffDAO" class="Model.DAO.StaffDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="orderFoodDAO" class="Model.DAO.OrderFoodDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="orderDetailDAO" class="Model.DAO.OrderDetailDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="dateCostDAO" class="Model.DAO.DateCostDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="monthCostDAO" class="Model.DAO.MonthCostDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="dateRevenueDAO" class="Model.DAO.DateRevenueDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="customerDAO" class="Model.DAO.CustomerDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	
+	
+	<bean id="staffDetailsService" class="Service.StaffDetailsService">
+		<property name="staffDAO" ref="staffDAO" />
+	</bean>
+	
+	
 	<!-- Transaction AOP -->
 	<tx:annotation-driven proxy-target-class="true" transaction-manager="txManager" />
 

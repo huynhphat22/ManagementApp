@@ -1,5 +1,7 @@
 package Controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,6 +12,10 @@ public class CategoryController {
 
 	@RequestMapping(value = "/Categories", method = RequestMethod.GET)
 	public ModelAndView init() {
-		return new ModelAndView("categories");
+		ModelAndView mav = new ModelAndView("categories");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName(); //get logged in username
+	    mav.addObject("username", name);
+		return mav;
 	}
 }

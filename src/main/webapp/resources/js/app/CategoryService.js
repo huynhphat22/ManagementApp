@@ -50,9 +50,9 @@ angular.module('ManagementApp').factory('CategoryService', ['$http', '$q', 'urls
         return deferred.promise;
     }
 
-    function save(department) {
+    function save(category) {
         var deferred = $q.defer();
-        $http.post(urls.CATEGORY_SERVICE_API, department)
+        $http.post(urls.CATEGORY_SERVICE_API, category)
             .then((response) => {
                 deferred.resolve(response.data);
             }, (errors) => {
@@ -61,9 +61,9 @@ angular.module('ManagementApp').factory('CategoryService', ['$http', '$q', 'urls
         return deferred.promise;
     }
 
-    function update(department){
+    function update(category){
         var deferred = $q.defer();
-        $http.put(urls.CATEGORY_SERVICE_API, department)
+        $http.put(urls.CATEGORY_SERVICE_API, category)
             .then((response) => {
                 deferred.resolve(response.data);
             }, (errors) => {

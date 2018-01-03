@@ -5,6 +5,11 @@ License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 */
 
+.label-yellow {background : yellow;}
+.label-orange {background : orange;}
+.label-purple {background : purple;}
+.label-pink {background : #f407de;}
+
 .toggle-hide{float:right; margin-right:5px}
 h4, h5, h6,
 h1, h2, h3 {margin: 0;}

@@ -9,6 +9,7 @@
         <put-attribute name="header" value="/WEB-INF/views/layouttemplate/Header.jsp"></put-attribute>
         <put-attribute name="title" value="" />
         <put-attribute name="body" value="" />
+        <put-attribute name="classie" value="/WEB-INF/views/layouttemplate/Classie.jsp"></put-attribute>
         <put-attribute name="footer" value="/WEB-INF/views/layouttemplate/Footer.jsp" />
         <put-list-attribute name="css">
             <add-attribute value="/css/bootstrap.min.css" />
@@ -17,11 +18,12 @@
             <add-attribute value="/css/custom.css"></add-attribute>
         </put-list-attribute>
         <put-list-attribute name="headjs">
-            <add-attribute value="/js/angular.min.js"/>
             <add-attribute value="/js/jquery-1.11.1.min.js"/>
+            <add-attribute value="/js/angular.min.js"/>
             <add-attribute value="/js/modernizr.custom.js"/>
        		<add-attribute value="/js/Chart.js"></add-attribute>
        		<add-attribute value="/js/metisMenu.min.js"/>
+       		<add-attribute value="/js/axios.min.js"/>
       		<add-attribute value="/js/custom.js"/>
         </put-list-attribute>
         <put-list-attribute name="js">
@@ -31,15 +33,38 @@
       		<add-attribute value="/js/app/app.js"/>
       		<add-attribute value="/js/app/DepartmentService.js"/>
       		<add-attribute value="/js/app/DepartmentController.js"/>
-      		
+      		<add-attribute value="/js/app/CategoryService.js"/>
+      		<add-attribute value="/js/app/CategoryController.js"/>
+      		<add-attribute value="/js/app/FoodService.js"/>
+      		<add-attribute value="/js/app/FoodController.js"/>
+      		<add-attribute value="/js/app/MenuService.js"/>
+      		<add-attribute value="/js/app/MenuController.js"/>
+      		<add-attribute value="/js/app/TableService.js"/>
+      		<add-attribute value="/js/app/TableController.js"/>
+      		<add-attribute value="/js/app/StaffService.js"/>
+      		<add-attribute value="/js/app/StaffController.js"/>
+      		<add-attribute value="/js/app/OrderService.js"/>
+      		<add-attribute value="/js/app/OrderController.js"/>
+      		<add-attribute value="/js/app/CustomerService.js"/>
+      		<add-attribute value="/js/app/CustomerController.js"/>
+      		<add-attribute value="/js/app/DateCostService.js"/>
+      		<add-attribute value="/js/app/DateCostController.js"/>
+      		<add-attribute value="/js/app/MonthCostService.js"/>
+      		<add-attribute value="/js/app/MonthCostController.js"/>
+      		<add-attribute value="/js/app/SwitchBoardOrderController.js"/>
+      		<add-attribute value="/js/app/ProfileController.js"/>
+      		<add-attribute value="/js/moment-2.20.1.js"/>
+            <add-attribute value="/js/angular-moment.js"/>
+            
         </put-list-attribute>
         
         <put-list-attribute name="fonts">
             <add-attribute value="/fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic"/>
         </put-list-attribute>
         
+        
     </definition>
-    
+    <definition name="LoginTemplate" template="/WEB-INF/views/layouttemplate/Login.jsp" ></definition>
     <definition name="home" extends="DefaultTemplate">
         <put-attribute name="title" value="Home"/>
         <put-attribute name="body" value="/WEB-INF/views/MainBody/Home.jsp"/>
@@ -57,7 +82,75 @@
     
     <definition name="foods" extends="DefaultTemplate">
         <put-attribute name="title" value="Manage Foods"/>
-        <put-attribute name="body" value="/WEB-INF/views/MainBody/Home.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Foods.jsp"/>
+    </definition>
+    
+    <definition name="menu" extends="DefaultTemplate">
+        <put-attribute name="title" value="Menu"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Menu.jsp"/>
+    </definition>
+    
+    <definition name="tables" extends="DefaultTemplate">
+        <put-attribute name="title" value="Tables"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Tables.jsp"/>
+    </definition>
+    
+     <definition name="staffs" extends="DefaultTemplate">
+        <put-attribute name="title" value="Staffs"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Staffs.jsp"/>
+    </definition>
+    
+     <definition name="profile" extends="DefaultTemplate">
+        <put-attribute name="title" value="Profile"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Profile.jsp"/>
+    </definition>
+    
+    <definition name="orders" extends="DefaultTemplate">
+        <put-attribute name="title" value="Orders"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Orders.jsp"/>
+    </definition>
+    
+     <definition name="customers" extends="DefaultTemplate">
+        <put-attribute name="title" value="Customers"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Customers.jsp"/>
+    </definition>
+    
+    
+     <definition name="dateCosts" extends="DefaultTemplate">
+        <put-attribute name="title" value="Date Costs"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/DateCosts.jsp"/>
+    </definition>
+    
+    <definition name="monthCosts" extends="DefaultTemplate">
+        <put-attribute name="title" value="Month Costs"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/MonthCosts.jsp"/>
+    </definition>
+    
+     <definition name="switchboarOrders" extends="DefaultTemplate">
+        <put-attribute name="title" value="SwitchBoard Orders"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/SwitchBoardOrders.jsp"/>
+    </definition>
+    
+    <definition name="totalRevenue" extends="DefaultTemplate">
+        <put-attribute name="title" value="Total revenue report"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/TotalRevenue.jsp"/>
+        <put-list-attribute name="js" inherit="true">
+        	<add-attribute value="/js/app/TotalRevenueService.js"/>
+        	<add-attribute value="/js/app/TotalRevenueController.js"/>
+
+        </put-list-attribute>
+    </definition>
+    
+    <definition name="totalCost" extends="DefaultTemplate">
+    	<put-attribute name="title" value="Total cost report"/>
+    	<put-attribute name="body" value="/WEB-INF/views/MainBody/TotalCost.jsp"/>
+    	<put-list-attribute name="js" inherit="true">
+        	<add-attribute value="/js/app/TotalCostController.js"/>
+        	<add-attribute value="/js/app/TotalCostService.js"/>
+        </put-list-attribute>
+    </definition>
+    
+     <definition name="login" extends="LoginTemplate">
     </definition>
     
     
