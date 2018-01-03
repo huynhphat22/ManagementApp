@@ -31,14 +31,13 @@
 								<input type="hidden" ng-model="fctrl.food.foodId"/>
 								<div class="form-group">
 									<label>Food Name</label>
-									<input type="text" ng-model="fctrl.food.foodName" class="form-control" />
+									<input required mingLength="2" type="text" ng-model="fctrl.food.foodName" class="form-control" />
 								</div>
 								<div class="form-group">
 									<label>Category</label>
-									<select class="form-control" 
+									<select required class="form-control" 
 									ng-model="fctrl.food.category.categoryId"
-									ng-options="cat.categoryId as cat.categoryName for cat in fctrl.listCategories"
-									ng-required = "true">
+									ng-options="cat.categoryId as cat.categoryName for cat in fctrl.listCategories">
 									
 									</select>
 								</div>
@@ -54,7 +53,9 @@
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<button class="btn btn-info" ng-cloak>{{fctrl.food.foodId ? 'Update' : 'Add'}}</button>
+								<button 
+								ng-disable="saveFoodForm.$pristine"
+								class="btn btn-info" ng-cloak>{{fctrl.food.foodId ? 'Update' : 'Add'}}</button>
 								<button type="button" ng-click="fctrl.reset()" class="btn btn-warning">Reset</button>
 							</div>
 						</div>
@@ -101,7 +102,6 @@
 									<select ng-model="fctrl.searchBy" required="true" class="form-control input-sm">
 										<option value="foodId">Food Id</option>
 										<option value="foodName">Food Name</option>
-										<option value="address">Address</option>
 									</select>
 								</div>
 								<div class="input-group">

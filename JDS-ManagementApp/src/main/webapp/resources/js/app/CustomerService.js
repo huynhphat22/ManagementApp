@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ManagementApp').factory('MenuService', ['$http', '$q', 'urls', function($http, $q, urls) {
+angular.module('ManagementApp').factory('CustomerService', ['$http', '$q', 'urls', function($http, $q, urls) {
 
     var factory = {
         findAll: findAll,
@@ -8,27 +8,15 @@ angular.module('ManagementApp').factory('MenuService', ['$http', '$q', 'urls', f
         findById: findById,
         save: save,
         update: update,
-        findAllByDepartmentId : findAllByDepartmentId
+        resetPassword : resetPassword
     };
 
 
     return factory;
 
-    function findAllByDepartmentId(){
-    	 var deferred = $q.defer();
-         $http.get(urls.MENU_SERVICE_API + "department")
-             .then((response) => {
-                 deferred.resolve(response.data);
-             }, (errors) => {
-                 deferred.reject(errors);
-             });
-
-         return deferred.promise;
-    }
-
-    function findAll() {
-        var deferred = $q.defer();
-        $http.get(urls.MENU_SERVICE_API)
+    function resetPassword(id){
+    	var deferred = $q.defer();
+        $http.get(urls.CUSTOMER_SERVICE_API + 'resetPassword/' + id)
             .then((response) => {
                 deferred.resolve(response.data);
             }, (errors) => {
@@ -38,9 +26,21 @@ angular.module('ManagementApp').factory('MenuService', ['$http', '$q', 'urls', f
         return deferred.promise;
     }
 
-    function findAllByPagination(pageQuery, departmentId){
+    function findAll() {
         var deferred = $q.defer();
-        $http.post(urls.MENU_SERVICE_API + 'pagination/' + departmentId , pageQuery)
+        $http.get(urls.CUSTOMER_SERVICE_API)
+            .then((response) => {
+                deferred.resolve(response.data);
+            }, (errors) => {
+                deferred.reject(errors);
+            });
+
+        return deferred.promise;
+    }
+
+    function findAllByPagination(pageQuery){
+        var deferred = $q.defer();
+        $http.post(urls.CUSTOMER_SERVICE_API + 'pagination', pageQuery)
             .then((response) => {
                 deferred.resolve(response.data);
             }, (errors) => {
@@ -51,7 +51,7 @@ angular.module('ManagementApp').factory('MenuService', ['$http', '$q', 'urls', f
 
     function findById(id) {
         var deferred = $q.defer();
-        $http.post(urls.MENU_SERVICE_API + 'id', id)
+        $http.get(urls.CUSTOMER_SERVICE_API + id)
             .then((response) => {
                 deferred.resolve(response.data);
             },
@@ -61,9 +61,9 @@ angular.module('ManagementApp').factory('MenuService', ['$http', '$q', 'urls', f
         return deferred.promise;
     }
 
-    function save(menu) {
+    function save(customer) {
         var deferred = $q.defer();
-        $http.post(urls.MENU_SERVICE_API, menu)
+        $http.post(urls.CUSTOMER_SERVICE_API, customer)
             .then((response) => {
                 deferred.resolve(response.data);
             }, (errors) => {
@@ -72,9 +72,9 @@ angular.module('ManagementApp').factory('MenuService', ['$http', '$q', 'urls', f
         return deferred.promise;
     }
 
-    function update(menu){
+    function update(customer){
         var deferred = $q.defer();
-        $http.put(urls.MENU_SERVICE_API, menu)
+        $http.put(urls.CUSTOMER_SERVICE_API, customer)
             .then((response) => {
                 deferred.resolve(response.data);
             }, (errors) => {

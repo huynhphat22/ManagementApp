@@ -1,25 +1,25 @@
 'use strict';
 
-angular.module('ManagementApp').controller('Departments', 
-['DepartmentService', '$scope', function (DepartmentService, $scope) {
+angular.module('ManagementApp').controller('DateCosts', 
+['DateCostService', '$scope', function (DateCostService, $scope) {
 
     var self = this;
 
-    self.listDepartments = [];
-    self.department = {};
-
+    self.listDateCosts = [];
+    self.dateCost = {};
+   
+    
     self.page = 1;
     self.asc = true;
     self.searchText = null;
     self.searchBy = null;
     self.size = 10;
-    self.sortBy = 'departmentId'
+    self.sortBy = 'id.departmentId'
 
     self.successMessage = '';
     self.errorMessage = '';
 
-    self.saveDepartment = false;
-
+    self.saveDateCost = false;
     self.edit = edit;
 
     self.range = range;
@@ -32,9 +32,10 @@ angular.module('ManagementApp').controller('Departments',
     self.reset = reset;
     self.submit = submit;
     self.changeRecordsPerPage = changeRecordsPerPage;
+    
+    
 
-
-    findAllDepartments();
+    findAllDateCosts();
 
     function range(min, max, step) {
         step = step || 1;
@@ -52,20 +53,20 @@ angular.module('ManagementApp').controller('Departments',
     }
 
     function increasePage() {
-        self.page = parseInt(self.page) < self.listDepartments.totalPages ? parseInt(self.page) + 1 : parseInt(self.page);
+        self.page = parseInt(self.page) < self.listDateCosts.totalPages ? parseInt(self.page) + 1 : parseInt(self.page);
         console.log(self.page);
-        findAllDepartments();
+        findAllDateCosts();
     }
 
     function decreasePage() {
         self.page = parseInt(self.page) > 1 ? parseInt(self.page) - 1 : parseInt(self.page);
-        findAllDepartments();
+        findAllDateCosts();
     }
 
     function changeRecordsPerPage() {
         self.page = 1;
         console.log(self.size);
-        findAllDepartments();
+        findAllDateCosts();
     }
 
     function changePage(x) {
@@ -74,45 +75,47 @@ angular.module('ManagementApp').controller('Departments',
             self.sortBy = x;
         }
         console.log("self when change" + self.page);
-        findAllDepartments();
+        findAllDateCosts();
     }
 
     function search() {
         self.page = 1;
-        $scope.searchDepartmentForm.$setPristine();
-        findAllDepartments();
+        $scope.searchDateCostForm.$setPristine();
+        findAllDateCosts();
     }
 
     function reload() {
         self.page = 1;
         self.size = 10;
-        self.sortBy = "departmentId";
+        self.sortBy = "dateCostId";
         self.asc = true;
         self.searchText = null;
-        findAllDepartments();
+        findAllDateCosts();
     }
 
     function reset() {
         self.successMessage = '';
         self.errorMessage = '';
-        self.department = {};
-        $scope.departmentForm.$setPristine(); //reset Form
+        self.isUpdate = false;
+        self.dateCost = {};
+        self.dateCost.id.departmentId = document.getElementById("deptId").value;
+        $scope.dateCostForm.$setPristine(); //reset Form
     }
 
     function submit() {
         console.log('Submitting');
-        if (self.department.departmentId === undefined || self.department.departmentId === null) {
-            console.log('Saving New Department', self.department);
-            save(self.department);
+        if (!self.dateCost.id) {
+            console.log('Saving New DateCost', self.dateCost);
+            save(self.dateCost);
         } else {
-            update(self.department);
-            console.log('Department updated with id ', self.department.id);
+            update(self.dateCost);
+            console.log('DateCost updated with id ', self.dateCost.id);
         }
-        $scope.saveDepartmentForm.$setPristine();
+        $scope.dateCostForm.$setPristine();
     }
 
 
-    function findAllDepartments() {
+    function findAllDateCosts() {
         var pageQuery = {
             sortBy : self.sortBy,
             page : self.page,
@@ -121,57 +124,61 @@ angular.module('ManagementApp').controller('Departments',
             searchText : self.searchText,
             size : self.size
         }
-        console.log("pageQuery", pageQuery);
-        DepartmentService.findAllByPagination(pageQuery)
+        
+        DateCostService.findAllByPagination(pageQuery)
             .then((response) => {
-                self.listDepartments = response;
+                self.listDateCosts = response;
             },
             (errors) => {
-                console.log("Errors Find All Department :", errors);
+                console.log("Errors Find All DateCost :", errors);
             });
     }
 
-    function save(department){
-        DepartmentService.save(department)
+    function save(dateCost){
+        DateCostService.save(dateCost)
         .then((response)=>{
-            self.successMessage = 'Insert Department Successfully!';
+            self.successMessage = 'Insert DateCost Successfully!';
             self.errorMessage = '';
-            findAllDepartments();
-            self.department = {};
-            self.saveDepartment = false;
+            findAllDateCosts();
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Insert Department!';
+            self.errorMessage = 'Error When Insert DateCost!';
         });
     }
 
-    function update(department){
-        DepartmentService.update(department)
+    function update(dateCost){
+        DateCostService.update(dateCost)
         .then((response)=>{
-            self.successMessage = 'Update Department Successfully!';
+            self.successMessage = 'Update DateCost Successfully!';
             self.errorMessage = '';
-            findAllDepartments();
+            findAllDateCosts();
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Update Department!';
+            self.errorMessage = 'Error When Update DateCost!';
         });
     }
 
-    function edit(id){
+    function edit(departmentId, dateOfCost){
         console.log("zo");
-        DepartmentService.findById(id)
+        const id = {
+        		dateOfCost : dateOfCost,
+        		departmentId : departmentId
+        };
+        console.log("id" ,id);
+        DateCostService.findById(id)
         .then((response)=>{
-            self.department =  response;
+            self.dateCost =  response;
+            console.log("date cost",self.dateCost);
             
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Getting Department!';
+            self.errorMessage = 'Error When Getting DateCost!';
         });
         
         $("html , body").animate({
             scrollTop: 0
         }, 300);
         
-        self.saveDepartment = true;
+        self.saveDateCost = true;
     }
 }]);

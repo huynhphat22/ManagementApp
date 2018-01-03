@@ -1,13 +1,15 @@
-// default package
-// Generated Dec 25, 2017 5:48:08 PM by Hibernate Tools 5.1.4.Final
-
 package Model.DTO;
+// default package
+// Generated Jan 2, 2018 10:02:25 AM by Hibernate Tools 5.1.4.Final
+
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.Date;
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
+
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,26 +19,34 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "month_cost", catalog = "restaurant")
-public class MonthCost  {
+public class MonthCost implements java.io.Serializable {
 
-	private MonthCostId id;
+	private Integer monthCostId;
+	private int departmentId;
+	private String monthOfCost;
 	private String typeOfCost;
-	private long price;
+	private int price;
 	private String note;
 	private Date dateCreated;
-	private Boolean flags;
+	private boolean flags;
 
 	public MonthCost() {
 	}
 
-	public MonthCost(MonthCostId id, long price, Date dateCreated) {
-		this.id = id;
+	public MonthCost(int departmentId, String monthOfCost, String typeOfCost, int price, Date dateCreated,
+			boolean flags) {
+		this.departmentId = departmentId;
+		this.monthOfCost = monthOfCost;
+		this.typeOfCost = typeOfCost;
 		this.price = price;
 		this.dateCreated = dateCreated;
+		this.flags = flags;
 	}
 
-	public MonthCost(MonthCostId id, String typeOfCost, long price, String note, Date dateCreated, Boolean flags) {
-		this.id = id;
+	public MonthCost(int departmentId, String monthOfCost, String typeOfCost, int price, String note, Date dateCreated,
+			boolean flags) {
+		this.departmentId = departmentId;
+		this.monthOfCost = monthOfCost;
 		this.typeOfCost = typeOfCost;
 		this.price = price;
 		this.note = note;
@@ -44,20 +54,37 @@ public class MonthCost  {
 		this.flags = flags;
 	}
 
-	@EmbeddedId
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
 
-	@AttributeOverrides({
-			@AttributeOverride(name = "departmentId", column = @Column(name = "departmentID", nullable = false)),
-			@AttributeOverride(name = "monthOfCost", column = @Column(name = "monthOfCost", nullable = false, length = 10)) })
-	public MonthCostId getId() {
-		return this.id;
+	@Column(name = "monthCostId", unique = true, nullable = false)
+	public Integer getMonthCostId() {
+		return this.monthCostId;
 	}
 
-	public void setId(MonthCostId id) {
-		this.id = id;
+	public void setMonthCostId(Integer monthCostId) {
+		this.monthCostId = monthCostId;
 	}
 
-	@Column(name = "typeOfCost", length = 60)
+	@Column(name = "departmentId", nullable = false)
+	public int getDepartmentId() {
+		return this.departmentId;
+	}
+
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
+	}
+
+	@Column(name = "monthOfCost", nullable = false, length = 8)
+	public String getMonthOfCost() {
+		return this.monthOfCost;
+	}
+
+	public void setMonthOfCost(String monthOfCost) {
+		this.monthOfCost = monthOfCost;
+	}
+
+	@Column(name = "typeOfCost", nullable = false, length = 100)
 	public String getTypeOfCost() {
 		return this.typeOfCost;
 	}
@@ -67,15 +94,15 @@ public class MonthCost  {
 	}
 
 	@Column(name = "price", nullable = false)
-	public long getPrice() {
+	public int getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(long price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 
-	@Column(name = "note", length = 300)
+	@Column(name = "note", length = 65535)
 	public String getNote() {
 		return this.note;
 	}
@@ -94,12 +121,12 @@ public class MonthCost  {
 		this.dateCreated = dateCreated;
 	}
 
-	@Column(name = "flags")
-	public Boolean getFlags() {
+	@Column(name = "flags", nullable = false)
+	public boolean isFlags() {
 		return this.flags;
 	}
 
-	public void setFlags(Boolean flags) {
+	public void setFlags(boolean flags) {
 		this.flags = flags;
 	}
 

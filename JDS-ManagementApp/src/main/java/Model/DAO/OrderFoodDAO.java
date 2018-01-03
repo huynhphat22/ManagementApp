@@ -20,4 +20,6 @@ public interface OrderFoodDAO {
 	
 	public Page paginateOrderFood(PageQuery pageQuery);
 	
+	public Page paginateOrderFoodByDepartmentSwitchBoard(PageQuery pageQuery);
+	
 }

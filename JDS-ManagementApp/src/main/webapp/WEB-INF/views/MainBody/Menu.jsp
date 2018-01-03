@@ -28,22 +28,31 @@
 					<form ng-submit="mctrl.submit()" name="menuForm">
 						<div class="row">
 							<div class="col-sm-4">
-								<input id="deptId" type="hidden" value="${department.departmentId }" ng-model="mctrl.menu.departmentId"/>
-								<div class="form-group">
+								<input id="deptId" type="hidden"  ng-model="mctrl.menu.id.departmentId"/>
+								
+								<div class="form-group" ng-hide="mctrl.isUpdate">
 									<label>Food Id</label>
-									<input ng-disabled ="mctrl.isUpdate" type="text" ng-model="mctrl.menu.id.foodId" class="form-control" />
+									<input type="number" required min="1" ng-model="mctrl.menu.id.foodId" class="form-control" />
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="form-group">
 									<label>Price</label>
-									<input type="number" ng-model="mctrl.menu.price" class="form-control" />
+									<input type="number" required min="10000" ng-model="mctrl.menu.price" class="form-control" />
+								</div>
+								<div class="form-group" ng-show="mctrl.menu.id.departmentId && mctrl.menu.id.foodId ">
+									<label>Flags</label>
+									<select required class="form-control" ng-model="mctrl.menu.flags"
+									 ng-options="o.v as o.n for o in [{ n: 'False', v: false }, { n: 'True', v: true }]">
+									</select>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<button class="btn btn-info" ng-cloak>{{mctrl.isUpdate ? 'Update' : 'Add'}}</button>
+								<button 
+								ng-disabled="menuForm.$pristine"
+								class="btn btn-info" ng-cloak>{{mctrl.menu.id.departmentId ? 'Update' : 'Add'}}</button>
 								<button type="button" ng-click="mctrl.reset()" class="btn btn-warning">Reset</button>
 							</div>
 						</div>
@@ -88,7 +97,8 @@
 							<form name="searchMenuForm" class="form-inline">
 								<div class="form-group">
 									<select ng-model="mctrl.searchBy" required="true" class="form-control input-sm">
-										<option value="food.foodName">Food Name</option>
+										<option value="id.foodId">Food Id</option>
+										<option value="id.departmentId">Department Id</option>
 										<option value="price">Price</option>
 										<option value="address">Address</option>
 									</select>

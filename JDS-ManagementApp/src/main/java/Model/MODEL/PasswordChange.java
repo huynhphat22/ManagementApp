@@ -1,28 +1,17 @@
 package Model.MODEL;
 
 public class PasswordChange {
-	private String username;
 	private String password;
 	private String newPassword;
 	private String reNewPassword;
 
-	public PasswordChange() {
-	}
+	PasswordChange(){}
 
-	public PasswordChange(String username, String password, String newPassword, String reNewPassword) {
+	public PasswordChange(String password, String newPassword, String reNewPassword) {
 		super();
-		this.username = username;
 		this.password = password;
 		this.newPassword = newPassword;
 		this.reNewPassword = reNewPassword;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getPassword() {
@@ -48,5 +37,7 @@ public class PasswordChange {
 	public void setReNewPassword(String reNewPassword) {
 		this.reNewPassword = reNewPassword;
 	}
+	
+	
 
 }

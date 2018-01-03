@@ -29,26 +29,29 @@
 								<input type="hidden" ng-model="tctrl.table.tableId"/>
 								<div class="form-group">
 									<label>Table Number</label>
-									<input type="number" ng-model="tctrl.table.tableNumber" class="form-control" />
+									<input type="number" required min="1" ng-model="tctrl.table.tableNumber" class="form-control" />
 								</div>
 								<div class="form-group">
 									<label>Status</label>
-									<select class="form-control" ng-model="tctrl.table.tableStatus">
+									<select class="form-control" required ng-model="tctrl.table.tableStatus">
 										<option value="empty">Empty</option>
 										<option value="ordered">Ordered</option>
 									</select>
 								</div>
 							</div>
 							<div class="col-sm-4">
-								<div class="form-group">
+								<div class="form-group" ng-show="tctrl.table.tableId ">
 									<label>Flags</label>
-									<input type="text" ng-model="tctrl.table.flags" class="form-control" />
+									<select 
+									required class="form-control" ng-model="tctrl.table.flags"
+									 ng-options="o.v as o.n for o in [{ n: 'False', v: false }, { n: 'True', v: true }]">
+									</select>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<button class="btn btn-info" ng-cloak>{{tctrl.table.tableId ? 'Update' : 'Add'}}</button>
+								<button class="btn btn-info" ng-disabled="saveTableForm.$pristine" ng-cloak>{{tctrl.table.tableId ? 'Update' : 'Add'}}</button>
 								<button type="button" ng-click="tctrl.reset()" class="btn btn-warning">Reset</button>
 							</div>
 						</div>
@@ -93,8 +96,9 @@
 							<form name="searchTableForm" class="form-inline">
 								<div class="form-group">
 									<select ng-model="tctrl.searchBy" required="true" class="form-control input-sm">
-										<option value="tableName">Table Name</option>
-										<option value="address">Address</option>
+										<option value="tableId">Table Id</option>
+										<option value="tableNumber">Table Number</option>
+										<option value="tableStatus">Table Status</option>
 									</select>
 								</div>
 								<div class="input-group">

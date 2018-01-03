@@ -75,10 +75,33 @@
 		<property name="sessionFactory" ref="mySessionFactory" />
 	</bean>
 	
+	<bean id="orderFoodDAO" class="Model.DAO.OrderFoodDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="orderDetailDAO" class="Model.DAO.OrderDetailDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="dateCostDAO" class="Model.DAO.DateCostDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="monthCostDAO" class="Model.DAO.MonthCostDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	<bean id="customerDAO" class="Model.DAO.CustomerDAOImpl">
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+	
+	
 	
 	<bean id="staffDetailsService" class="Service.StaffDetailsService">
 		<property name="staffDAO" ref="staffDAO" />
 	</bean>
+	
+	
 	<!-- Transaction AOP -->
 	<tx:annotation-driven proxy-target-class="true" transaction-manager="txManager" />
 

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ManagementApp').factory('MenuService', ['$http', '$q', 'urls', function($http, $q, urls) {
+angular.module('ManagementApp').factory('MonthCostService', ['$http', '$q', 'urls', function($http, $q, urls) {
 
     var factory = {
         findAll: findAll,
@@ -16,7 +16,7 @@ angular.module('ManagementApp').factory('MenuService', ['$http', '$q', 'urls', f
 
     function findAllByDepartmentId(){
     	 var deferred = $q.defer();
-         $http.get(urls.MENU_SERVICE_API + "department")
+         $http.get(urls.MONTHCOST_SERVICE_API + "department")
              .then((response) => {
                  deferred.resolve(response.data);
              }, (errors) => {
@@ -28,7 +28,7 @@ angular.module('ManagementApp').factory('MenuService', ['$http', '$q', 'urls', f
 
     function findAll() {
         var deferred = $q.defer();
-        $http.get(urls.MENU_SERVICE_API)
+        $http.get(urls.MONTHCOST_SERVICE_API)
             .then((response) => {
                 deferred.resolve(response.data);
             }, (errors) => {
@@ -38,9 +38,9 @@ angular.module('ManagementApp').factory('MenuService', ['$http', '$q', 'urls', f
         return deferred.promise;
     }
 
-    function findAllByPagination(pageQuery, departmentId){
+    function findAllByPagination(pageQuery){
         var deferred = $q.defer();
-        $http.post(urls.MENU_SERVICE_API + 'pagination/' + departmentId , pageQuery)
+        $http.post(urls.MONTHCOST_SERVICE_API + 'department/', pageQuery)
             .then((response) => {
                 deferred.resolve(response.data);
             }, (errors) => {
@@ -51,7 +51,7 @@ angular.module('ManagementApp').factory('MenuService', ['$http', '$q', 'urls', f
 
     function findById(id) {
         var deferred = $q.defer();
-        $http.post(urls.MENU_SERVICE_API + 'id', id)
+        $http.get(urls.MONTHCOST_SERVICE_API + id)
             .then((response) => {
                 deferred.resolve(response.data);
             },
@@ -61,9 +61,9 @@ angular.module('ManagementApp').factory('MenuService', ['$http', '$q', 'urls', f
         return deferred.promise;
     }
 
-    function save(menu) {
+    function save(monthCost) {
         var deferred = $q.defer();
-        $http.post(urls.MENU_SERVICE_API, menu)
+        $http.post(urls.MONTHCOST_SERVICE_API, monthCost)
             .then((response) => {
                 deferred.resolve(response.data);
             }, (errors) => {
@@ -72,9 +72,9 @@ angular.module('ManagementApp').factory('MenuService', ['$http', '$q', 'urls', f
         return deferred.promise;
     }
 
-    function update(menu){
+    function update(monthCost){
         var deferred = $q.defer();
-        $http.put(urls.MENU_SERVICE_API, menu)
+        $http.put(urls.MONTHCOST_SERVICE_API, monthCost)
             .then((response) => {
                 deferred.resolve(response.data);
             }, (errors) => {

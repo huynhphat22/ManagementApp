@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import Model.DAO.MenuDepartmentDAO;
+import Model.DAO.StaffDAO;
 import Model.DTO.MenuDepartment;
 import Model.DTO.MenuDepartmentId;
 import Model.MODEL.Page;
@@ -22,6 +25,9 @@ public class RestMenuDepartmentController {
 
 	@Autowired
 	private MenuDepartmentDAO menuDepartmentDAO;
+	
+	@Autowired
+	private StaffDAO staffDAO;
 	
 	
 	@RequestMapping(value="/api/menuDepartment", method = RequestMethod.GET,  produces =  MediaType.APPLICATION_JSON_VALUE)
@@ -55,6 +61,7 @@ public class RestMenuDepartmentController {
 			this.menuDepartmentDAO.update(menuDepartment);
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -71,12 +78,27 @@ public class RestMenuDepartmentController {
 	}
 	
 	
+	@RequestMapping(value="/api/menuDepartment/department", method = RequestMethod.GET)
+	public ResponseEntity<Iterable<MenuDepartment>> findAllByDepartment(){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+
+		try {
+			int departmentId = this.staffDAO.findByUsername(username).getDepartmentId();
+			return new ResponseEntity<>(this.menuDepartmentDAO.findAllByDepartmentId(departmentId), HttpStatus.OK);
+		}
+		catch(Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
 	@RequestMapping(value="/api/menuDepartment/pagination/{departmentId}", method = RequestMethod.POST)
 	public ResponseEntity<Page> paginate(@RequestBody PageQuery pageQuery, @PathVariable("departmentId") int departmentId ){
 		try {
 			return new ResponseEntity<>(this.menuDepartmentDAO.paginateMenuDepartment(pageQuery, departmentId), HttpStatus.OK);
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}

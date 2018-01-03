@@ -27,20 +27,21 @@
 						<div class="col-sm-6">
 							<form ng-submit="pctrl.submit()" name="changePasswordForm">
 								<div class="form-group">
-									<label>UserName</label> <input required type="text"
-										ng-model="pctrl.passwordChange.username" class="form-control" />
-								</div>
-								<div class="form-group">
 									<label>Current Password</label> <input required type="password"
-										ng-model="pctrl.passwordChange.password" class="form-control" />
+										ng-model="pctrl.passwordChange.password" class="form-control"
+										minLength="6" />
 								</div>
 								<div class="form-group">
-									<label>New Password</label> <input required type="password"
+									<label>New Password</label> <input required 
+										minLength="6"
+										type="password"
 										ng-model="pctrl.passwordChange.newPassword"
 										class="form-control" />
 								</div>
 								<div class="form-group">
-									<label>Confirm New Password</label> <input required type="password"
+									<label>Confirm New Password</label> <input required 
+										minLength="6"
+										type="password"
 										ng-model="pctrl.passwordChange.reNewPassword"
 										class="form-control" />
 								</div>

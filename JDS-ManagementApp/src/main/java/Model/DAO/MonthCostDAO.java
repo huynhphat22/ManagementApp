@@ -1,7 +1,6 @@
 package Model.DAO;
 
 import Model.DTO.MonthCost;
-import Model.DTO.MonthCostId;
 import Model.MODEL.Page;
 import Model.MODEL.PageQuery;
 
@@ -11,9 +10,9 @@ public MonthCost save(MonthCost monthCost);
 	
 	public MonthCost update(MonthCost monthCost);
 	
-	public void delete(MonthCostId id);
+	public void delete(int id);
 	
-	public MonthCost findById(MonthCostId id);
+	public MonthCost findById(int id);
 	
 	public Iterable<MonthCost> findAll();
 	

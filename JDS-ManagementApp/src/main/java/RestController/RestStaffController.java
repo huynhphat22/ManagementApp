@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -90,8 +92,9 @@ public class RestStaffController {
 
 	@RequestMapping(value = "/api/staff/change-password", method = RequestMethod.POST)
 	public ResponseEntity<Void> changePassword(@RequestBody PasswordChange passwordChange) {
-
-		Staff staff = this.staffDAO.findByUsername(passwordChange.getUsername());
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Staff staff = this.staffDAO.findByUsername(username);
 		BCryptPasswordEncoder bpe = new BCryptPasswordEncoder();
 		if (staff == null || !bpe.matches(passwordChange.getPassword(), staff.getPassword())
 				|| !passwordChange.getNewPassword().equals(passwordChange.getReNewPassword())) {

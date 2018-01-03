@@ -66,9 +66,15 @@
 								</div>
 								<div class="form-group">
 									<label>Department</label>
-									<select ng-model="sctrl.staff.departmentId" required
+									<select class="form-control" ng-model="sctrl.staff.departmentId" required
 									ng-options="department.departmentId as department.departmentName for department in sctrl.listDepartments">
 										
+									</select>
+								</div>
+								<div class="form-group" ng-show="sctrl.staff.staffId">
+									<label>Flags</label>
+									<select required class="form-control" ng-model="sctrl.staff.flags"
+									 ng-options="o.v as o.n for o in [{ n: 'False', v: false }, { n: 'True', v: true }]">
 									</select>
 								</div>
 							</div>
@@ -128,6 +134,7 @@
 										<option value="staffName">Staff Name</option>
 										<option value="username">Username</option>
 										<option value="address">Address</option>
+										<option value="phoneNumber">Phone Number</option>
 									</select>
 								</div>
 								<div class="input-group">

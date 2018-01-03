@@ -29,27 +29,36 @@
 								<input type="hidden" ng-model="dctrl.department.departmentId"/>
 								<div class="form-group">
 									<label>Department Name</label>
-									<input type="text" ng-model="dctrl.department.departmentName" class="form-control" />
+									<input type="text" required minLenth="2" ng-model="dctrl.department.departmentName" class="form-control" />
 								</div>
 								<div class="form-group">
 									<label>Address</label>
-									<input type="text" ng-model="dctrl.department.address" class="form-control" />
+									<input type="text" required minLength="20" ng-model="dctrl.department.address" class="form-control" />
 								</div>
+								
 							</div>
 							<div class="col-sm-4">
 								<div class="form-group">
 									<label>Phone Number</label>
-									<input type="text" ng-model="dctrl.department.phoneNumber" class="form-control" />
+									<input type="text" minLength="10" maxLength="11" ng-model="dctrl.department.phoneNumber" class="form-control" />
 								</div>
 								<div class="form-group">
 									<label>Number Of Table</label>
-									<input type="number" ng-model="dctrl.department.numberOfTable" class="form-control" />
+									<input type="number" required ng-model="dctrl.department.numberOfTable" class="form-control" />
+								</div>
+								<div class="form-group" ng-show="dctrl.department.departmentId">
+									<label>Flags</label>
+									<select required class="form-control" ng-model="dctrl.department.flags"
+									 ng-options="o.v as o.n for o in [{ n: 'False', v: false }, { n: 'True', v: true }]">
+									</select>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-sm-12">
-								<button class="btn btn-info" ng-cloak>{{dctrl.department.departmentId ? 'Update' : 'Add'}}</button>
+								<button 
+								ng-disabled="saveDepartmentForm.$pristine"
+								class="btn btn-info" ng-cloak>{{dctrl.department.departmentId ? 'Update' : 'Add'}}</button>
 								<button type="button" ng-click="dctrl.reset()" class="btn btn-warning">Reset</button>
 							</div>
 						</div>

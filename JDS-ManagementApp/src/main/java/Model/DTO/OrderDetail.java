@@ -44,8 +44,7 @@ public class OrderDetail  {
 	@EmbeddedId
 
 	@AttributeOverrides({ @AttributeOverride(name = "orderId", column = @Column(name = "orderID", nullable = false)),
-			@AttributeOverride(name = "foodId", column = @Column(name = "foodID", nullable = false)),
-			@AttributeOverride(name = "departmentId", column = @Column(name = "departmentId", nullable = false)) })
+			@AttributeOverride(name = "foodId", column = @Column(name = "foodID", nullable = false)) })
 	public OrderDetailId getId() {
 		return this.id;
 	}

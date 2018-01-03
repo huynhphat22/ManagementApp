@@ -101,12 +101,12 @@ angular.module('ManagementApp').controller('Menus',
         self.errorMessage = '';
         self.isUpdate = false;
         self.menu = {};
-        self.menu.id.departmentId = document.getElementById("deptId").value;
+        self.menu.id.departmentId = self.departmentId;
         $scope.menuForm.$setPristine(); //reset Form
     }
 
     function submit() {
-    	self.menu.id.departmentId = document.getElementById("deptId").value;
+    	self.menu.id.departmentId = self.departmentId;
         console.log('Submitting');
         if (!self.isUpdate) {
             console.log('Saving New Menu', self.menu);

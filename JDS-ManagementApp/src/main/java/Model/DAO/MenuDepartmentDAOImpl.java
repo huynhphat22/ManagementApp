@@ -1,5 +1,7 @@
 package Model.DAO;
 
+import java.util.Date;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -29,6 +31,8 @@ public class MenuDepartmentDAOImpl implements MenuDepartmentDAO {
 	public MenuDepartment save(MenuDepartment menuDepartment) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
+		menuDepartment.setDateCreated(new Date());
+		menuDepartment.setFlags(true);
 		session.persist(menuDepartment);
 		return menuDepartment;
 	}
@@ -48,7 +52,7 @@ public class MenuDepartmentDAOImpl implements MenuDepartmentDAO {
 		MenuDepartment menuDepartment = this.findById(id);
 		if (menuDepartment != null) {
 			Session session = this.sessionFactory.getCurrentSession();
-			session.delete(menuDepartment);
+			menuDepartment.setFlags(false);
 		}
 
 	}

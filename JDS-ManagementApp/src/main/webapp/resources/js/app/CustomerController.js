@@ -1,24 +1,26 @@
 'use strict';
 
-angular.module('ManagementApp').controller('Departments', 
-['DepartmentService', '$scope', function (DepartmentService, $scope) {
+angular.module('ManagementApp').controller('Customers', 
+['CustomerService', '$scope', function (CustomerService, $scope) {
 
     var self = this;
 
-    self.listDepartments = [];
-    self.department = {};
+    self.listCustomers = [];
+    self.customer = {};
 
     self.page = 1;
     self.asc = true;
     self.searchText = null;
     self.searchBy = null;
     self.size = 10;
-    self.sortBy = 'departmentId'
+    self.sortBy = 'customerId'
 
     self.successMessage = '';
     self.errorMessage = '';
 
-    self.saveDepartment = false;
+    self.saveCustomer = false;
+    
+    self.resetPassword = resetPassword;
 
     self.edit = edit;
 
@@ -34,7 +36,7 @@ angular.module('ManagementApp').controller('Departments',
     self.changeRecordsPerPage = changeRecordsPerPage;
 
 
-    findAllDepartments();
+    findAllCustomers();
 
     function range(min, max, step) {
         step = step || 1;
@@ -52,20 +54,20 @@ angular.module('ManagementApp').controller('Departments',
     }
 
     function increasePage() {
-        self.page = parseInt(self.page) < self.listDepartments.totalPages ? parseInt(self.page) + 1 : parseInt(self.page);
+        self.page = parseInt(self.page) < self.listCustomers.totalPages ? parseInt(self.page) + 1 : parseInt(self.page);
         console.log(self.page);
-        findAllDepartments();
+        findAllCustomers();
     }
 
     function decreasePage() {
         self.page = parseInt(self.page) > 1 ? parseInt(self.page) - 1 : parseInt(self.page);
-        findAllDepartments();
+        findAllCustomers();
     }
 
     function changeRecordsPerPage() {
         self.page = 1;
         console.log(self.size);
-        findAllDepartments();
+        findAllCustomers();
     }
 
     function changePage(x) {
@@ -74,45 +76,45 @@ angular.module('ManagementApp').controller('Departments',
             self.sortBy = x;
         }
         console.log("self when change" + self.page);
-        findAllDepartments();
+        findAllCustomers();
     }
 
     function search() {
         self.page = 1;
-        $scope.searchDepartmentForm.$setPristine();
-        findAllDepartments();
+        $scope.searchCustomerForm.$setPristine();
+        findAllCustomers();
     }
 
     function reload() {
         self.page = 1;
         self.size = 10;
-        self.sortBy = "departmentId";
+        self.sortBy = "customerId";
         self.asc = true;
         self.searchText = null;
-        findAllDepartments();
+        findAllCustomers();
     }
 
     function reset() {
         self.successMessage = '';
         self.errorMessage = '';
-        self.department = {};
-        $scope.departmentForm.$setPristine(); //reset Form
+        self.customer = {};
+        $scope.customerForm.$setPristine(); //reset Form
     }
 
     function submit() {
         console.log('Submitting');
-        if (self.department.departmentId === undefined || self.department.departmentId === null) {
-            console.log('Saving New Department', self.department);
-            save(self.department);
+        if (self.customer.customerId === undefined || self.customer.customerId === null) {
+            console.log('Saving New Customer', self.customer);
+            save(self.customer);
         } else {
-            update(self.department);
-            console.log('Department updated with id ', self.department.id);
+            update(self.customer);
+            console.log('Customer updated with id ', self.customer.id);
         }
-        $scope.saveDepartmentForm.$setPristine();
+        $scope.customerForm.$setPristine();
     }
 
 
-    function findAllDepartments() {
+    function findAllCustomers() {
         var pageQuery = {
             sortBy : self.sortBy,
             page : self.page,
@@ -122,56 +124,66 @@ angular.module('ManagementApp').controller('Departments',
             size : self.size
         }
         console.log("pageQuery", pageQuery);
-        DepartmentService.findAllByPagination(pageQuery)
+        CustomerService.findAllByPagination(pageQuery)
             .then((response) => {
-                self.listDepartments = response;
+                self.listCustomers = response;
             },
             (errors) => {
-                console.log("Errors Find All Department :", errors);
+                console.log("Errors Find All Customer :", errors);
             });
     }
 
-    function save(department){
-        DepartmentService.save(department)
+    function save(customer){
+        CustomerService.save(customer)
         .then((response)=>{
-            self.successMessage = 'Insert Department Successfully!';
+            self.successMessage = 'Insert Customer Successfully!';
             self.errorMessage = '';
-            findAllDepartments();
-            self.department = {};
-            self.saveDepartment = false;
+            findAllCustomers();
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Insert Department!';
+            self.errorMessage = 'Error When Insert Customer!';
         });
     }
 
-    function update(department){
-        DepartmentService.update(department)
+    function update(customer){
+        CustomerService.update(customer)
         .then((response)=>{
-            self.successMessage = 'Update Department Successfully!';
+            self.successMessage = 'Update Customer Successfully!';
             self.errorMessage = '';
-            findAllDepartments();
+            findAllCustomers();
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Update Department!';
+            self.errorMessage = 'Error When Update Customer!';
+        });
+    }
+    
+    function resetPassword(id){
+        CustomerService.resetPassword(id)
+        .then((response)=>{
+            self.successMessage = 'Reset Password For Customer With Id ' +id + ' Successfully!';
+            self.errorMessage = '';
+            findAllCustomers();
+        },(errors)=>{
+            self.successMessage = '';
+            self.errorMessage = 'Error When Reset Password For Customer With Id ' + id;
         });
     }
 
     function edit(id){
         console.log("zo");
-        DepartmentService.findById(id)
+        CustomerService.findById(id)
         .then((response)=>{
-            self.department =  response;
+            self.customer =  response;
             
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Getting Department!';
+            self.errorMessage = 'Error When Getting Customer!';
         });
         
         $("html , body").animate({
             scrollTop: 0
         }, 300);
         
-        self.saveDepartment = true;
+        self.saveCustomer = true;
     }
 }]);

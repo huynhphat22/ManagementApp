@@ -1,24 +1,24 @@
 'use strict';
 
-angular.module('ManagementApp').controller('Departments', 
-['DepartmentService', '$scope', function (DepartmentService, $scope) {
+angular.module('ManagementApp').controller('MonthCosts', 
+['MonthCostService', '$scope', function (MonthCostService, $scope) {
 
     var self = this;
 
-    self.listDepartments = [];
-    self.department = {};
+    self.listMonthCosts = [];
+    self.monthCost = {};
 
     self.page = 1;
     self.asc = true;
     self.searchText = null;
     self.searchBy = null;
     self.size = 10;
-    self.sortBy = 'departmentId'
+    self.sortBy = 'monthCostId'
 
     self.successMessage = '';
     self.errorMessage = '';
 
-    self.saveDepartment = false;
+    self.saveMonthCost = false;
 
     self.edit = edit;
 
@@ -34,7 +34,7 @@ angular.module('ManagementApp').controller('Departments',
     self.changeRecordsPerPage = changeRecordsPerPage;
 
 
-    findAllDepartments();
+    findAllMonthCosts();
 
     function range(min, max, step) {
         step = step || 1;
@@ -52,20 +52,20 @@ angular.module('ManagementApp').controller('Departments',
     }
 
     function increasePage() {
-        self.page = parseInt(self.page) < self.listDepartments.totalPages ? parseInt(self.page) + 1 : parseInt(self.page);
+        self.page = parseInt(self.page) < self.listMonthCosts.totalPages ? parseInt(self.page) + 1 : parseInt(self.page);
         console.log(self.page);
-        findAllDepartments();
+        findAllMonthCosts();
     }
 
     function decreasePage() {
         self.page = parseInt(self.page) > 1 ? parseInt(self.page) - 1 : parseInt(self.page);
-        findAllDepartments();
+        findAllMonthCosts();
     }
 
     function changeRecordsPerPage() {
         self.page = 1;
         console.log(self.size);
-        findAllDepartments();
+        findAllMonthCosts();
     }
 
     function changePage(x) {
@@ -74,45 +74,45 @@ angular.module('ManagementApp').controller('Departments',
             self.sortBy = x;
         }
         console.log("self when change" + self.page);
-        findAllDepartments();
+        findAllMonthCosts();
     }
 
     function search() {
         self.page = 1;
-        $scope.searchDepartmentForm.$setPristine();
-        findAllDepartments();
+        $scope.searchMonthCostForm.$setPristine();
+        findAllMonthCosts();
     }
 
     function reload() {
         self.page = 1;
         self.size = 10;
-        self.sortBy = "departmentId";
+        self.sortBy = "monthCostId";
         self.asc = true;
         self.searchText = null;
-        findAllDepartments();
+        findAllMonthCosts();
     }
 
     function reset() {
         self.successMessage = '';
         self.errorMessage = '';
-        self.department = {};
-        $scope.departmentForm.$setPristine(); //reset Form
+        self.monthCost = {};
+        $scope.monthCostForm.$setPristine(); //reset Form
     }
 
     function submit() {
         console.log('Submitting');
-        if (self.department.departmentId === undefined || self.department.departmentId === null) {
-            console.log('Saving New Department', self.department);
-            save(self.department);
+        if (self.monthCost.monthCostId === undefined || self.monthCost.monthCostId === null) {
+            console.log('Saving New MonthCost', self.monthCost);
+            save(self.monthCost);
         } else {
-            update(self.department);
-            console.log('Department updated with id ', self.department.id);
+            update(self.monthCost);
+            console.log('MonthCost updated with id ', self.monthCost.monthCostId);
         }
-        $scope.saveDepartmentForm.$setPristine();
+        $scope.monthCostForm.$setPristine();
     }
 
 
-    function findAllDepartments() {
+    function findAllMonthCosts() {
         var pageQuery = {
             sortBy : self.sortBy,
             page : self.page,
@@ -122,56 +122,54 @@ angular.module('ManagementApp').controller('Departments',
             size : self.size
         }
         console.log("pageQuery", pageQuery);
-        DepartmentService.findAllByPagination(pageQuery)
+        MonthCostService.findAllByPagination(pageQuery)
             .then((response) => {
-                self.listDepartments = response;
+                self.listMonthCosts = response;
             },
             (errors) => {
-                console.log("Errors Find All Department :", errors);
+                console.log("Errors Find All MonthCost :", errors);
             });
     }
 
-    function save(department){
-        DepartmentService.save(department)
+    function save(monthCost){
+        MonthCostService.save(monthCost)
         .then((response)=>{
-            self.successMessage = 'Insert Department Successfully!';
+            self.successMessage = 'Insert MonthCost Successfully!';
             self.errorMessage = '';
-            findAllDepartments();
-            self.department = {};
-            self.saveDepartment = false;
+            findAllMonthCosts();
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Insert Department!';
+            self.errorMessage = 'Error When Insert MonthCost!';
         });
     }
 
-    function update(department){
-        DepartmentService.update(department)
+    function update(monthCost){
+        MonthCostService.update(monthCost)
         .then((response)=>{
-            self.successMessage = 'Update Department Successfully!';
+            self.successMessage = 'Update MonthCost Successfully!';
             self.errorMessage = '';
-            findAllDepartments();
+            findAllMonthCosts();
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Update Department!';
+            self.errorMessage = 'Error When Update MonthCost!';
         });
     }
 
     function edit(id){
         console.log("zo");
-        DepartmentService.findById(id)
+        MonthCostService.findById(id)
         .then((response)=>{
-            self.department =  response;
+            self.monthCost =  response;
             
         },(errors)=>{
             self.successMessage = '';
-            self.errorMessage = 'Error When Getting Department!';
+            self.errorMessage = 'Error When Getting MonthCost!';
         });
         
         $("html , body").animate({
             scrollTop: 0
         }, 300);
         
-        self.saveDepartment = true;
+        self.saveMonthCost = true;
     }
 }]);

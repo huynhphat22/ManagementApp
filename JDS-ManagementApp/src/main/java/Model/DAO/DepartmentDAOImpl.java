@@ -1,5 +1,7 @@
 package Model.DAO;
 
+import java.util.Date;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,6 +31,8 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 	public Department save(Department department) {
 		// TODO Auto-generated method stub
 		Session session = this.sessionFactory.getCurrentSession();
+		department.setFlags(true);
+		department.setDateCreated(new Date());
 		session.persist(department);
 		return department;
 	}
@@ -47,7 +51,8 @@ public class DepartmentDAOImpl implements DepartmentDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		Department department = this.findById(id);
 		if (department != null) {
-			session.delete(department);
+			department.setFlags(false);
+			session.update(department);
 		}
 	}
 

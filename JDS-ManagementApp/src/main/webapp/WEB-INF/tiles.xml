@@ -43,6 +43,15 @@
       		<add-attribute value="/js/app/TableController.js"/>
       		<add-attribute value="/js/app/StaffService.js"/>
       		<add-attribute value="/js/app/StaffController.js"/>
+      		<add-attribute value="/js/app/OrderService.js"/>
+      		<add-attribute value="/js/app/OrderController.js"/>
+      		<add-attribute value="/js/app/CustomerService.js"/>
+      		<add-attribute value="/js/app/CustomerController.js"/>
+      		<add-attribute value="/js/app/DateCostService.js"/>
+      		<add-attribute value="/js/app/DateCostController.js"/>
+      		<add-attribute value="/js/app/MonthCostService.js"/>
+      		<add-attribute value="/js/app/MonthCostController.js"/>
+      		<add-attribute value="/js/app/SwitchBoardOrderController.js"/>
       		<add-attribute value="/js/app/ProfileController.js"/>
         </put-list-attribute>
         
@@ -91,6 +100,32 @@
      <definition name="profile" extends="DefaultTemplate">
         <put-attribute name="title" value="Profile"/>
         <put-attribute name="body" value="/WEB-INF/views/MainBody/Profile.jsp"/>
+    </definition>
+    
+    <definition name="orders" extends="DefaultTemplate">
+        <put-attribute name="title" value="Orders"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Orders.jsp"/>
+    </definition>
+    
+     <definition name="customers" extends="DefaultTemplate">
+        <put-attribute name="title" value="Customers"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/Customers.jsp"/>
+    </definition>
+    
+    
+     <definition name="dateCosts" extends="DefaultTemplate">
+        <put-attribute name="title" value="Date Costs"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/DateCosts.jsp"/>
+    </definition>
+    
+    <definition name="monthCosts" extends="DefaultTemplate">
+        <put-attribute name="title" value="Month Costs"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/MonthCosts.jsp"/>
+    </definition>
+    
+     <definition name="switchboarOrders" extends="DefaultTemplate">
+        <put-attribute name="title" value="SwitchBoard Orders"/>
+        <put-attribute name="body" value="/WEB-INF/views/MainBody/SwitchBoardOrders.jsp"/>
     </definition>
     
      <definition name="login" extends="LoginTemplate">

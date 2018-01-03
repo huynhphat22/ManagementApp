@@ -13,14 +13,20 @@
 		<intercept-url pattern="/Login" access="permitAll()" />
 		<intercept-url pattern="/Logout" access="permitAll()" />
 
-		<intercept-url pattern="/Home" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Home" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER','ROLE_SALE', 'ROLE_SWITCHBOARD' )" />
 		<intercept-url pattern="/Departments" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
-		<intercept-url pattern="/Foods" access="hasAnyRole('ROLE_STAFF', 'ROLE_MANAGER')" />
-		<intercept-url pattern="/Tables" access="hasAnyRole('ROLE_STAFF', 'ROLE_MANAGER')" />
-		<intercept-url pattern="/Staffs" access="hasAnyRole('ROLE_STAFF', 'ROLE_MANAGER')" />
-		<intercept-url pattern="/Menu" access="hasAnyRole('ROLE_STAFF', 'ROLE_MANAGER')" />
-		<intercept-url pattern="/Categories" access="hasAnyRole('ROLE_STAFF', 'ROLE_MANAGER')" />
-		<intercept-url pattern="/Profile" access="hasAnyRole('ROLE_STAFF', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Foods" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Tables" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Staffs" access="hasAnyRole('ROLE_MANAGER')" />
+		<intercept-url pattern="/Menu" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Categories" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Profile" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_SALE', 'ROLE_SWITCHBOARD')" />
+		
+		<intercept-url pattern="/DateCosts" access="hasAnyRole('ROLE_SALE', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/MonthCosts" access="hasAnyRole('ROLE_SALE', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Orders" access="hasAnyRole('ROLE_SALE', 'ROLE_MANAGER')" />
+		<intercept-url pattern="/Customer" access="hasAnyRole('ROLE_SALE','ROLE_SWITCHBOARD','ROLE_MANAGER')" />
+		<intercept-url pattern="/SwitchBoardOrders" access="hasAnyRole('ROLE_SWITCHBOARD', 'ROLE_MANAGER')" />
 		<!--  <intercept-url pattern="/other/**" access="isAuthenticated()" />-->
 		<access-denied-handler error-page="/403" />
 
